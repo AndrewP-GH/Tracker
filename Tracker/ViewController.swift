@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         collectionView.register(SupplementaryView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: "footer")
+        collectionView.allowsMultipleSelection = false
         return collectionView
     }()
     private let letters = [
@@ -109,6 +110,43 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! LetterCollectionViewCell
+        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! LetterCollectionViewCell
+        cell.titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let indexPath = indexPaths.first else {
+            return nil
+        }
+        return UIContextMenuConfiguration(actionProvider: { action in
+            UIMenu(children: [
+                UIAction(title: "Bold") { [weak self] _ in
+                    self?.makeBold(indexPath: indexPath)
+                },
+                UIAction(title: "Italic") { [weak self] _ in
+                    self?.makeItalic(indexPath: indexPath)
+                },
+            ])
+        }
+        )
+    }
+
+    private func makeBold(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? LetterCollectionViewCell
+        cell?.titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+    }
+
+    private func makeItalic(indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as? LetterCollectionViewCell
+        cell?.titleLabel.font = UIFont.italicSystemFont(ofSize: 17)
     }
 }
 
