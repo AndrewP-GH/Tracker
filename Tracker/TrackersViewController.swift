@@ -7,13 +7,101 @@
 
 import UIKit
 
-class TrackersViewController: UIViewController {
+final class TrackersViewController: UIViewController {
+    private lazy var TrackerLabel: UILabel = {
+        let trackerLabel = UILabel()
+        trackerLabel.translatesAutoresizingMaskIntoConstraints = false
+        trackerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        trackerLabel.textColor = .ypBlack
+        trackerLabel.textAlignment = .left
+        trackerLabel.text = "Трекеры"
+        return trackerLabel
+    }()
+
+    private lazy var DatePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.datePickerMode = .date
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+        datePicker.backgroundColor = .ypBackground
+        datePicker.clipsToBounds = true
+        datePicker.layer.cornerRadius = 8
+        datePicker.timeZone = NSTimeZone.local
+        return datePicker
+    }()
+
+    private lazy var searchTextField: UITextField = {
+        let searchTextField = UITextField()
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchTextField.placeholder = "Поиск"
+        searchTextField.backgroundColor = .ypBackground
+        searchTextField.layer.cornerRadius = 10
+        searchTextField.clipsToBounds = true
+//        searchTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: searchTextField.frame.height))
+        searchTextField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        searchTextField.textColor = .ypBlack
+        searchTextField.leftViewMode = .always
+        searchTextField.clearButtonMode = .whileEditing
+        searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
+        searchTextField.delegate = self
+        return searchTextField
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setupView()
     }
 
+    private func setupView() {
+        view.backgroundColor = .ypWhite
+        setupNavigationBar()
+        addSubviews()
+        makeConstraints()
+    }
 
+    private func setupNavigationBar() {
+        guard let navigationController else {
+            return
+        }
+        navigationController.navigationBar.barTintColor = .ypBlack
+        navigationController.navigationBar.tintColor = .ypWhite
+        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.ypWhite]
+        navigationItem.title = "Трекеры"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"),
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(addTracker))
+    }
+
+    private func addSubviews() {
+        view.addSubview(TrackerLabel)
+        view.addSubview(DatePicker)
+        view.addSubview(searchTextField)
+    }
+
+    private func makeConstraints() {
+
+    }
+
+    @objc
+    private func addTracker() {
+//        let addTrackerViewController = AddTrackerViewController()
+//        navigationController?.pushViewController(addTrackerViewController, animated: true)
+    }
+
+    @objc
+    private func dateChanged() {
+    }
+
+    @objc
+    private func searchTextChanged() {
+    }
 }
 
+extension TrackersViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+        return true
+    }
+}
