@@ -13,15 +13,16 @@ final class TabBarViewController: UITabBarController {
 
     private func setupView() {
         view.backgroundColor = .ypWhite
-        selectedIndex = 0
         setupTabBar()
         viewControllers = getViewControllers()
+        selectedIndex = 0
     }
 
     private func setupTabBar() {
         tabBar.tintColor = .ypBlue
         tabBar.unselectedItemTintColor = .ypGray
-        tabBar.addSubview(getTopBorderView())
+        let borderView = getTopBorderView()
+        tabBar.addSubview(borderView)
     }
 
     private func getTopBorderView() -> UIView {
