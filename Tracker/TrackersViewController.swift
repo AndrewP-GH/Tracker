@@ -119,7 +119,6 @@ final class TrackersViewController: UIViewController {
                 [
                     plusImage.widthAnchor.constraint(equalToConstant: 42),
                     plusImage.heightAnchor.constraint(equalToConstant: 42),
-//                    plusImage.leadingAnchor.constraint(equalTo: navigationController!.navigationBar.leadingAnchor),
 
                     trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
                     trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
