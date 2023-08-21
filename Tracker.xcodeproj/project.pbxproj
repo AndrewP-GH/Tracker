@@ -17,6 +17,7 @@
 		1BAEE38C29F43005001601F9 /* TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38B29F43005001601F9 /* TrackerUITests.swift */; };
 		1BAEE38E29F43005001601F9 /* TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */; };
 		AE09A0F93FBB921311C2028C /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3D8ED5B4E3C5BB1D136 /* StatisticsViewController.swift */; };
+		AE09A43CCFEBCEDF8D62E2BB /* EmptyTrackersPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */; };
 		AE09A6AC7DC6D491DD438F45 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A646B069B67C073F8F0A /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AE09A3D8ED5B4E3C5BB1D136 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		AE09A646B069B67C073F8F0A /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrackersPlaceholderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				1BAEE37829F43005001601F9 /* Info.plist */,
 				AE09A646B069B67C073F8F0A /* TabBarViewController.swift */,
 				AE09A3D8ED5B4E3C5BB1D136 /* StatisticsViewController.swift */,
+				AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				1B3EDED02A0A85FC00F12717 /* UIColor+Extensions.swift in Sources */,
 				AE09A6AC7DC6D491DD438F45 /* TabBarViewController.swift in Sources */,
 				AE09A0F93FBB921311C2028C /* StatisticsViewController.swift in Sources */,
+				AE09A43CCFEBCEDF8D62E2BB /* EmptyTrackersPlaceholderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
