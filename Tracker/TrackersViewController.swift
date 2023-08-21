@@ -8,12 +8,18 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
+    private lazy var plusImage: UIImageView = {
+        let plusImage = UIImageView()
+        plusImage.translatesAutoresizingMaskIntoConstraints = false
+        plusImage.image = UIImage(named: "AddTracker")
+        plusImage.tintColor = .ypBlack
+        plusImage.contentMode = .scaleAspectFit
+        plusImage.backgroundColor = .clear
+        return plusImage
+    }()
+
     private lazy var plusButton: UIBarButtonItem = {
-        let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(addTracker))
-        plusButton.tintColor = .ypBlue
+        let plusButton = UIBarButtonItem(customView: plusImage)
         return plusButton
     }()
 
@@ -38,6 +44,11 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         return datePicker
+    }()
+
+    private lazy var datePickerButton: UIBarButtonItem = {
+        let datePickerButton = UIBarButtonItem(customView: datePicker)
+        return datePickerButton
     }()
 
     private lazy var searchTextField: UITextField = {
@@ -88,15 +99,12 @@ final class TrackersViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-//        guard let navigationController else {
-//            return
-//        }
-//        navigationController.navigationBar.barTintColor = .ypBlack
-//        navigationController.navigationBar.tintColor = .ypWhite
-//        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.ypWhite]
-
-        navigationItem.leftBarButtonItem = plusButton
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
+        guard let navBar = navigationController?.navigationBar,
+              let topItem = navBar.topItem else {
+            return
+        }
+        topItem.setLeftBarButton(plusButton, animated: false)
+        topItem.setRightBarButton(datePickerButton, animated: false)
     }
 
     private func addSubviews() {
@@ -109,25 +117,26 @@ final class TrackersViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-//                    datePicker.topAnchor.constraint(equalTo: view.bottomAnchor, constant: 6),
-//                    datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//
-            trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
-            trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    plusImage.widthAnchor.constraint(equalToConstant: 42),
+                    plusImage.heightAnchor.constraint(equalToConstant: 42),
+//                    plusImage.leadingAnchor.constraint(equalTo: navigationController!.navigationBar.leadingAnchor),
 
-            searchTextField.topAnchor.constraint(equalTo: trackerLabel.bottomAnchor, constant: 7),
-            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            searchTextField.heightAnchor.constraint(equalToConstant: 36),
+                    trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
+                    trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-            trackersTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
-            trackersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            trackersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            trackersTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+                    searchTextField.topAnchor.constraint(equalTo: trackerLabel.bottomAnchor, constant: 7),
+                    searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
-            emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ]
+                    trackersTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
+                    trackersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    trackersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    trackersTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+
+                    emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                ]
         )
     }
 

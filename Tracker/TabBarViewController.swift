@@ -35,13 +35,14 @@ final class TabBarViewController: UITabBarController {
 
     private func getViewControllers() -> [UIViewController] {
         let trackersViewController = TrackersViewController()
-        trackersViewController.tabBarItem = UITabBarItem(title: "Трекеры",
+        let navigationController = UINavigationController(rootViewController: trackersViewController)
+        navigationController.tabBarItem = UITabBarItem(title: "Трекеры",
                                                          image: UIImage(named: "Trackers"),
                                                          selectedImage: nil)
         let settingsViewController = StatisticsViewController()
         settingsViewController.tabBarItem = UITabBarItem(title: "Статистика",
                                                          image: UIImage(named: "Statistics"),
                                                          selectedImage: nil)
-        return [trackersViewController, settingsViewController]
+        return [navigationController, settingsViewController]
     }
 }
