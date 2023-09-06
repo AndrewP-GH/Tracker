@@ -43,6 +43,7 @@ final class TrackersViewController: UIViewController {
         datePicker.clipsToBounds = true
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
+        datePicker.locale = Locale.init(identifier: "ru_RU")
         return datePicker
     }()
 
