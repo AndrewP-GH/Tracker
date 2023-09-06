@@ -55,14 +55,21 @@ final class TrackersViewController: UIViewController {
     private lazy var searchTextField: UITextField = {
         let searchTextField = UITextField()
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 16))
+        let imageView = UIImageView(frame: CGRect(x: 8, y: 0, width: 16, height: 16))
+        imageView.image = UIImage(systemName: "magnifyingglass",
+                                           withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?
+                .withTintColor(.ypGray, renderingMode: .alwaysOriginal)
+        imageView.contentMode = .scaleAspectFit
+        iconContainer.addSubview(imageView)
+        searchTextField.leftViewMode = .always
+        searchTextField.leftView = iconContainer
         searchTextField.placeholder = "Поиск"
         searchTextField.backgroundColor = .ypBackground
         searchTextField.layer.cornerRadius = 10
         searchTextField.clipsToBounds = true
-//        searchTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: searchTextField.frame.height))
         searchTextField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         searchTextField.textColor = .ypBlack
-        searchTextField.leftViewMode = .always
         searchTextField.clearButtonMode = .whileEditing
         searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
         searchTextField.delegate = self
