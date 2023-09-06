@@ -58,13 +58,15 @@ final class TrackersViewController: UIViewController {
         let iconContainer = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 16))
         let imageView = UIImageView(frame: CGRect(x: 8, y: 0, width: 16, height: 16))
         imageView.image = UIImage(systemName: "magnifyingglass",
-                                           withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?
+                                  withConfiguration: UIImage.SymbolConfiguration(weight: .regular))?
                 .withTintColor(.ypGray, renderingMode: .alwaysOriginal)
         imageView.contentMode = .scaleAspectFit
         iconContainer.addSubview(imageView)
         searchTextField.leftViewMode = .always
         searchTextField.leftView = iconContainer
         searchTextField.placeholder = "Поиск"
+//        searchTextField.backgroundColor = UIColor(rgb: 0x7676801F, alpha: 0.12)
+//        searchTextField.backgroundColor = UIColor(red: 118 / 255.0, green: 118 / 255.0, blue: 128, alpha: 0.12)
         searchTextField.backgroundColor = .ypBackground
         searchTextField.layer.cornerRadius = 10
         searchTextField.clipsToBounds = true
