@@ -8,6 +8,11 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
+    var categories: [TrackerCategory] = []
+    var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
+    var currentDate: Date = Date()
+    var visibleCategories: [TrackerCategory] = []
+
     private lazy var plusImage: UIImageView = {
         let plusImage = UIImageView()
         plusImage.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +49,7 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
+        datePicker.date = currentDate
         return datePicker
     }()
 
@@ -65,8 +71,6 @@ final class TrackersViewController: UIViewController {
         searchTextField.leftViewMode = .always
         searchTextField.leftView = iconContainer
         searchTextField.placeholder = "Поиск"
-//        searchTextField.backgroundColor = UIColor(rgb: 0x7676801F, alpha: 0.12)
-//        searchTextField.backgroundColor = UIColor(red: 118 / 255.0, green: 118 / 255.0, blue: 128, alpha: 0.12)
         searchTextField.backgroundColor = .ypBackground
         searchTextField.layer.cornerRadius = 10
         searchTextField.clipsToBounds = true
@@ -157,6 +161,8 @@ final class TrackersViewController: UIViewController {
 
     @objc
     private func dateChanged() {
+        currentDate = datePicker.date
+        // TODO: в результате показываются только те трекеры, у которых в расписании выбран день, совпадающий с датой в currentDate;
     }
 
     @objc
