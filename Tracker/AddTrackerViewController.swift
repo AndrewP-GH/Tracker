@@ -14,6 +14,5 @@ class AddTrackerViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .ypWhite
-        title = "Создание теркера"
     }
 }

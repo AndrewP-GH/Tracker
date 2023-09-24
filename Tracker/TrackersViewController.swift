@@ -158,7 +158,7 @@ final class TrackersViewController: UIViewController {
     @objc
     private func addTracker() {
         let addTrackerViewController = AddTrackerViewController()
-        navigationController?.pushViewController(addTrackerViewController, animated: true)
+        present(addTrackerViewController, animated: true)
     }
 
     @objc
