@@ -17,6 +17,7 @@
 		1BAEE38C29F43005001601F9 /* TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38B29F43005001601F9 /* TrackerUITests.swift */; };
 		1BAEE38E29F43005001601F9 /* TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */; };
 		AE09A0F93FBB921311C2028C /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3D8ED5B4E3C5BB1D136 /* StatisticsViewController.swift */; };
+		AE09A3EF7DBC2261BAC9005C /* AddHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A92DEAB404B4BDE2814B /* AddHabitViewController.swift */; };
 		AE09A43CCFEBCEDF8D62E2BB /* EmptyTrackersPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */; };
 		AE09A5B9E214C1026264B495 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */; };
 		AE09A6AC7DC6D491DD438F45 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A646B069B67C073F8F0A /* TabBarViewController.swift */; };
@@ -62,6 +63,7 @@
 		AE09A3D8ED5B4E3C5BB1D136 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		AE09A646B069B67C073F8F0A /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrackersPlaceholderView.swift; sourceTree = "<group>"; };
+		AE09A92DEAB404B4BDE2814B /* AddHabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitViewController.swift; sourceTree = "<group>"; };
 		AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		AE09AB4275607F87ED4373BF /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AE09ABBE60025A9E751AA8B4 /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				AE09A758780071CDA7E81BC6 /* EmptyTrackersPlaceholderView.swift */,
 				AE09AB5FCCE960083A367F9A /* Models */,
 				AE09ABBE60025A9E751AA8B4 /* AddTrackerViewController.swift */,
+				AE09A92DEAB404B4BDE2814B /* AddHabitViewController.swift */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				AE09AA59E8697661198A9C3D /* Schedule.swift in Sources */,
 				AE09A6C3C6E8F00B3C8A00C2 /* WeekDay.swift in Sources */,
 				AE09AFDC9C8A68C26472D465 /* AddTrackerViewController.swift in Sources */,
+				AE09A3EF7DBC2261BAC9005C /* AddHabitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

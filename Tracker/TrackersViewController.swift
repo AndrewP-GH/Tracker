@@ -79,6 +79,7 @@ final class TrackersViewController: UIViewController {
         searchTextField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         searchTextField.textColor = .ypBlack
         searchTextField.clearButtonMode = .whileEditing
+        searchTextField.textAlignment = .left
         searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
         searchTextField.delegate = self
         return searchTextField

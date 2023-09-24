@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-class AddTrackerViewController: UIViewController {
+final class AddTrackerViewController: UIViewController {
     private lazy var header: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +69,8 @@ class AddTrackerViewController: UIViewController {
     }
 
     @objc private func addHabit() {
+        let vc = AddHabitViewController()
+        present(vc, animated: true)
     }
 
     @objc private func addEvent() {
