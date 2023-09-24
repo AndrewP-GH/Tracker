@@ -13,18 +13,20 @@ final class TrackersViewController: UIViewController {
     var currentDate: Date = Date()
     var visibleCategories: [TrackerCategory] = []
 
-    private lazy var plusImage: UIImageView = {
-        let plusImage = UIImageView()
+    private lazy var plusImageButton: UIButton = {
+        let plusImage = UIButton()
         plusImage.translatesAutoresizingMaskIntoConstraints = false
-        plusImage.image = UIImage(named: "AddTracker")
+        plusImage.setImage(UIImage(named: "AddTracker"), for: .normal)
         plusImage.tintColor = .ypBlack
         plusImage.contentMode = .scaleAspectFit
         plusImage.backgroundColor = .clear
+        plusImage.addTarget(self, action: #selector(addTracker), for: .touchUpInside)
         return plusImage
     }()
 
+
     private lazy var plusButton: UIBarButtonItem = {
-        let plusButton = UIBarButtonItem(customView: plusImage)
+        let plusButton = UIBarButtonItem(customView: plusImageButton)
         return plusButton
     }()
 
@@ -131,8 +133,8 @@ final class TrackersViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    plusImage.widthAnchor.constraint(equalToConstant: 42),
-                    plusImage.heightAnchor.constraint(equalToConstant: 42),
+                    plusImageButton.widthAnchor.constraint(equalToConstant: 42),
+                    plusImageButton.heightAnchor.constraint(equalToConstant: 42),
 
                     trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
                     trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -155,8 +157,8 @@ final class TrackersViewController: UIViewController {
 
     @objc
     private func addTracker() {
-//        let addTrackerViewController = AddTrackerViewController()
-//        navigationController?.pushViewController(addTrackerViewController, animated: true)
+        let addTrackerViewController = AddTrackerViewController()
+        navigationController?.pushViewController(addTrackerViewController, animated: true)
     }
 
     @objc
