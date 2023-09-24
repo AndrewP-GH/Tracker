@@ -42,20 +42,27 @@ class AddTrackerViewController: UIViewController {
     }
 
     private func setupConstraints() {
+        let sideInset: CGFloat = 20
         NSLayoutConstraint.activate(
                 [
                     header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 26),
-                    header.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-                    header.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+                    header.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
+                    header.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
 
-                    habit.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 180),
-                    habit.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                    habit.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+                    habit.topAnchor.constraint(equalTo: header.bottomAnchor, constant: 295),
+                    habit.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
+                    habit.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                     habit.heightAnchor.constraint(equalToConstant: 60),
 
                     event.topAnchor.constraint(equalTo: habit.bottomAnchor, constant: 16),
-                    event.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                    event.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+                    event.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
+                    event.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                     event.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
