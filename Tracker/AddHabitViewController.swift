@@ -54,6 +54,16 @@ final class AddHabitViewController: UIViewController {
         return configureTable
     }()
 
+    private lazy var emojiLabel: UILabel = {
+        let emojiLabel = UILabel()
+        emojiLabel.translatesAutoresizingMaskIntoConstraints = false
+        emojiLabel.text = "Emoji"
+        emojiLabel.font = .systemFont(ofSize: 19, weight: .bold)
+        emojiLabel.textColor = .ypBlack
+        emojiLabel.textAlignment = .left
+        return emojiLabel
+    }()
+
     private lazy var rowsSeparator: UIView = {
         let rowsSeparator = UIView()
         rowsSeparator.translatesAutoresizingMaskIntoConstraints = false
@@ -78,6 +88,7 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(nameTextField)
         view.addSubview(configureTable)
         view.addSubview(rowsSeparator)
+        view.addSubview(emojiLabel)
     }
 
     private func setupConstraints() {
@@ -110,6 +121,12 @@ final class AddHabitViewController: UIViewController {
                     rowsSeparator.trailingAnchor
                             .constraint(equalTo: configureTable.trailingAnchor, constant: -sideInset),
                     rowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
+
+                    emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
+                    emojiLabel.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
+                    emojiLabel.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
                 ]
         )
     }
