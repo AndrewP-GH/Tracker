@@ -50,6 +50,7 @@ final class AddHabitTableViewCell: UITableViewCell {
     private func setupView() {
         backgroundColor = .ypBackground
         selectionStyle = .none
+        isUserInteractionEnabled = true
         addSubviews()
         setupConstraints()
     }

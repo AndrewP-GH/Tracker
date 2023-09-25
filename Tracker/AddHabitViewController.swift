@@ -6,6 +6,9 @@ import Foundation
 import UIKit
 
 final class AddHabitViewController: UIViewController {
+    let cellHeight: CGFloat = 75
+    let tableRows: Int = 2
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,10 +47,18 @@ final class AddHabitViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-//        configureTable.register(AddHabitTableViewCell.self, forCellReuseIdentifier: AddHabitTableViewCell.identifier)
-//        configureTable.delegate = self
+        configureTable.register(AddHabitTableViewCell.self, forCellReuseIdentifier: AddHabitTableViewCell.identifier)
+        configureTable.delegate = self
         configureTable.dataSource = self
+        configureTable.layer.cornerRadius = 16
         return configureTable
+    }()
+
+    private lazy var rowsSeparator: UIView = {
+        let rowsSeparator = UIView()
+        rowsSeparator.translatesAutoresizingMaskIntoConstraints = false
+        rowsSeparator.backgroundColor = .ypGray
+        return rowsSeparator
     }()
 
 
@@ -66,6 +77,7 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(nameTextField)
         view.addSubview(configureTable)
+        view.addSubview(rowsSeparator)
     }
 
     private func setupConstraints() {
@@ -90,6 +102,14 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
                     configureTable.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
+                    configureTable.heightAnchor.constraint(equalToConstant: cellHeight * CGFloat(tableRows)),
+
+                    rowsSeparator.topAnchor.constraint(equalTo: configureTable.topAnchor, constant: cellHeight - 0.5),
+                    rowsSeparator.leadingAnchor
+                            .constraint(equalTo: configureTable.leadingAnchor, constant: sideInset),
+                    rowsSeparator.trailingAnchor
+                            .constraint(equalTo: configureTable.trailingAnchor, constant: -sideInset),
+                    rowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
                 ]
         )
     }
@@ -104,14 +124,42 @@ extension AddHabitViewController: UITextFieldDelegate {
 
 extension AddHabitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        tableRows
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AddHabitTableViewCell.identifier,
-                                                 for: indexPath) as! AddHabitTableViewCell
+        let cell = tableView.dequeueReusableCell(
+                withIdentifier: AddHabitTableViewCell.identifier,
+                for: indexPath) as? AddHabitTableViewCell ?? AddHabitTableViewCell()
+        switch indexPath.row {
+        case 0:
+            cell.titleLabel.text = "Категория"
+        case 1:
+            cell.titleLabel.text = "Расписание"
+        default:
+            break
+        }
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        cellHeight
+    }
+}
 
+extension AddHabitViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+//            let vc = CategoriesViewController()
+//            navigationController?.pushViewController(vc, animated: true)
+            break
+        case 1:
+//            let vc = ScheduleViewController()
+//            navigationController?.pushViewController(vc, animated: true)
+            break
+        default:
+            break
+        }
+    }
 }
