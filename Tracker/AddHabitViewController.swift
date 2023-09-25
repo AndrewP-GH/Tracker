@@ -37,6 +37,19 @@ final class AddHabitViewController: UIViewController {
         return textField
     }()
 
+    private lazy var configureTable: UITableView = {
+        let configureTable = UITableView()
+        configureTable.translatesAutoresizingMaskIntoConstraints = false
+        configureTable.backgroundColor = .ypBackground
+        configureTable.separatorStyle = .none
+        configureTable.showsVerticalScrollIndicator = false
+        configureTable.showsHorizontalScrollIndicator = false
+//        configureTable.register(AddHabitTableViewCell.self, forCellReuseIdentifier: AddHabitTableViewCell.identifier)
+//        configureTable.delegate = self
+        configureTable.dataSource = self
+        return configureTable
+    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +65,7 @@ final class AddHabitViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(titleLabel)
         view.addSubview(nameTextField)
+        view.addSubview(configureTable)
     }
 
     private func setupConstraints() {
@@ -70,6 +84,12 @@ final class AddHabitViewController: UIViewController {
                     nameTextField.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                     nameTextField.heightAnchor.constraint(equalToConstant: 75),
+
+                    configureTable.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
+                    configureTable.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
+                    configureTable.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                 ]
         )
     }
@@ -80,4 +100,18 @@ extension AddHabitViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+}
+
+extension AddHabitViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AddHabitTableViewCell.identifier,
+                                                 for: indexPath) as! AddHabitTableViewCell
+        return cell
+    }
+
+
 }
