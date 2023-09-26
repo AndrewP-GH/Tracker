@@ -10,17 +10,16 @@ final class AddHabitViewController: UIViewController {
     private let tableRows: Int = 2
     private let emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
-        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
-        "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
+//        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+//        "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
     ]
     private let colors = [
         UIColor.init(hex: "#FD4C49"), UIColor.init(hex: "#FF881E"), UIColor.init(hex: "#007BFA"),
         UIColor.init(hex: "#6E44FE"), UIColor.init(hex: "#33CF69"), UIColor.init(hex: "#E66DD4"),
-        UIColor.init(hex: "#F9D4D4"), UIColor.init(hex: "#34A7FE"), UIColor.init(hex: "#46E69D"),
-        UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
-        UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
-        UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
-
+//        UIColor.init(hex: "#F9D4D4"), UIColor.init(hex: "#34A7FE"), UIColor.init(hex: "#46E69D"),
+//        UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
+//        UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
+//        UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
     ]
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
@@ -135,6 +134,46 @@ final class AddHabitViewController: UIViewController {
         return collectionView
     }
 
+    private lazy var cancelButton: UIButton = {
+        let red = UIColor.ypRed
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitle("Отменить", for: .normal)
+        button.setTitleColor(red, for: .normal)
+        button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
+        button.layer.cornerRadius = 16
+        button.clipsToBounds = true
+        button.layer.borderWidth = 1
+        button.layer.borderColor = red.cgColor
+//        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .ypGray
+        button.setTitle("Создать", for: .normal)
+        button.setTitleColor(.ypWhite, for: .normal)
+        button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
+        button.layer.cornerRadius = 16
+        button.clipsToBounds = true
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.ypGray.cgColor
+//        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var buttonsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -162,6 +201,7 @@ final class AddHabitViewController: UIViewController {
         scrollView.addSubview(emojiCollectionView)
         scrollView.addSubview(colorLabel)
         scrollView.addSubview(colorCollectionView)
+        scrollView.addSubview(buttonsStackView)
     }
 
     private func setupConstraints() {
@@ -214,6 +254,12 @@ final class AddHabitViewController: UIViewController {
                     colorCollectionView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 18),
                     colorCollectionView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -18),
                     colorCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
+
+                    buttonsStackView.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 40),
+                    buttonsStackView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 20),
+                    buttonsStackView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
+                    buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
+
                 ]
         )
     }
