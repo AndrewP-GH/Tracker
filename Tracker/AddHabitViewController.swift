@@ -159,9 +159,7 @@ final class AddHabitViewController: UIViewController {
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
         button.clipsToBounds = true
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.ypGray.cgColor
-//        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
 
