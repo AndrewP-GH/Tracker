@@ -6,8 +6,10 @@ import Foundation
 import UIKit
 
 final class AddHabitViewController: UIViewController {
-    let cellHeight: CGFloat = 75
-    let tableRows: Int = 2
+    private let tableCellHeight: CGFloat = 75
+    private let tableRows: Int = 2
+    private let emojis = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓",
+            "🥇", "🎸", "🏝", "😪"]
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -59,9 +61,24 @@ final class AddHabitViewController: UIViewController {
         emojiLabel.translatesAutoresizingMaskIntoConstraints = false
         emojiLabel.text = "Emoji"
         emojiLabel.font = .systemFont(ofSize: 19, weight: .bold)
-        emojiLabel.textColor = .ypBlack
         emojiLabel.textAlignment = .left
+        emojiLabel.textColor = .ypBlack
         return emojiLabel
+    }()
+
+    private lazy var emojiCollectionView: UICollectionView = {
+        let emojiCollectionView = UICollectionView(frame: .zero,
+                                                   collectionViewLayout: UICollectionViewFlowLayout())
+        emojiCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        emojiCollectionView.backgroundColor = .clear
+        emojiCollectionView.showsVerticalScrollIndicator = false
+        emojiCollectionView.showsHorizontalScrollIndicator = false
+        emojiCollectionView.register(TrackerCustomizationViewCell.self,
+                                     forCellWithReuseIdentifier: TrackerCustomizationViewCell.identifier)
+        emojiCollectionView.delegate = self
+        emojiCollectionView.dataSource = self
+        emojiCollectionView.delegate = self
+        return emojiCollectionView
     }()
 
     private lazy var rowsSeparator: UIView = {
@@ -89,6 +106,7 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(configureTable)
         view.addSubview(rowsSeparator)
         view.addSubview(emojiLabel)
+        view.addSubview(emojiCollectionView)
     }
 
     private func setupConstraints() {
@@ -113,9 +131,10 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
                     configureTable.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
-                    configureTable.heightAnchor.constraint(equalToConstant: cellHeight * CGFloat(tableRows)),
+                    configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
-                    rowsSeparator.topAnchor.constraint(equalTo: configureTable.topAnchor, constant: cellHeight - 0.5),
+                    rowsSeparator.topAnchor
+                            .constraint(equalTo: configureTable.topAnchor, constant: tableCellHeight - 0.5),
                     rowsSeparator.leadingAnchor
                             .constraint(equalTo: configureTable.leadingAnchor, constant: sideInset),
                     rowsSeparator.trailingAnchor
@@ -127,6 +146,13 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
                     emojiLabel.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
+                    emojiCollectionView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 24),
+                    emojiCollectionView.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
+                    emojiCollectionView.trailingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18),
+                    emojiCollectionView.bottomAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
                 ]
         )
     }
@@ -160,7 +186,7 @@ extension AddHabitViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight
+        tableCellHeight
     }
 }
 
@@ -178,5 +204,68 @@ extension AddHabitViewController: UITableViewDelegate {
         default:
             break
         }
+    }
+}
+
+
+extension AddHabitViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        emojis.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCustomizationViewCell.identifier,
+                                                      for: indexPath) as! TrackerCustomizationViewCell
+        cell.titleLabel.text = emojis[indexPath.row]
+        return cell
+    }
+}
+
+extension AddHabitViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+}
+
+extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
+    fileprivate var sectionInsets: UIEdgeInsets {
+        .zero
+    }
+
+    fileprivate var itemsPerRow: CGFloat {
+        6
+    }
+
+    fileprivate var interitemSpace: CGFloat {
+        5.0
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let sectionPadding = sectionInsets.left * (itemsPerRow + 1)
+        let interitemPadding = max(0.0, itemsPerRow - 1) * interitemSpace
+        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
+        let widthPerItem = availableWidth / itemsPerRow
+
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            insetForSectionAt section: Int) -> UIEdgeInsets {
+        sectionInsets
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        0.0
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        interitemSpace
     }
 }
