@@ -16,12 +16,40 @@ extension UIColor {
     static var ypRed: UIColor { UIColor(named: "YP Red")! }
     static var ypWhite: UIColor { UIColor(named: "YP White")! }
 
-    convenience init(rgb: Int, alpha: CGFloat = 1.0) {
-        self.init(
-                red: CGFloat((rgb >> 16) & 0xFF) / 255.0,
-                green: CGFloat((rgb >> 8) & 0xFF) / 255.0,
-                blue: CGFloat(rgb & 0xFF) / 255.0,
-                alpha: alpha
-        )
+    public convenience init?(hex: String) {
+        var hexColor: String
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            hexColor = String(hex[start...])
+        } else {
+            hexColor = hex
+        }
+        let r, g, b, a: CGFloat
+        if hexColor.count == 6 {
+            let scanner = Scanner(string: hexColor)
+            var hexNumber: UInt64 = 0
+            if scanner.scanHexInt64(&hexNumber) {
+                r = CGFloat((hexNumber >> 16) & 0xFF) / 255
+                g = CGFloat((hexNumber >> 8) & 0xFF) / 255
+                b = CGFloat(hexNumber & 0xFF) / 255
+                a = 1
+                self.init(red: r, green: g, blue: b, alpha: a)
+                return
+            }
+        }
+        if hexColor.count == 8 {
+            let scanner = Scanner(string: hexColor)
+            var hexNumber: UInt64 = 0
+            if scanner.scanHexInt64(&hexNumber) {
+                r = CGFloat((hexNumber >> 24) & 0xFF) / 255
+                g = CGFloat((hexNumber >> 16) & 0xFF) / 255
+                b = CGFloat((hexNumber >> 8) & 0xFF) / 255
+                a = CGFloat(hexNumber & 0xFF) / 255
+                self.init(red: r, green: g, blue: b, alpha: a)
+                return
+            }
+        }
+        return nil
     }
+
 }
