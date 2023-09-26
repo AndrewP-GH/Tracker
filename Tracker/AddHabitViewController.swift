@@ -63,14 +63,22 @@ final class AddHabitViewController: UIViewController {
     }()
 
     private lazy var emojiLabel: UILabel = {
-        let emojiLabel = UILabel()
-        emojiLabel.translatesAutoresizingMaskIntoConstraints = false
-        emojiLabel.text = "Emoji"
-        emojiLabel.font = .systemFont(ofSize: 19, weight: .bold)
-        emojiLabel.textAlignment = .left
-        emojiLabel.textColor = .ypBlack
-        return emojiLabel
+        createCollectionLabel(title: "Emoji")
     }()
+
+    private lazy var colorLabel: UILabel = {
+        createCollectionLabel(title: "Color")
+    }()
+
+    private func createCollectionLabel(title: String) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = title
+        label.font = .systemFont(ofSize: 19, weight: .bold)
+        label.textAlignment = .left
+        label.textColor = .ypBlack
+        return label
+    }
 
     private lazy var emojiCollectionView: UICollectionView = {
         let emojiCollectionView = UICollectionView(frame: .zero,
@@ -113,6 +121,7 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(rowsSeparator)
         view.addSubview(emojiLabel)
         view.addSubview(emojiCollectionView)
+        view.addSubview(colorLabel)
     }
 
     private func setupConstraints() {
@@ -160,7 +169,15 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18),
                     emojiCollectionView.heightAnchor
                             .constraint(equalToConstant: collectionCellSize.height *
-                                    (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up))
+                                    (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)),
+
+                    colorLabel.topAnchor.constraint(equalTo: emojiCollectionView.bottomAnchor, constant: 40),
+                    colorLabel.leadingAnchor
+                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
+                    
+                    colorLabel.trailingAnchor
+                            .constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -28),
+                    
                 ]
         )
     }
