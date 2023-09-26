@@ -8,8 +8,14 @@ import UIKit
 final class AddHabitViewController: UIViewController {
     private let tableCellHeight: CGFloat = 75
     private let tableRows: Int = 2
-    private let emojis = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓",
-            "🥇", "🎸", "🏝", "😪"]
+    private let emojis = [
+        "🙂", "😻", "🌺", "🐶", "❤️", "😱",
+        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
+    ]
+    private let collectionItemsPerRow: CGFloat = 6
+    private let collectionCellSize = CGSize(width: 52, height: 52)
+
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -146,13 +152,15 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
                     emojiLabel.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -28),
+
                     emojiCollectionView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 24),
                     emojiCollectionView.leadingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18),
                     emojiCollectionView.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18),
-                    emojiCollectionView.bottomAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+                    emojiCollectionView.heightAnchor
+                            .constraint(equalToConstant: collectionCellSize.height *
+                                    (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up))
                 ]
         )
     }
@@ -227,27 +235,12 @@ extension AddHabitViewController: UICollectionViewDelegate {
 }
 
 extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
-    fileprivate var sectionInsets: UIEdgeInsets {
-        .zero
-    }
-
-    fileprivate var itemsPerRow: CGFloat {
-        6
-    }
-
-    fileprivate var interitemSpace: CGFloat {
-        5.0
-    }
+    fileprivate var sectionInsets: UIEdgeInsets { .zero }
 
     func collectionView(_ collectionView: UICollectionView,
             layout collectionViewLayout: UICollectionViewLayout,
             sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let sectionPadding = sectionInsets.left * (itemsPerRow + 1)
-        let interitemPadding = max(0.0, itemsPerRow - 1) * interitemSpace
-        let availableWidth = collectionView.bounds.width - sectionPadding - interitemPadding
-        let widthPerItem = availableWidth / itemsPerRow
-
-        return CGSize(width: widthPerItem, height: widthPerItem)
+        collectionCellSize
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -266,6 +259,17 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
             _ collectionView: UICollectionView,
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        interitemSpace
+        let paddingsCount = collectionItemsPerRow - 1
+        if paddingsCount <= 0 {
+            return 0.0
+        }
+        let sectionPadding = (sectionInsets.left + sectionInsets.right) * collectionItemsPerRow
+        let itemsWidth = collectionCellSize.width * collectionItemsPerRow
+        let paddingSumWidth = collectionView.bounds.width - sectionPadding - itemsWidth
+        if paddingSumWidth <= 0 {
+            return 0.0
+        }
+        let padding = paddingSumWidth / paddingsCount
+        return padding.rounded(.towardZero)
     }
 }
