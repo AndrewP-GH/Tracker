@@ -265,11 +265,11 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
         }
         let sectionPadding = (sectionInsets.left + sectionInsets.right) * collectionItemsPerRow
         let itemsWidth = collectionCellSize.width * collectionItemsPerRow
-        let paddingSumWidth = collectionView.bounds.width - sectionPadding - itemsWidth
-        if paddingSumWidth <= 0 {
+        let paddingsWidth = collectionView.bounds.width - sectionPadding - itemsWidth
+        if paddingsWidth <= 0 {
             return 0.0
         }
-        let padding = paddingSumWidth / paddingsCount
+        let padding = paddingsWidth / paddingsCount
         return padding.rounded(.towardZero)
     }
 }
