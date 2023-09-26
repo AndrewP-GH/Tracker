@@ -70,6 +70,8 @@ final class AddHabitViewController: UIViewController {
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = 16
+        configureTable.clipsToBounds = true
+        configureTable.isScrollEnabled = false
         return configureTable
     }()
 
