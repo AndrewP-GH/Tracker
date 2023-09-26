@@ -16,7 +16,6 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -62,6 +61,13 @@ final class AddHabitViewController: UIViewController {
         return configureTable
     }()
 
+    private lazy var configureTableRowsSeparator: UIView = {
+        let rowsSeparator = UIView()
+        rowsSeparator.translatesAutoresizingMaskIntoConstraints = false
+        rowsSeparator.backgroundColor = .ypGray
+        return rowsSeparator
+    }()
+
     private lazy var emojiLabel: UILabel = {
         createCollectionLabel(title: "Emoji")
     }()
@@ -95,13 +101,6 @@ final class AddHabitViewController: UIViewController {
         return emojiCollectionView
     }()
 
-    private lazy var rowsSeparator: UIView = {
-        let rowsSeparator = UIView()
-        rowsSeparator.translatesAutoresizingMaskIntoConstraints = false
-        rowsSeparator.backgroundColor = .ypGray
-        return rowsSeparator
-    }()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,7 +117,7 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(nameTextField)
         view.addSubview(configureTable)
-        view.addSubview(rowsSeparator)
+        view.addSubview(configureTableRowsSeparator)
         view.addSubview(emojiLabel)
         view.addSubview(emojiCollectionView)
         view.addSubview(colorLabel)
@@ -148,13 +147,13 @@ final class AddHabitViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                     configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
-                    rowsSeparator.topAnchor
+                    configureTableRowsSeparator.topAnchor
                             .constraint(equalTo: configureTable.topAnchor, constant: tableCellHeight - 0.5),
-                    rowsSeparator.leadingAnchor
+                    configureTableRowsSeparator.leadingAnchor
                             .constraint(equalTo: configureTable.leadingAnchor, constant: sideInset),
-                    rowsSeparator.trailingAnchor
+                    configureTableRowsSeparator.trailingAnchor
                             .constraint(equalTo: configureTable.trailingAnchor, constant: -sideInset),
-                    rowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
+                    configureTableRowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
 
                     emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
                     emojiLabel.leadingAnchor
@@ -174,10 +173,10 @@ final class AddHabitViewController: UIViewController {
                     colorLabel.topAnchor.constraint(equalTo: emojiCollectionView.bottomAnchor, constant: 40),
                     colorLabel.leadingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28),
-                    
+
                     colorLabel.trailingAnchor
                             .constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -28),
-                    
+
                 ]
         )
     }
