@@ -24,6 +24,10 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
+    private var collectionViewHeight: CGFloat {
+        collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
+    }
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -122,19 +126,6 @@ final class AddHabitViewController: UIViewController {
         setupView()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let layout = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate(
-                [
-                    scrollView.topAnchor.constraint(equalTo: layout.topAnchor),
-                    scrollView.leadingAnchor.constraint(equalTo: layout.leadingAnchor),
-                    scrollView.trailingAnchor.constraint(equalTo: layout.trailingAnchor),
-                    scrollView.bottomAnchor.constraint(equalTo: layout.bottomAnchor),
-                ]
-        )
-    }
-
     private func setupView() {
         view.backgroundColor = .ypWhite
         addSubviews()
@@ -149,11 +140,12 @@ final class AddHabitViewController: UIViewController {
         view.addSubview(emojiLabel)
         view.addSubview(emojiCollectionView)
         view.addSubview(colorLabel)
+        view.addSubview(colorCollectionView)
     }
 
     private func setupConstraints() {
         let sideInset: CGFloat = 16
-        let layout = scrollView.safeAreaLayoutGuide
+        let layout = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     titleLabel.topAnchor.constraint(equalTo: layout.topAnchor, constant: 26),
