@@ -11,7 +11,7 @@ final class AddHabitViewController: UIViewController {
     private let emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
-        "🥦", "🏓", "🥇", "🎸", "🏝", "😪"
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
     ]
     private let colors = [
         UIColor.init(hex: "#FD4C49"), UIColor.init(hex: "#FF881E"), UIColor.init(hex: "#007BFA"),
@@ -20,6 +20,7 @@ final class AddHabitViewController: UIViewController {
         UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
         UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
         UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
+
     ]
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
@@ -27,6 +28,17 @@ final class AddHabitViewController: UIViewController {
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
     }
+
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .clear
+        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isUserInteractionEnabled = true
+        scrollView.contentMode = .scaleAspectFit
+        return scrollView
+    }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -128,6 +140,12 @@ final class AddHabitViewController: UIViewController {
         setupView()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        scrollView.contentSize = CGSize(width: view.frame.size.width,
+                                        height: view.frame.size.height + 1200)
+    }
+
     private func setupView() {
         view.backgroundColor = .ypWhite
         addSubviews()
@@ -135,21 +153,27 @@ final class AddHabitViewController: UIViewController {
     }
 
     private func addSubviews() {
-        view.addSubview(titleLabel)
-        view.addSubview(nameTextField)
-        view.addSubview(configureTable)
-        view.addSubview(configureTableRowsSeparator)
-        view.addSubview(emojiLabel)
-        view.addSubview(emojiCollectionView)
-        view.addSubview(colorLabel)
-        view.addSubview(colorCollectionView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(titleLabel)
+        scrollView.addSubview(nameTextField)
+        scrollView.addSubview(configureTable)
+        scrollView.addSubview(configureTableRowsSeparator)
+        scrollView.addSubview(emojiLabel)
+        scrollView.addSubview(emojiCollectionView)
+        scrollView.addSubview(colorLabel)
+        scrollView.addSubview(colorCollectionView)
     }
 
     private func setupConstraints() {
         let sideInset: CGFloat = 16
-        let layout = view.safeAreaLayoutGuide
+        let layout = scrollView.safeAreaLayoutGuide
         NSLayoutConstraint.activate(
                 [
+                    scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+                    scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                    scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
                     titleLabel.topAnchor.constraint(equalTo: layout.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: sideInset),
                     titleLabel.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -sideInset),
@@ -233,6 +257,7 @@ extension AddHabitViewController: UITableViewDelegate {
         case 0:
 //            let vc = CategoriesViewController()
 //            navigationController?.pushViewController(vc, animated: true)
+
             break
         case 1:
 //            let vc = ScheduleViewController()
