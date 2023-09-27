@@ -184,8 +184,8 @@ final class AddHabitViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        scrollView.contentSize = CGSize(width: view.frame.size.width,
-                                        height: view.frame.size.height + 1200)
+        let totalContentHeight = contentView.frame.size.height + 20
+        scrollView.contentSize = CGSize(width: view.frame.size.width, height: totalContentHeight)
     }
 
     private func setupView() {
