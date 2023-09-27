@@ -8,7 +8,7 @@ import UIKit
 final class AddHabitTableViewCell: UITableViewCell {
     static let identifier = "AddHabitTableViewCell"
 
-    let titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .regular)
@@ -18,7 +18,7 @@ final class AddHabitTableViewCell: UITableViewCell {
         return label
     }()
 
-    let subtitleLabel: UILabel = {
+    lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .regular)
@@ -28,7 +28,7 @@ final class AddHabitTableViewCell: UITableViewCell {
         return label
     }()
 
-    let arrowImageView: UIImageView = {
+    lazy var arrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "CellArrow")
@@ -69,7 +69,6 @@ final class AddHabitTableViewCell: UITableViewCell {
                     arrowImageView.widthAnchor.constraint(equalToConstant: 24),
                     arrowImageView.heightAnchor.constraint(equalToConstant: 24),
 
-//                    titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
                     titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
                     titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -16),
                     titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
