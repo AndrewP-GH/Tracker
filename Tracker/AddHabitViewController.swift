@@ -151,7 +151,7 @@ final class AddHabitViewController: UIViewController {
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1
         button.layer.borderColor = red.cgColor
-//        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -267,6 +267,10 @@ final class AddHabitViewController: UIViewController {
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
+    }
+
+    @objc private func cancelButtonTapped() {
+        dismiss(animated: true)
     }
 }
 
