@@ -10,16 +10,16 @@ final class AddHabitViewController: UIViewController {
     private let tableRows: Int = 2
     private let emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
-//        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
-//        "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
+        "😇", "😡", "🥶", "🤔", "🙌", "🍔",
+        "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
     ]
     private let colors = [
         UIColor.init(hex: "#FD4C49"), UIColor.init(hex: "#FF881E"), UIColor.init(hex: "#007BFA"),
         UIColor.init(hex: "#6E44FE"), UIColor.init(hex: "#33CF69"), UIColor.init(hex: "#E66DD4"),
-//        UIColor.init(hex: "#F9D4D4"), UIColor.init(hex: "#34A7FE"), UIColor.init(hex: "#46E69D"),
-//        UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
-//        UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
-//        UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
+        UIColor.init(hex: "#F9D4D4"), UIColor.init(hex: "#34A7FE"), UIColor.init(hex: "#46E69D"),
+        UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
+        UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
+        UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
     ]
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
@@ -34,9 +34,14 @@ final class AddHabitViewController: UIViewController {
         scrollView.backgroundColor = .clear
         scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isUserInteractionEnabled = true
-        scrollView.contentMode = .scaleAspectFit
         return scrollView
+    }()
+
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .clear
+        return contentView
     }()
 
     private lazy var titleLabel: UILabel = {
@@ -191,39 +196,45 @@ final class AddHabitViewController: UIViewController {
 
     private func addSubviews() {
         view.addSubview(scrollView)
-        scrollView.addSubview(titleLabel)
-        scrollView.addSubview(nameTextField)
-        scrollView.addSubview(configureTable)
-        scrollView.addSubview(configureTableRowsSeparator)
-        scrollView.addSubview(emojiLabel)
-        scrollView.addSubview(emojiCollectionView)
-        scrollView.addSubview(colorLabel)
-        scrollView.addSubview(colorCollectionView)
-        scrollView.addSubview(buttonsStackView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(nameTextField)
+        contentView.addSubview(configureTable)
+        contentView.addSubview(configureTableRowsSeparator)
+        contentView.addSubview(emojiLabel)
+        contentView.addSubview(emojiCollectionView)
+        contentView.addSubview(colorLabel)
+        contentView.addSubview(colorCollectionView)
+        contentView.addSubview(buttonsStackView)
     }
 
     private func setupConstraints() {
         let sideInset: CGFloat = 16
-        let layout = scrollView.safeAreaLayoutGuide
+        let safeG = view.safeAreaLayoutGuide
+        let contentG = scrollView.safeAreaLayoutGuide
         NSLayoutConstraint.activate(
                 [
-                    scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-                    scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                    scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                    scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
+                    scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor),
+                    scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
+                    scrollView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
 
-                    titleLabel.topAnchor.constraint(equalTo: layout.topAnchor, constant: 26),
-                    titleLabel.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: sideInset),
-                    titleLabel.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -sideInset),
+                    contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
+                    contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
+                    contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+
+                    titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
+                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
+                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
 
                     nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
-                    nameTextField.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: sideInset),
-                    nameTextField.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -sideInset),
+                    nameTextField.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
+                    nameTextField.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
                     nameTextField.heightAnchor.constraint(equalToConstant: 75),
 
                     configureTable.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
-                    configureTable.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: sideInset),
-                    configureTable.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -sideInset),
+                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
+                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
                     configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
                     configureTableRowsSeparator.topAnchor
@@ -235,28 +246,30 @@ final class AddHabitViewController: UIViewController {
                     configureTableRowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
 
                     emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
-                    emojiLabel.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 28),
-                    emojiLabel.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -28),
+                    emojiLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
+                    emojiLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -28),
 
                     emojiCollectionView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 24),
-                    emojiCollectionView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 18),
-                    emojiCollectionView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -18),
+                    emojiCollectionView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 18),
+                    emojiCollectionView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -18),
                     emojiCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
                     colorLabel.topAnchor.constraint(equalTo: emojiCollectionView.bottomAnchor, constant: 40),
-                    colorLabel.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 28),
+                    colorLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
                     colorLabel.trailingAnchor
                             .constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -28),
 
                     colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 24),
-                    colorCollectionView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 18),
-                    colorCollectionView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -18),
+                    colorCollectionView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 18),
+                    colorCollectionView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -18),
                     colorCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
                     buttonsStackView.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 40),
-                    buttonsStackView.leadingAnchor.constraint(equalTo: layout.leadingAnchor, constant: 20),
-                    buttonsStackView.trailingAnchor.constraint(equalTo: layout.trailingAnchor, constant: -20),
+                    buttonsStackView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 20),
+                    buttonsStackView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -20),
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
+
+                    contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
 
                 ]
         )
