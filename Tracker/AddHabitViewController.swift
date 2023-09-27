@@ -182,12 +182,6 @@ final class AddHabitViewController: UIViewController {
         setupView()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        let totalContentHeight = contentView.frame.size.height + 20
-        scrollView.contentSize = CGSize(width: view.frame.size.width, height: totalContentHeight)
-    }
-
     private func setupView() {
         view.backgroundColor = .ypWhite
         addSubviews()
@@ -211,7 +205,7 @@ final class AddHabitViewController: UIViewController {
     private func setupConstraints() {
         let sideInset: CGFloat = 16
         let safeG = view.safeAreaLayoutGuide
-        let contentG = scrollView.safeAreaLayoutGuide
+        let contentG = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
@@ -222,6 +216,8 @@ final class AddHabitViewController: UIViewController {
                     contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    contentView.bottomAnchor.constraint(equalTo: contentG.bottomAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
