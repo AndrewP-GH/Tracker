@@ -63,7 +63,7 @@ final class AddHabitViewController: UIViewController {
         textField.textAlignment = .left
         textField.backgroundColor = .ypBackground
         textField.layer.cornerRadius = 16
-        textField.clipsToBounds = true
+        textField.layer.masksToBounds = true
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
         textField.delegate = self
@@ -86,7 +86,7 @@ final class AddHabitViewController: UIViewController {
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = 16
-        configureTable.clipsToBounds = true
+        configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
         return configureTable
     }()
@@ -148,7 +148,7 @@ final class AddHabitViewController: UIViewController {
         button.setTitleColor(red, for: .normal)
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
-        button.clipsToBounds = true
+        button.layer.masksToBounds = true
         button.layer.borderWidth = 1
         button.layer.borderColor = red.cgColor
 //        button.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
@@ -163,7 +163,7 @@ final class AddHabitViewController: UIViewController {
         button.setTitleColor(.ypWhite, for: .normal)
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
-        button.clipsToBounds = true
+        button.layer.masksToBounds = true
 //        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()

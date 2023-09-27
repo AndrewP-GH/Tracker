@@ -21,7 +21,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
-        view.clipsToBounds = true
+        view.layer.masksToBounds = true
         view.backgroundColor = .clear
         return view
     }()

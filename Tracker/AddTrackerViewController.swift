@@ -84,7 +84,7 @@ final class AddTrackerViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.backgroundColor = .ypBlack
         button.layer.cornerRadius = 16
-        button.clipsToBounds = true
+        button.layer.masksToBounds = true
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }

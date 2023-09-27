@@ -47,7 +47,7 @@ final class TrackersViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .compact
         datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
         datePicker.backgroundColor = .ypBackground
-        datePicker.clipsToBounds = true
+        datePicker.layer.masksToBounds = true
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
@@ -75,7 +75,7 @@ final class TrackersViewController: UIViewController {
         searchTextField.placeholder = "Поиск"
         searchTextField.backgroundColor = .ypBackground
         searchTextField.layer.cornerRadius = 10
-        searchTextField.clipsToBounds = true
+        searchTextField.layer.masksToBounds = true
         searchTextField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         searchTextField.textColor = .ypBlack
         searchTextField.clearButtonMode = .whileEditing
