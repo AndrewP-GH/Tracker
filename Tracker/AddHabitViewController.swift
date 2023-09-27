@@ -32,7 +32,7 @@ final class AddHabitViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .clear
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
@@ -218,6 +218,7 @@ final class AddHabitViewController: UIViewController {
                     contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
                     contentView.bottomAnchor.constraint(equalTo: contentG.bottomAnchor),
                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                    contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
@@ -264,9 +265,6 @@ final class AddHabitViewController: UIViewController {
                     buttonsStackView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 20),
                     buttonsStackView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -20),
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
-
-                    contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
-
                 ]
         )
     }
