@@ -44,8 +44,9 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func setTitle(_ title: String) {
+    func set(title: String, withSeparator: Bool) {
         titleLabel.text = title
+        self.withSeparator = withSeparator
     }
 
     private func setupView() {

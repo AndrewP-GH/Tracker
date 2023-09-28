@@ -93,7 +93,9 @@ final class ScheduleViewController: UIViewController {
 
     @objc private func save() {
         configureTable.visibleCells.forEach { cell in
-            guard let cell = cell as? WeekDayTableViewCell else { return }
+            guard let cell = cell as? WeekDayTableViewCell else {
+                return
+            }
             print(cell.isEnabled)
         }
         dismiss(animated: true)
@@ -110,8 +112,8 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
                                                  for: indexPath) as! WeekDayTableViewCell
-        cell.setTitle(WeekDay.allCases[indexPath.row].rawValue)
-        cell.withSeparator = indexPath.row != WeekDay.allCases.count - 1
+        cell.set(title: WeekDay.allCases[indexPath.row].rawValue,
+                 withSeparator: indexPath.row != WeekDay.allCases.count - 1)
         return cell
     }
 

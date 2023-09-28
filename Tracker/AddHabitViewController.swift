@@ -277,11 +277,9 @@ extension AddHabitViewController: UITableViewDataSource {
                 for: indexPath) as! AddHabitTableViewCell
         switch indexPath.row {
         case 0:
-            cell.titleLabel.text = "Категория"
-            cell.withSeparator = true
+            cell.set(title: "Категория", withSeparator: true)
         case 1:
-            cell.titleLabel.text = "Расписание"
-            cell.withSeparator = false
+            cell.set(title: "Расписание", withSeparator: false)
         default:
             break
         }
@@ -329,9 +327,9 @@ extension AddHabitViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! TrackerCustomizationViewCell
         switch collectionView {
         case emojiCollectionView:
-            cell.setTitle(emojis[indexPath.row])
+            cell.value = .emoji(emojis[indexPath.row])
         case colorCollectionView:
-            cell.setColor(colors[indexPath.row])
+            cell.value = .color(colors[indexPath.row])
         default:
             break
         }

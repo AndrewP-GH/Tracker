@@ -8,6 +8,12 @@ import UIKit
 final class TrackerCustomizationViewCell: UICollectionViewCell {
     static let identifier = "TrackerCustomizationViewCell"
 
+    enum CustomizationCellValue {
+        case none
+        case color(UIColor?)
+        case emoji(String)
+    }
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,11 +32,24 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         return view
     }()
 
-    func setTitle(_ title: String) {
+    private func setTitle(_ title: String) {
         titleLabel.text = title
     }
 
-    func setColor(_ color: UIColor?) {
+    var value: CustomizationCellValue = .none {
+        didSet {
+            switch value {
+            case .none:
+                break
+            case .color(let color):
+                setColor(color)
+            case .emoji(let title):
+                setTitle(title)
+            }
+        }
+    }
+
+    private func setColor(_ color: UIColor?) {
         colorView.backgroundColor = color
     }
 
@@ -68,5 +87,6 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
                 ]
         )
     }
-
 }
+
+

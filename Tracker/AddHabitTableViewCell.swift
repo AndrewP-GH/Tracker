@@ -8,7 +8,7 @@ import UIKit
 final class AddHabitTableViewCell: GreyTableViewCell {
     static let identifier = "AddHabitTableViewCell"
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .regular)
@@ -18,7 +18,7 @@ final class AddHabitTableViewCell: GreyTableViewCell {
         return label
     }()
 
-    lazy var subtitleLabel: UILabel = {
+    private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .regular)
@@ -28,7 +28,7 @@ final class AddHabitTableViewCell: GreyTableViewCell {
         return label
     }()
 
-    lazy var arrowImageView: UIImageView = {
+    private lazy var arrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "CellArrow")
@@ -45,6 +45,17 @@ final class AddHabitTableViewCell: GreyTableViewCell {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
+    }
+
+    func set(title: String, withSeparator: Bool) {
+        titleLabel.text = title
+        self.withSeparator = withSeparator
+    }
+
+    func set(title: String, subtitle: String, withSeparator: Bool) {
+        titleLabel.text = title
+        subtitleLabel.text = subtitle
+        self.withSeparator = withSeparator
     }
 
     private func setupView() {
