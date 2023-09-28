@@ -283,7 +283,7 @@ extension AddHabitViewController: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        if textField.text?.isEmpty ?? true {
+        if textField.text?.isEmpty ?? true && schedule.isEmpty {
             disableButton(saveButton)
         } else {
             enableButton(saveButton)
