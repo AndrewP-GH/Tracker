@@ -10,7 +10,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
 
     enum CustomizationCellValue {
         case none
-        case color(UIColor?)
+        case color(UIColor)
         case emoji(String)
     }
 
@@ -32,7 +32,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         return view
     }()
 
-    private func setTitle(_ title: String) {
+    private func setTitle(_ title: String?) {
         titleLabel.text = title
     }
 
@@ -41,7 +41,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
             switch value {
             case .none:
                 setColor(nil)
-                setTitle("")
+                setTitle(nil)
             case .color(let color):
                 setColor(color)
             case .emoji(let title):

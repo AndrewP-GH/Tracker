@@ -70,6 +70,7 @@ final class AddTrackerViewController: UIViewController {
 
     @objc private func addHabit() {
         let vc = AddHabitViewController()
+        vc.delegate = self
         present(vc, animated: true)
     }
 
@@ -87,5 +88,12 @@ final class AddTrackerViewController: UIViewController {
         button.layer.masksToBounds = true
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
+    }
+}
+
+extension AddTrackerViewController: AddTrackerViewControllerDelegate {
+    func addTrackerViewController(tracker: Tracker) {
+        print(tracker)
+        dismiss(animated: false)
     }
 }

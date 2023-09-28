@@ -16,7 +16,7 @@ extension UIColor {
     static var ypRed: UIColor { UIColor(named: "YP Red")! }
     static var ypWhite: UIColor { UIColor(named: "YP White")! }
 
-    public convenience init?(hex: String) {
+    public convenience init(hex: String) {
         var hexColor: String
         if hex.hasPrefix("#") {
             let start = hex.index(hex.startIndex, offsetBy: 1)
@@ -49,7 +49,7 @@ extension UIColor {
                 return
             }
         }
-        return nil
+        self.init(red: 0, green: 0, blue: 0, alpha: 0) // TODO: maybe throw an error?
     }
 
 }

@@ -6,6 +6,8 @@ import Foundation
 import UIKit
 
 final class AddHabitViewController: UIViewController {
+    weak var delegate: AddTrackerViewControllerDelegate?
+
     private let tableCellHeight: CGFloat = 75
     private let tableRows: Int = 2
     private let emojis = [
@@ -24,7 +26,7 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
-    private var schedule: [WeekDay] = []
+    private var selectedDays: [WeekDay] = []
 
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
@@ -272,6 +274,13 @@ final class AddHabitViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
+        delegate?.addTrackerViewController(tracker: Tracker(
+                id: UUID(),
+                name: nameTextField.text!,
+                color: colors[0],
+                emoji: emojis[0],
+                schedule: Schedule(days: selectedDays))
+        )
         dismiss(animated: true)
     }
 }
@@ -283,7 +292,11 @@ extension AddHabitViewController: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        if textField.text?.isEmpty ?? true && schedule.isEmpty {
+        UpdateSaveButtonState(textField: textField)
+    }
+
+    private func UpdateSaveButtonState(textField: UITextField) {
+        if (textField.text?.isEmpty ?? true) || selectedDays.isEmpty {
             disableButton(saveButton)
         } else {
             enableButton(saveButton)
@@ -409,6 +422,7 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 
 extension AddHabitViewController: AddHabitViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
-        self.schedule = schedule
+        selectedDays = schedule
+        UpdateSaveButtonState(textField: nameTextField)
     }
 }
