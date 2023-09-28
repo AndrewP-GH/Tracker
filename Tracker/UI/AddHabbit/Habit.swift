@@ -9,5 +9,5 @@ struct Habit {
     let name: String
     let emoji: String
     let color: UIColor
-    var schedule: [Int]
+    var schedule: [WeekDay: Bool]
 }

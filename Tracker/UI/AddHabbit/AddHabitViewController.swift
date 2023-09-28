@@ -24,7 +24,7 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
-    private var habit = Habit(name: "", emoji: "", color: .ypWhite, schedule: [])
+    private var habit = Habit(name: "", emoji: "", color: .ypWhite, schedule: [:])
 
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
@@ -303,6 +303,7 @@ extension AddHabitViewController: UITableViewDelegate {
             break
         case 1:
             let vc = ScheduleViewController()
+            vc.delegate = self
             present(vc, animated: true)
             break
         default:
@@ -385,7 +386,7 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AddHabitViewController: AddHabitViewControllerDelegate {
-    func setSchedule(schedule: [Int]) {
+    func setSchedule(schedule: [WeekDay: Bool]) {
         habit.schedule = schedule
     }
 }

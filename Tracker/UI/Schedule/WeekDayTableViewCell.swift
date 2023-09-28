@@ -17,6 +17,8 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         }
     }
 
+    var weekDay: WeekDay?
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,7 +46,8 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func set(title: String, withSeparator: Bool) {
+    func set(weekDay: WeekDay, title: String, withSeparator: Bool) {
+        self.weekDay = weekDay
         titleLabel.text = title
         self.withSeparator = withSeparator
     }

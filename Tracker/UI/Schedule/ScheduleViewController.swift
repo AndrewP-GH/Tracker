@@ -7,6 +7,9 @@ import UIKit
 
 final class ScheduleViewController: UIViewController {
     private let cellHeight: CGFloat = 75
+    private let weekDaysCount = WeekDay.allCases.count
+
+    weak var delegate: AddHabitViewControllerDelegate?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -92,19 +95,22 @@ final class ScheduleViewController: UIViewController {
     }
 
     @objc private func save() {
+        var selected = [WeekDay: Bool]()
         configureTable.visibleCells.forEach { cell in
-            guard let cell = cell as? WeekDayTableViewCell else {
+            guard let cell = cell as? WeekDayTableViewCell,
+                  let weekDay = cell.weekDay else {
                 return
             }
-            print(cell.isEnabled)
+            selected[weekDay] = cell.isEnabled
         }
+        delegate?.setSchedule(schedule: selected)
         dismiss(animated: true)
     }
 }
 
 extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        WeekDay.allCases.count
+        weekDaysCount
     }
 
     func numberOfSections(in tableView: UITableView) -> Int { 1 }
@@ -112,7 +118,9 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
                                                  for: indexPath) as! WeekDayTableViewCell
-        cell.set(title: WeekDay.allCases[indexPath.row].rawValue,
+        let weekDay = WeekDay.allCases[indexPath.row]
+        cell.set(weekDay: weekDay,
+                 title: weekDay.rawValue,
                  withSeparator: indexPath.row != WeekDay.allCases.count - 1)
         return cell
     }
