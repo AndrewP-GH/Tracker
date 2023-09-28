@@ -24,7 +24,7 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
-    private var habit = Habit(name: "", emoji: "", color: .ypWhite, schedule: [])
+    private var schedule: [WeekDay] = []
 
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
@@ -69,6 +69,7 @@ final class AddHabitViewController: UIViewController {
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
         textField.delegate = self
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
@@ -153,16 +154,25 @@ final class AddHabitViewController: UIViewController {
     private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .ypGray
         button.setTitle("Создать", for: .normal)
         button.setTitleColor(.ypWhite, for: .normal)
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
-        button.isEnabled = false
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        disableButton(button)
         return button
     }()
+
+    private func disableButton(_ button: UIButton) {
+        button.isEnabled = false
+        button.backgroundColor = .ypGray
+    }
+
+    private func enableButton(_ button: UIButton) {
+        button.isEnabled = true
+        button.backgroundColor = .ypBlack
+    }
 
     private lazy var buttonsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [cancelButton, saveButton])
@@ -262,8 +272,6 @@ final class AddHabitViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        habit.name = nameTextField.text ?? ""
-
         dismiss(animated: true)
     }
 }
@@ -272,6 +280,14 @@ extension AddHabitViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if textField.text?.isEmpty ?? true {
+            disableButton(saveButton)
+        } else {
+            enableButton(saveButton)
+        }
     }
 }
 
@@ -393,6 +409,6 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 
 extension AddHabitViewController: AddHabitViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
-        habit.schedule = schedule
+        self.schedule = schedule
     }
 }
