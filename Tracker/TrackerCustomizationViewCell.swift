@@ -30,7 +30,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         titleLabel.text = title
     }
 
-    func setColor(_ color: UIColor) {
+    func setColor(_ color: UIColor?) {
         colorView.backgroundColor = color
     }
 

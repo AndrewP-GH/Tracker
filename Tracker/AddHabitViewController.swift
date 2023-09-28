@@ -274,7 +274,7 @@ extension AddHabitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
                 withIdentifier: AddHabitTableViewCell.identifier,
-                for: indexPath) as? AddHabitTableViewCell ?? AddHabitTableViewCell()
+                for: indexPath) as! AddHabitTableViewCell
         switch indexPath.row {
         case 0:
             cell.titleLabel.text = "Категория"
@@ -302,8 +302,8 @@ extension AddHabitViewController: UITableViewDelegate {
 
             break
         case 1:
-//            let vc = ScheduleViewController()
-//            present(vc, animated: true)
+            let vc = ScheduleViewController()
+            present(vc, animated: true)
             break
         default:
             break
