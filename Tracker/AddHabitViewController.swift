@@ -227,7 +227,6 @@ final class AddHabitViewController: UIViewController {
                     configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
 
-
                     emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
                     emojiLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
                     emojiLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -28),
@@ -330,9 +329,9 @@ extension AddHabitViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! TrackerCustomizationViewCell
         switch collectionView {
         case emojiCollectionView:
-            cell.titleLabel.text = emojis[indexPath.row]
+            cell.setTitle(emojis[indexPath.row])
         case colorCollectionView:
-            cell.colorView.backgroundColor = colors[indexPath.row]
+            cell.setColor(colors[indexPath.row])
         default:
             break
         }

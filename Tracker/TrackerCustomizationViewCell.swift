@@ -8,7 +8,7 @@ import UIKit
 final class TrackerCustomizationViewCell: UICollectionViewCell {
     static let identifier = "TrackerCustomizationViewCell"
 
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 32, weight: .bold)
@@ -17,7 +17,7 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         return label
     }()
 
-    lazy var colorView: UIView = {
+    private lazy var colorView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
@@ -25,6 +25,14 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         view.backgroundColor = .clear
         return view
     }()
+
+    func setTitle(_ title: String) {
+        titleLabel.text = title
+    }
+
+    func setColor(_ color: UIColor) {
+        colorView.backgroundColor = color
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
