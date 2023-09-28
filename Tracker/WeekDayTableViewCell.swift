@@ -6,7 +6,16 @@ import Foundation
 import UIKit
 
 final class WeekDayTableViewCell: GreyTableViewCell {
-    static let identifier = "AddHabitTableViewCell"
+    static let identifier = "WeekDayTableViewCell"
+
+    var isEnabled: Bool {
+        get {
+            switchView.isOn
+        }
+        set {
+            switchView.isOn = newValue
+        }
+    }
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()

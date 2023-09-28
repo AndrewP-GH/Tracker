@@ -43,7 +43,7 @@ final class ScheduleViewController: UIViewController {
         button.setTitle("Готово", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypWhite, for: .normal)
-//        button.addTarget(self, action: #selector(save), for: .touchUpInside)
+        button.addTarget(self, action: #selector(save), for: .touchUpInside)
         return button
     }()
 
@@ -91,6 +91,13 @@ final class ScheduleViewController: UIViewController {
         )
     }
 
+    @objc private func save() {
+        configureTable.visibleCells.forEach { cell in
+            guard let cell = cell as? WeekDayTableViewCell else { return }
+            print(cell.isEnabled)
+        }
+        dismiss(animated: true)
+    }
 }
 
 extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
