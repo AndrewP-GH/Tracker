@@ -24,7 +24,7 @@ final class AddHabitViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
-    private var habit = Habit(name: "", emoji: "", color: .ypWhite, schedule: [:])
+    private var habit = Habit(name: "", emoji: "", color: .ypWhite, schedule: [])
 
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
@@ -159,7 +159,8 @@ final class AddHabitViewController: UIViewController {
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
-//        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -259,6 +260,12 @@ final class AddHabitViewController: UIViewController {
     @objc private func cancelButtonTapped() {
         dismiss(animated: true)
     }
+
+    @objc private func saveButtonTapped() {
+        habit.name = nameTextField.text ?? ""
+
+        dismiss(animated: true)
+    }
 }
 
 extension AddHabitViewController: UITextFieldDelegate {
@@ -299,7 +306,6 @@ extension AddHabitViewController: UITableViewDelegate {
         case 0:
 //            let vc = CategoriesViewController()
 //            navigationController?.pushViewController(vc, animated: true)
-
             break
         case 1:
             let vc = ScheduleViewController()
@@ -386,7 +392,7 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AddHabitViewController: AddHabitViewControllerDelegate {
-    func setSchedule(schedule: [WeekDay: Bool]) {
+    func setSchedule(schedule: [WeekDay]) {
         habit.schedule = schedule
     }
 }

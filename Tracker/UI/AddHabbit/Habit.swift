@@ -6,8 +6,8 @@ import Foundation
 import UIKit
 
 struct Habit {
-    let name: String
-    let emoji: String
-    let color: UIColor
-    var schedule: [WeekDay: Bool]
+    var name: String
+    var emoji: String
+    var color: UIColor
+    var schedule: [WeekDay]
 }

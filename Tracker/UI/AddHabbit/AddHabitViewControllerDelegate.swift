@@ -5,5 +5,5 @@
 import Foundation
 
 protocol AddHabitViewControllerDelegate: AnyObject {
-    func setSchedule(schedule: [WeekDay: Bool])
+    func setSchedule(schedule: [WeekDay])
 }

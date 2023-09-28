@@ -98,13 +98,14 @@ final class ScheduleViewController: UIViewController {
         defer {
             dismiss(animated: true)
         }
-        var selected = [WeekDay: Bool]()
+        var selected: [WeekDay] = []
         configureTable.visibleCells.forEach { cell in
-            guard let cell = cell as? WeekDayTableViewCell,
-                  let weekDay = cell.weekDay else {
+            guard let cell = cell as? WeekDayTableViewCell else {
                 return
             }
-            selected[weekDay] = cell.isEnabled
+            if cell.isEnabled, let weekDay = cell.weekDay {
+                selected.append(weekDay)
+            }
         }
         delegate?.setSchedule(schedule: selected)
     }
