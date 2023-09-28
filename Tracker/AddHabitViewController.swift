@@ -91,13 +91,6 @@ final class AddHabitViewController: UIViewController {
         return configureTable
     }()
 
-    private lazy var configureTableRowsSeparator: UIView = {
-        let rowsSeparator = UIView()
-        rowsSeparator.translatesAutoresizingMaskIntoConstraints = false
-        rowsSeparator.backgroundColor = .ypGray
-        return rowsSeparator
-    }()
-
     private lazy var emojiLabel: UILabel = {
         createCollectionLabel(title: "Emoji")
     }()
@@ -194,7 +187,6 @@ final class AddHabitViewController: UIViewController {
         contentView.addSubview(titleLabel)
         contentView.addSubview(nameTextField)
         contentView.addSubview(configureTable)
-        contentView.addSubview(configureTableRowsSeparator)
         contentView.addSubview(emojiLabel)
         contentView.addSubview(emojiCollectionView)
         contentView.addSubview(colorLabel)
@@ -234,13 +226,7 @@ final class AddHabitViewController: UIViewController {
                     configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
                     configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
-                    configureTableRowsSeparator.topAnchor
-                            .constraint(equalTo: configureTable.topAnchor, constant: tableCellHeight - 0.5),
-                    configureTableRowsSeparator.leadingAnchor
-                            .constraint(equalTo: configureTable.leadingAnchor, constant: sideInset),
-                    configureTableRowsSeparator.trailingAnchor
-                            .constraint(equalTo: configureTable.trailingAnchor, constant: -sideInset),
-                    configureTableRowsSeparator.heightAnchor.constraint(equalToConstant: 0.5),
+
 
                     emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
                     emojiLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
@@ -293,8 +279,10 @@ extension AddHabitViewController: UITableViewDataSource {
         switch indexPath.row {
         case 0:
             cell.titleLabel.text = "Категория"
+            cell.withSeparator = true
         case 1:
             cell.titleLabel.text = "Расписание"
+            cell.withSeparator = false
         default:
             break
         }
@@ -316,7 +304,7 @@ extension AddHabitViewController: UITableViewDelegate {
             break
         case 1:
 //            let vc = ScheduleViewController()
-//            navigationController?.pushViewController(vc, animated: true)
+//            present(vc, animated: true)
             break
         default:
             break
