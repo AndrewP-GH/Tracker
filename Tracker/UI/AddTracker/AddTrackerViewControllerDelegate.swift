@@ -5,5 +5,5 @@
 import Foundation
 
 protocol AddTrackerViewControllerDelegate: AnyObject {
-    func addTrackerViewController(tracker: Tracker)
+    func addTracker(tracker: Tracker)
 }

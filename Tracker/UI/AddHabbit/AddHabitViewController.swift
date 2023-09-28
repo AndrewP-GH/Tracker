@@ -274,14 +274,13 @@ final class AddHabitViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        delegate?.addTrackerViewController(tracker: Tracker(
+        delegate?.addTracker(tracker: Tracker(
                 id: UUID(),
                 name: nameTextField.text!,
                 color: colors[0],
                 emoji: emojis[0],
                 schedule: Schedule(days: selectedDays))
         )
-        dismiss(animated: true)
     }
 }
 

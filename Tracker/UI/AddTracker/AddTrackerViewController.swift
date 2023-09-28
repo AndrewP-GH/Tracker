@@ -92,8 +92,13 @@ final class AddTrackerViewController: UIViewController {
 }
 
 extension AddTrackerViewController: AddTrackerViewControllerDelegate {
-    func addTrackerViewController(tracker: Tracker) {
+    func addTracker(tracker: Tracker) {
         print(tracker)
-        dismiss(animated: false)
+        presentingViewController?.dismiss(
+                animated: true,
+                completion: { [weak self] in
+                    self?.dismiss(animated: false)
+                }
+        )
     }
 }
