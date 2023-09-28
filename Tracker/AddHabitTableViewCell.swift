@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class AddHabitTableViewCell: UITableViewCell {
+final class AddHabitTableViewCell: GreyTableViewCell {
     static let identifier = "AddHabitTableViewCell"
 
     lazy var titleLabel: UILabel = {
@@ -37,23 +37,6 @@ final class AddHabitTableViewCell: UITableViewCell {
         return imageView
     }()
 
-    var withSeparator: Bool = false {
-        didSet {
-            showSeparator(withSeparator)
-        }
-    }
-
-    private lazy var separatorView: UIView = {
-        let rowSeparator = UIView()
-        rowSeparator.translatesAutoresizingMaskIntoConstraints = false
-        rowSeparator.backgroundColor = .ypGray
-        return rowSeparator
-    }()
-
-    private func showSeparator(_ isHidden: Bool) {
-        separatorView.isHidden = !isHidden
-    }
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -65,9 +48,6 @@ final class AddHabitTableViewCell: UITableViewCell {
     }
 
     private func setupView() {
-        backgroundColor = .ypBackground
-        selectionStyle = .none
-        isUserInteractionEnabled = true
         addSubviews()
         setupConstraints()
     }
@@ -76,7 +56,6 @@ final class AddHabitTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
         contentView.addSubview(arrowImageView)
-        contentView.addSubview(separatorView)
     }
 
     private func setupConstraints() {
@@ -94,13 +73,8 @@ final class AddHabitTableViewCell: UITableViewCell {
                     subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
                     subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
                     subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-
-                    separatorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -0.5),
-                    separatorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                    separatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-                    separatorView.heightAnchor.constraint(equalToConstant: 0.5),
                 ]
         )
     }
-
 }
+
