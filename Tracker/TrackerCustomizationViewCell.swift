@@ -40,7 +40,8 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         didSet {
             switch value {
             case .none:
-                break
+                setColor(nil)
+                setTitle("")
             case .color(let color):
                 setColor(color)
             case .emoji(let title):
