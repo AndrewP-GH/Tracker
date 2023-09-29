@@ -11,7 +11,7 @@ final class TrackersViewController: UIViewController {
     var categories: [TrackerCategory] = []
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
     var currentDate: Date = Date()
-    var visibleCategories: [TrackerCategory] = []
+    var visibleCategories: [TrackerCategory] = createTrackers()
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -23,7 +23,6 @@ final class TrackersViewController: UIViewController {
         plusImage.addTarget(self, action: #selector(addTracker), for: .touchUpInside)
         return plusImage
     }()
-
 
     private lazy var plusButton: UIBarButtonItem = {
         let plusButton = UIBarButtonItem(customView: plusImageButton)
@@ -85,16 +84,17 @@ final class TrackersViewController: UIViewController {
         return searchTextField
     }()
 
-    private lazy var trackersTableView: UITableView = {
-        let trackersTableView = UITableView()
-        trackersTableView.translatesAutoresizingMaskIntoConstraints = false
-//        trackersTableView.backgroundColor = .ypWhite
-//        trackersTableView.separatorStyle = .none
-//        trackersTableView.showsVerticalScrollIndicator = false
-//        trackersTableView.register(TrackerTableViewCell.self, forCellReuseIdentifier: "TrackerTableViewCell")
-//        trackersTableView.delegate = self
-//        trackersTableView.dataSource = self
-        return trackersTableView
+    private lazy var trackersView: UICollectionView = {
+        let trackersView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        trackersView.translatesAutoresizingMaskIntoConstraints = false
+        trackersView.backgroundColor = .clear
+        trackersView.register(TrackerCollectionViewCell.self,
+                              forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier)
+        trackersView.dataSource = self
+        trackersView.delegate = self
+        trackersView.showsVerticalScrollIndicator = false
+        trackersView.showsHorizontalScrollIndicator = false
+        return trackersView
     }()
 
     private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
@@ -127,8 +127,8 @@ final class TrackersViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(trackerLabel)
         view.addSubview(searchTextField)
-        view.addSubview(trackersTableView)
-        trackersTableView.addSubview(emptyTrackersPlaceholderView)
+        view.addSubview(trackersView)
+        view.addSubview(emptyTrackersPlaceholderView)
     }
 
     private func setupConstraints() {
@@ -145,10 +145,10 @@ final class TrackersViewController: UIViewController {
                     searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
-                    trackersTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 16),
-                    trackersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                    trackersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                    trackersTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
+                    trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
+                    trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    trackersView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -175,7 +175,73 @@ final class TrackersViewController: UIViewController {
 
 extension TrackersViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
+        textField.resignFirstResponder()
         return true
+    }
+}
+
+extension TrackersViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        visibleCategories.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        visibleCategories[section].items.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
+                                                      for: indexPath) as! TrackerCollectionViewCell
+        let tracker = visibleCategories[indexPath.section].items[indexPath.row]
+        cell.configure(with: tracker)
+        return cell
+    }
+
+}
+
+extension TrackersViewController: UICollectionViewDelegate {
+}
+
+
+extension TrackersViewController {
+    class func createTrackers() -> [TrackerCategory] {
+        [
+            TrackerCategory(header: "Домашний уют", items: [
+                Tracker(id: UUID(),
+                        name: "Поливать растения",
+                        color: .green,
+                        emoji: "❤️",
+                        schedule: nil)]
+            ),
+            TrackerCategory(header: "Радостные мелочи", items: [
+                Tracker(id: UUID(),
+                        name: "Кошка заслонила камеру на созвоне",
+                        color: .orange,
+                        emoji: "😻",
+                        schedule: nil),
+                Tracker(id: UUID(),
+                        name: "Бабушка прислала открытку в вотсапе",
+                        color: .red,
+                        emoji: "🌺",
+                        schedule: nil),
+                Tracker(id: UUID(),
+                        name: "Свидания в апреле",
+                        color: .blue,
+                        emoji: "❤️",
+                        schedule: nil)]
+            ),
+            TrackerCategory(header: "Самочувствие", items: [
+                Tracker(id: UUID(),
+                        name: "Хорошее настроение",
+                        color: .purple,
+                        emoji: "🙂",
+                        schedule: nil),
+                Tracker(id: UUID(),
+                        name: "Легкая тревожность",
+                        color: .ypBlue,
+                        emoji: "😪",
+                        schedule: nil)]
+            )
+        ]
     }
 }

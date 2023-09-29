@@ -131,7 +131,6 @@ final class AddHabitViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(TrackerCustomizationViewCell.self,
                                 forCellWithReuseIdentifier: TrackerCustomizationViewCell.identifier)
-        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
