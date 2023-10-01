@@ -314,9 +314,9 @@ extension AddHabitViewController: UITableViewDataSource {
                 for: indexPath) as! AddHabitTableViewCell
         switch indexPath.row {
         case 0:
-            cell.set(title: "Категория", withSeparator: true)
+            cell.set(title: "Категория")
         case 1:
-            cell.set(title: "Расписание", withSeparator: false)
+            cell.set(title: "Расписание")
         default:
             break
         }
@@ -342,6 +342,12 @@ extension AddHabitViewController: UITableViewDelegate {
             break
         default:
             break
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? AddHabitTableViewCell {
+            cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
         }
     }
 }

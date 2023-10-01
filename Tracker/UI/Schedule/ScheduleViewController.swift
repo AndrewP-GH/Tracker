@@ -151,13 +151,17 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
                                                  for: indexPath) as! WeekDayTableViewCell
         let weekDay = WeekDay.allCases[indexPath.row]
-        cell.set(weekDay: weekDay,
-                 title: weekDay.rawValue,
-                 withSeparator: indexPath.row != WeekDay.allCases.count - 1)
+        cell.set(weekDay: weekDay, title: weekDay.rawValue)
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         cellHeight
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? WeekDayTableViewCell {
+            cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
+        }
     }
 }

@@ -47,15 +47,13 @@ final class AddHabitTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func set(title: String, withSeparator: Bool) {
+    func set(title: String) {
         titleLabel.text = title
-        self.withSeparator = withSeparator
     }
 
-    func set(title: String, subtitle: String, withSeparator: Bool) {
+    func set(title: String, subtitle: String) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
-        self.withSeparator = withSeparator
     }
 
     private func setupView() {

@@ -46,10 +46,9 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func set(weekDay: WeekDay, title: String, withSeparator: Bool) {
+    func set(weekDay: WeekDay, title: String) {
         self.weekDay = weekDay
         titleLabel.text = title
-        self.withSeparator = withSeparator
     }
 
     private func setupView() {
