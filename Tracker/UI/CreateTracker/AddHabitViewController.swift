@@ -338,6 +338,7 @@ extension AddHabitViewController: UITableViewDelegate {
         case 1:
             let vc = ScheduleViewController()
             vc.delegate = self
+            vc.selected = selectedDays
             present(vc, animated: true)
             break
         default:
