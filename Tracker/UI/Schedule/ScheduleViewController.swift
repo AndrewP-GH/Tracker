@@ -27,6 +27,8 @@ final class ScheduleViewController: UIViewController {
         scrollView.backgroundColor = .clear
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.layer.cornerRadius = 16
+        scrollView.layer.masksToBounds = true
         return scrollView
     }()
 
@@ -92,8 +94,8 @@ final class ScheduleViewController: UIViewController {
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
-                    scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor),
-                    scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
+                    scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor, constant: sideInset),
+                    scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
                     contentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
@@ -105,12 +107,12 @@ final class ScheduleViewController: UIViewController {
                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
-                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
-                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
+                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
+                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
 
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
-                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
+                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
+                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
                     button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),
