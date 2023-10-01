@@ -7,6 +7,6 @@ import UIKit
 
 extension UITableView {
     func isLastCellInSection(at indexPath: IndexPath) -> Bool {
-        indexPath.row != numberOfRows(inSection: indexPath.section) - 1
+        indexPath.row == numberOfRows(inSection: indexPath.section) - 1
     }
 }
