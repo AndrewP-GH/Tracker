@@ -147,7 +147,9 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         weekDaysCount
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int { 1 }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
