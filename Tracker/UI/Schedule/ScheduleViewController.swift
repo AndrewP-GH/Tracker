@@ -21,6 +21,22 @@ final class ScheduleViewController: UIViewController {
         return label
     }()
 
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .clear
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .clear
+        return contentView
+    }()
+
     private lazy var configureTable: UITableView = {
         let configureTable = UITableView()
         configureTable.translatesAutoresizingMaskIntoConstraints = false
@@ -62,33 +78,44 @@ final class ScheduleViewController: UIViewController {
     }
 
     private func addSubviews() {
-        view.addSubview(titleLabel)
-        view.addSubview(configureTable)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(configureTable)
         view.addSubview(button)
     }
 
     private func setupConstraints() {
         let sideInset: CGFloat = 16
+        let safeG = view.safeAreaLayoutGuide
+        let contentG = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate(
                 [
-                    titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 26),
-                    titleLabel.leadingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
-                    titleLabel.trailingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
+                    scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
+                    scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor),
+                    scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
+                    scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
+
+                    contentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
+
+                    contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
+                    contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
+                    contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                    contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+
+                    titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
+                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
+                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
 
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-                    configureTable.leadingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
-                    configureTable.trailingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
+                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
+                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
-                    button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-                    button.leadingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                    button.trailingAnchor
-                            .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+                    button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),
+                    button.leadingAnchor.constraint(equalTo: safeG.leadingAnchor, constant: 20),
+                    button.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -20),
                     button.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
