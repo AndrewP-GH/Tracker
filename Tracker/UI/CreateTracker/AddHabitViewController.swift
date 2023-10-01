@@ -314,9 +314,9 @@ extension AddHabitViewController: UITableViewDataSource {
                 for: indexPath) as! AddHabitTableViewCell
         switch indexPath.row {
         case 0:
-            cell.set(title: "Категория")
+            cell.configure(title: "Категория")
         case 1:
-            cell.set(title: "Расписание")
+            cell.configure(title: "Расписание")
         default:
             break
         }

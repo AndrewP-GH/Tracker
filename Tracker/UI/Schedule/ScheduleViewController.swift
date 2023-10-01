@@ -154,7 +154,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
                                                  for: indexPath) as! WeekDayTableViewCell
         let weekDay = WeekDay.allCases[indexPath.row]
-        cell.set(weekDay: weekDay, title: weekDay.rawValue)
+        cell.configure(weekDay: weekDay, title: weekDay.rawValue, isEnabled: selectedDays.contains(weekDay))
         return cell
     }
 
@@ -165,9 +165,6 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WeekDayTableViewCell {
             cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
-            if let weekDay = cell.weekDay {
-                cell.isEnabled = selectedDays.contains(weekDay)
-            }
         }
     }
 }

@@ -47,7 +47,7 @@ final class AddHabitTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func set(title: String) {
+    func configure(title: String) {
         titleLabel.text = title
     }
 

@@ -12,9 +12,6 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         get {
             switchView.isOn
         }
-        set {
-            switchView.isOn = newValue
-        }
     }
 
     var weekDay: WeekDay?
@@ -46,9 +43,10 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func set(weekDay: WeekDay, title: String) {
+    func configure(weekDay: WeekDay, title: String, isEnabled: Bool) {
         self.weekDay = weekDay
         titleLabel.text = title
+        switchView.isOn = isEnabled
     }
 
     private func setupView() {
