@@ -291,10 +291,10 @@ extension AddHabitViewController: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        UpdateSaveButtonState(textField: textField)
+        updateSaveButtonState(textField: textField)
     }
 
-    private func UpdateSaveButtonState(textField: UITextField) {
+    private func updateSaveButtonState(textField: UITextField) {
         if (textField.text?.isEmpty ?? true) || selectedDays.isEmpty {
             disableButton(saveButton)
         } else {
@@ -429,6 +429,6 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 extension AddHabitViewController: AddHabitViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule
-        UpdateSaveButtonState(textField: nameTextField)
+        updateSaveButtonState(textField: nameTextField)
     }
 }
