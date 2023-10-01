@@ -214,12 +214,12 @@ final class AddHabitViewController: UIViewController {
         let contentG = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate(
                 [
-                    contentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
-
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
                     scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor),
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
                     scrollView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
+
+                    contentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
 
                     contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
