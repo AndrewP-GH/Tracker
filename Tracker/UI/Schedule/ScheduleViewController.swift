@@ -11,7 +11,7 @@ final class ScheduleViewController: UIViewController {
     private let cornerRadius: CGFloat = 16
 
     weak var delegate: AddHabitViewControllerDelegate?
-    var selected: [WeekDay] = []
+    var selectedDays: [WeekDay] = []
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -164,7 +164,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WeekDayTableViewCell {
             cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
-            cell.isEnabled = selected.contains(cell.weekDay!)
+            cell.isEnabled = selectedDays.contains(cell.weekDay!)
         }
     }
 }
