@@ -8,6 +8,7 @@ import UIKit
 final class ScheduleViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let weekDaysCount = WeekDay.allCases.count
+    private let cornerRadius: CGFloat = 16
 
     weak var delegate: AddHabitViewControllerDelegate?
 
@@ -27,7 +28,7 @@ final class ScheduleViewController: UIViewController {
         scrollView.backgroundColor = .clear
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.layer.cornerRadius = 16
+        scrollView.layer.cornerRadius = cornerRadius
         scrollView.layer.masksToBounds = true
         return scrollView
     }()
@@ -49,7 +50,7 @@ final class ScheduleViewController: UIViewController {
         configureTable.register(WeekDayTableViewCell.self, forCellReuseIdentifier: WeekDayTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
-        configureTable.layer.cornerRadius = 16
+        configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
         return configureTable
@@ -59,7 +60,7 @@ final class ScheduleViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .ypBlack
-        button.layer.cornerRadius = 16
+        button.layer.cornerRadius = cornerRadius
         button.layer.masksToBounds = true
         button.setTitle("Готово", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
