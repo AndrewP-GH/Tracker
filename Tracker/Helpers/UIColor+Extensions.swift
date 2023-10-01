@@ -25,7 +25,8 @@ extension UIColor {
             hexColor = hex
         }
         let r, g, b, a: CGFloat
-        if hexColor.count == 6 {
+        switch hexColor.count {
+        case 6: // RGB
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
@@ -36,8 +37,7 @@ extension UIColor {
                 self.init(red: r, green: g, blue: b, alpha: a)
                 return
             }
-        }
-        if hexColor.count == 8 {
+        case 8: // ARGB
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
@@ -48,6 +48,8 @@ extension UIColor {
                 self.init(red: r, green: g, blue: b, alpha: a)
                 return
             }
+        default:
+            break
         }
         self.init(red: 0, green: 0, blue: 0, alpha: 0) // TODO: maybe throw an error?
     }
