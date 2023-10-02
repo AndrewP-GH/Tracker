@@ -92,7 +92,7 @@ final class ScheduleViewController: UIViewController {
     private func setupConstraints() {
         let sideInset: CGFloat = 16
         let safeG = view.safeAreaLayoutGuide
-        let contentG = scrollView.contentLayoutGuide
+        let svContentG = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
@@ -100,21 +100,21 @@ final class ScheduleViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
-                    contentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
+                    svContentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
 
-                    contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
-                    contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
-                    contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
+                    contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
+                    contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
-                    titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
-                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
-                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
+                    titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
+                    titleLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
 
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
-                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
+                    configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
                     button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),
