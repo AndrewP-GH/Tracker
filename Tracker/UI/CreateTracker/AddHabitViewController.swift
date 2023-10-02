@@ -219,7 +219,7 @@ final class AddHabitViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
                     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10),
+                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
