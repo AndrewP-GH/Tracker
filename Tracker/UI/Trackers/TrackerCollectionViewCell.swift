@@ -46,7 +46,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
-        label.lineBreakMode = .byWordWrapping
+        label.adjustsFontSizeToFitWidth = false
+        label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
         label.backgroundColor = .clear
         label.textColor = .white
@@ -126,11 +127,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     emojiLabel.widthAnchor.constraint(equalToConstant: 24),
                     emojiLabel.heightAnchor.constraint(equalToConstant: 24),
 
-                    textStackView.topAnchor.constraint(equalTo: emojiLabel.topAnchor, constant: 8),
+                    textStackView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
                     textStackView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 12),
                     textStackView.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -12),
                     textStackView.bottomAnchor.constraint(equalTo: coloredView.bottomAnchor, constant: -12),
 
+                    nameLabel.topAnchor.constraint(equalTo: textStackView.topAnchor),
                     nameLabel.leadingAnchor.constraint(equalTo: textStackView.leadingAnchor),
                     nameLabel.trailingAnchor.constraint(equalTo: textStackView.trailingAnchor),
                     nameLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
