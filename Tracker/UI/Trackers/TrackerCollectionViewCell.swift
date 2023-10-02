@@ -132,7 +132,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     textStackView.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -12),
                     textStackView.bottomAnchor.constraint(equalTo: coloredView.bottomAnchor, constant: -12),
 
-                    nameLabel.topAnchor.constraint(equalTo: textStackView.topAnchor),
+                    nameLabel.topAnchor.constraint(greaterThanOrEqualTo: textStackView.topAnchor),
                     nameLabel.leadingAnchor.constraint(equalTo: textStackView.leadingAnchor),
                     nameLabel.trailingAnchor.constraint(equalTo: textStackView.trailingAnchor),
                     nameLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
