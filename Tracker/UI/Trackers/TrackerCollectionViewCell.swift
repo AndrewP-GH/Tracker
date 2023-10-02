@@ -45,7 +45,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = false
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
@@ -65,7 +64,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textAlignment = .left
         label.backgroundColor = .clear
         label.textColor = .ypBlack
         return label

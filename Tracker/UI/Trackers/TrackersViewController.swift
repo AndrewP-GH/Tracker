@@ -34,7 +34,6 @@ final class TrackersViewController: UIViewController {
         trackerLabel.translatesAutoresizingMaskIntoConstraints = false
         trackerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         trackerLabel.textColor = .ypBlack
-        trackerLabel.textAlignment = .left
         trackerLabel.text = "Трекеры"
         return trackerLabel
     }()
@@ -78,7 +77,6 @@ final class TrackersViewController: UIViewController {
         searchTextField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         searchTextField.textColor = .ypBlack
         searchTextField.clearButtonMode = .whileEditing
-        searchTextField.textAlignment = .left
         searchTextField.addTarget(self, action: #selector(searchTextChanged), for: .editingChanged)
         searchTextField.delegate = self
         return searchTextField

@@ -21,7 +21,6 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 17, weight: .regular)
         label.textColor = .ypBlack
-        label.textAlignment = .left
         label.backgroundColor = .clear
         return label
     }()

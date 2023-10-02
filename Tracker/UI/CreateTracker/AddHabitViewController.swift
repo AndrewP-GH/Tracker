@@ -64,7 +64,6 @@ final class AddHabitViewController: UIViewController {
         textField.placeholder = "Введите название трекера"
         textField.font = .systemFont(ofSize: 17, weight: .regular)
         textField.textColor = .ypBlack
-        textField.textAlignment = .left
         textField.backgroundColor = .ypBackground
         textField.layer.cornerRadius = 16
         textField.layer.masksToBounds = true
@@ -109,7 +108,6 @@ final class AddHabitViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
         label.font = .systemFont(ofSize: 19, weight: .bold)
-        label.textAlignment = .left
         label.textColor = .ypBlack
         return label
     }
