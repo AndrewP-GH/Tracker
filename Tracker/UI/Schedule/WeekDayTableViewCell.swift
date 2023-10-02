@@ -29,7 +29,8 @@ final class WeekDayTableViewCell: GreyTableViewCell {
     private lazy var switchView: UISwitch = {
         let switchView = UISwitch()
         switchView.translatesAutoresizingMaskIntoConstraints = false
-        switchView.backgroundColor = .ypBackground
+        switchView.backgroundColor = .clear
+        switchView.onTintColor = .ypBlue
         return switchView
     }()
 
