@@ -113,6 +113,7 @@ final class TrackersViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupConstraints()
+        updateContent()
     }
 
     private func setupNavigationBar() {
@@ -154,6 +155,11 @@ final class TrackersViewController: UIViewController {
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
                 ]
         )
+    }
+
+    private func updateContent() {
+        trackersView.reloadData()
+        emptyTrackersPlaceholderView.isHidden = !visibleCategories.isEmpty
     }
 
     @objc
@@ -199,7 +205,12 @@ extension TrackersViewController: UICollectionViewDataSource {
 
 }
 
-extension TrackersViewController: UICollectionViewDelegate {
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 167, height: 148)
+    }
 }
 
 
