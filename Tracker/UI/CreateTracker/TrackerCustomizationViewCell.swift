@@ -76,17 +76,18 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
     }
 
     private func setupConstraints() {
-        NSLayoutConstraint.activate(
-                [
-                    colorView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                    colorView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                    colorView.widthAnchor.constraint(equalToConstant: 40),
-                    colorView.heightAnchor.constraint(equalToConstant: 40),
+        NSLayoutConstraint.activate(getContentConstraints(colorView) + getContentConstraints(titleLabel))
+    }
 
-                    titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                    titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                ]
-        )
+    private func getContentConstraints(_ view: UIView) -> [NSLayoutConstraint] {
+        [
+            view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+            view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
+            view.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
+            view.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+        ]
     }
 }
 

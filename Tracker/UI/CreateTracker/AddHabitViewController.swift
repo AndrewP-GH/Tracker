@@ -387,18 +387,10 @@ extension AddHabitViewController: UICollectionViewDelegate {
 }
 
 extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
-    fileprivate var sectionInsets: UIEdgeInsets { .zero }
-
     func collectionView(_ collectionView: UICollectionView,
             layout collectionViewLayout: UICollectionViewLayout,
             sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionCellSize
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            insetForSectionAt section: Int) -> UIEdgeInsets {
-        sectionInsets
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -415,11 +407,10 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
         if paddingsCount <= 0 {
             return 0.0
         }
-        let sectionPadding = (sectionInsets.left + sectionInsets.right) * collectionItemsPerRow
         let itemsWidth = collectionCellSize.width * collectionItemsPerRow
-        let paddingsWidth = collectionView.bounds.width - sectionPadding - itemsWidth
+        let paddingsWidth = collectionView.bounds.width - itemsWidth
         if paddingsWidth <= 0 {
-            return 0.0
+            return 5.0
         }
         let padding = paddingsWidth / paddingsCount
         return padding.rounded(.towardZero)

@@ -206,10 +206,31 @@ extension TrackersViewController: UICollectionViewDataSource {
 }
 
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    fileprivate var itemsPerRow: CGFloat {
+        2
+    }
+
+    fileprivate var spacing: CGFloat {
+        9.0
+    }
+
+    fileprivate var cellHeight: CGFloat {
+        148.0
+    }
+
     func collectionView(_ collectionView: UICollectionView,
             layout collectionViewLayout: UICollectionViewLayout,
             sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 167, height: 148)
+        let spacing = spacing * (itemsPerRow - 1)
+        let widthPerItem = (collectionView.bounds.width - spacing) / itemsPerRow
+        return CGSize(width: widthPerItem.rounded(.towardZero), height: cellHeight)
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            layout collectionViewLayout: UICollectionViewLayout,
+            minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        spacing
     }
 }
 
