@@ -27,6 +27,7 @@
 		AE09A5B9E214C1026264B495 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */; };
 		AE09A6C3C6E8F00B3C8A00C2 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A317014C9DD701FEF33D /* WeekDay.swift */; };
 		AE09A7FE3223E7CF5BC5B725 /* EmptyTrackersPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */; };
+		AE09A804C4A6554511760807 /* SectionHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */; };
 		AE09A8497E60BBEF2698B9AE /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A40A8963CDEF25D53C0C /* WeekDayTableViewCell.swift */; };
 		AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */; };
 		AE09A972C843A834EE5E4F69 /* GreyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3D29C508B67F65C32E8 /* GreyTableViewCell.swift */; };
@@ -80,6 +81,7 @@
 		AE09A89F4384094A31DB9085 /* TrackersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrackersPlaceholderView.swift; sourceTree = "<group>"; };
+		AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderReusableView.swift; sourceTree = "<group>"; };
 		AE09AB4275607F87ED4373BF /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		AE09AD8BA211C8A1599E3D5C /* TrackerCustomizationViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCustomizationViewCell.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			children = (
 				AE09A89F4384094A31DB9085 /* TrackersViewController.swift */,
 				AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */,
+				AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				AE09A57983110585B50DB85E /* TrackersViewController.swift in Sources */,
 				AE09A49095C97C47B282E8C4 /* TrackerCollectionViewCell.swift in Sources */,
 				AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */,
+				AE09A804C4A6554511760807 /* SectionHeaderReusableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
