@@ -9,6 +9,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
 
     var tracker: Tracker?
+    private var isDone = false
 
     private lazy var coloredView: UIView = {
         let view = UIView()
@@ -23,7 +24,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .center
-        label.backgroundColor = UIColor.init(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.3)
+        label.backgroundColor = UIColor.init(white: 1.0, alpha: 0.3)
         label.layer.cornerRadius = 12
         label.layer.masksToBounds = true
         return label
@@ -72,8 +73,9 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "plus"), for: .normal)
-        button.tintColor = .ypWhite
+        button.setImage(UIImage(named: "PlusButton"), for: .normal)
+        button.backgroundColor = .ypWhite
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -157,7 +159,21 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         coloredView.backgroundColor = tracker.color
         emojiLabel.text = tracker.emoji
         nameLabel.text = tracker.name
-        button.backgroundColor = tracker.color
+        button.tintColor = tracker.color
         daysLabel.text = "0 дней"
+        updateButton()
+    }
+
+    @objc private func buttonTapped() {
+        isDone.toggle()
+        updateButton()
+    }
+
+    private func updateButton() {
+        if isDone {
+            button.setImage(UIImage(named: "DoneButton"), for: .normal)
+        } else {
+            button.setImage(UIImage(named: "PlusButton"), for: .normal)
+        }
     }
 }
