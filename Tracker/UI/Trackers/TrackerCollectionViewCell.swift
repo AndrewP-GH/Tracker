@@ -40,11 +40,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
 
-    private lazy var textLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-//        label.textAlignment = .left
+        label.textAlignment = .left
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.backgroundColor = .clear
@@ -105,7 +105,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(coloredView)
         coloredView.addSubview(emojiLabel)
         coloredView.addSubview(textStackView)
-        textStackView.addSubview(textLabel)
+        textStackView.addSubview(nameLabel)
         contentView.addSubview(controlView)
         controlView.addSubview(daysLabel)
         controlView.addSubview(button)
@@ -129,9 +129,9 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     textStackView.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -12),
                     textStackView.bottomAnchor.constraint(equalTo: coloredView.bottomAnchor, constant: -12),
 
-                    textLabel.leadingAnchor.constraint(equalTo: textStackView.leadingAnchor),
-                    textLabel.trailingAnchor.constraint(equalTo: textStackView.trailingAnchor),
-                    textLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
+                    nameLabel.leadingAnchor.constraint(equalTo: textStackView.leadingAnchor),
+                    nameLabel.trailingAnchor.constraint(equalTo: textStackView.trailingAnchor),
+                    nameLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
 
                     controlView.topAnchor.constraint(equalTo: coloredView.bottomAnchor),
                     controlView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -156,7 +156,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         }
         coloredView.backgroundColor = tracker.color
         emojiLabel.text = tracker.emoji
-        textLabel.text = tracker.name
+        nameLabel.text = tracker.name
         button.backgroundColor = tracker.color
         daysLabel.text = "0 дней"
     }
