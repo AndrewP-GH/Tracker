@@ -211,59 +211,59 @@ final class AddHabitViewController: UIViewController {
     private func setupConstraints() {
         let sideInset: CGFloat = 16
         let safeG = view.safeAreaLayoutGuide
-        let contentG = scrollView.contentLayoutGuide
+        let svContentG = scrollView.contentLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
                     scrollView.leadingAnchor.constraint(equalTo: safeG.leadingAnchor),
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
-                    scrollView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
+                    scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-                    contentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
+                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
 
-                    contentView.topAnchor.constraint(equalTo: contentG.topAnchor),
-                    contentView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor),
-                    contentView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor),
+                    contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
+                    contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
+                    contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                     contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
 
-                    titleLabel.topAnchor.constraint(equalTo: contentG.topAnchor, constant: 26),
-                    titleLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
-                    titleLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
+                    titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
+                    titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
+                    titleLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
 
                     nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
-                    nameTextField.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
-                    nameTextField.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
+                    nameTextField.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
+                    nameTextField.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
                     nameTextField.heightAnchor.constraint(equalToConstant: 75),
 
                     configureTable.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
-                    configureTable.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: sideInset),
-                    configureTable.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -sideInset),
+                    configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
+                    configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
                     configureTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
 
                     emojiLabel.topAnchor.constraint(equalTo: configureTable.bottomAnchor, constant: 32),
-                    emojiLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
-                    emojiLabel.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -28),
+                    emojiLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 28),
+                    emojiLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -28),
 
                     emojiCollectionView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 24),
-                    emojiCollectionView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 18),
-                    emojiCollectionView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -18),
+                    emojiCollectionView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 18),
+                    emojiCollectionView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -18),
                     emojiCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
                     colorLabel.topAnchor.constraint(equalTo: emojiCollectionView.bottomAnchor, constant: 40),
-                    colorLabel.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 28),
+                    colorLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 28),
                     colorLabel.trailingAnchor
                             .constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -28),
 
                     colorCollectionView.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 24),
-                    colorCollectionView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 18),
-                    colorCollectionView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -18),
+                    colorCollectionView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 18),
+                    colorCollectionView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -18),
                     colorCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight),
 
                     buttonsStackView.topAnchor.constraint(equalTo: colorCollectionView.bottomAnchor, constant: 40),
-                    buttonsStackView.leadingAnchor.constraint(equalTo: contentG.leadingAnchor, constant: 20),
-                    buttonsStackView.trailingAnchor.constraint(equalTo: contentG.trailingAnchor, constant: -20),
+                    buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
+                    buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
