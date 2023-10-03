@@ -8,10 +8,10 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    var categories: [TrackerCategory] = []
+    var categories: [TrackerCategory] = createTrackers()
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
     var currentDate: Date = Date()
-    var visibleCategories: [TrackerCategory] = createTrackers()
+    var visibleCategories: [TrackerCategory] = []
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -159,6 +159,7 @@ final class TrackersViewController: UIViewController {
     }
 
     private func updateContent() {
+        visibleCategories = categories.filter({ !$0.items.isEmpty })
         trackersView.reloadData()
         emptyTrackersPlaceholderView.isHidden = !visibleCategories.isEmpty
     }
