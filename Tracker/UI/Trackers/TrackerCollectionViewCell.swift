@@ -9,7 +9,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
 
     var tracker: Tracker?
-    private var isDone = false
+    private var isDone = false {
+        didSet {
+            updateButton()
+        }
+    }
 
     private lazy var coloredView: UIView = {
         let view = UIView()
@@ -166,7 +170,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
 
     @objc private func buttonTapped() {
         isDone.toggle()
-        updateButton()
     }
 
     private func updateButton() {
