@@ -275,14 +275,20 @@ extension TrackersViewController {
                         name: "Поливать растения",
                         color: .green,
                         emoji: "❤️",
-                        schedule: nil)]
-            ),
+                        schedule: Schedule(
+                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                        )
+                )
+            ]),
             TrackerCategory(header: "Радостные мелочи", items: [
                 Tracker(id: UUID(),
                         name: "Кошка заслонила камеру на созвоне",
                         color: .orange,
                         emoji: "😻",
-                        schedule: nil),
+                        schedule: Schedule(
+                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                        )
+                ),
                 Tracker(id: UUID(),
                         name: "Бабушка прислала открытку в вотсапе",
                         color: .red,
@@ -292,20 +298,29 @@ extension TrackersViewController {
                         name: "Свидания в апреле",
                         color: .blue,
                         emoji: "❤️",
-                        schedule: nil)]
-            ),
+                        schedule: Schedule(
+                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                        )
+                )
+            ]),
             TrackerCategory(header: "Самочувствие", items: [
                 Tracker(id: UUID(),
                         name: "Хорошее настроение",
                         color: .purple,
                         emoji: "🙂",
-                        schedule: nil),
+                        schedule: Schedule(
+                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                        )
+                ),
                 Tracker(id: UUID(),
                         name: "Легкая тревожность",
                         color: .ypBlue,
                         emoji: "😪",
-                        schedule: nil)]
-            )
+                        schedule: Schedule(
+                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                        )
+                )
+            ])
         ]
     }
 }
