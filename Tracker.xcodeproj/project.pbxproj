@@ -32,9 +32,11 @@
 		AE09A8497E60BBEF2698B9AE /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A40A8963CDEF25D53C0C /* WeekDayTableViewCell.swift */; };
 		AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */; };
 		AE09A972C843A834EE5E4F69 /* GreyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3D29C508B67F65C32E8 /* GreyTableViewCell.swift */; };
+		AE09AA24E7E2B461E1AD825F /* TrackerCategory+Exyensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AFC837732573408E6E18 /* TrackerCategory+Exyensions.swift */; };
 		AE09AA59E8697661198A9C3D /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AB4275607F87ED4373BF /* Schedule.swift */; };
 		AE09AA917DCD609CD2C06BCC /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADC3540B22379B38D9A8 /* Tracker.swift */; };
 		AE09AB08D0DE358D32586969 /* AddTrackerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A7FEF047DAC443E359A4 /* AddTrackerViewControllerDelegate.swift */; };
+		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
 		AE09AE769C5982E1A071099A /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */; };
 		AE09AF3EE56D2791C0582FCC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,7 @@
 		1BAEE38729F43005001601F9 /* TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BAEE38B29F43005001601F9 /* TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUITests.swift; sourceTree = "<group>"; };
 		1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AE09A029231B86A0B34058A9 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A0EF435010B3E6222FEB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 		AE09ADC3540B22379B38D9A8 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		AE09AF12C4F3D544E02D63A3 /* AddHabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitViewController.swift; sourceTree = "<group>"; };
+		AE09AFC837732573408E6E18 /* TrackerCategory+Exyensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerCategory+Exyensions.swift"; sourceTree = "<group>"; };
 		AE09AFFCD877240BEF97F86D /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +128,8 @@
 				1B3EDECF2A0A85FC00F12717 /* UIColor+Extensions.swift */,
 				AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */,
 				AE09A52DF510C9D636A1369D /* Date+Extensions.swift */,
+				AE09AFC837732573408E6E18 /* TrackerCategory+Exyensions.swift */,
+				AE09A029231B86A0B34058A9 /* String+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -409,6 +415,8 @@
 				AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */,
 				AE09A804C4A6554511760807 /* SectionHeaderReusableView.swift in Sources */,
 				AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */,
+				AE09AA24E7E2B461E1AD825F /* TrackerCategory+Exyensions.swift in Sources */,
+				AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

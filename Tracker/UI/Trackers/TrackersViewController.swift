@@ -159,9 +159,15 @@ final class TrackersViewController: UIViewController {
     }
 
     private func updateContent() {
+        let dayOfWeek = currentDate.dayOfWeek()
+        let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         visibleCategories = categories.filter({
-            !$0.items.isEmpty
-                    && $0.items.contains(where: { $0.schedule?.days.contains(currentDate.dayOfWeek()) ?? true })
+            let byDate = $0.hasTrackers(for: dayOfWeek)
+            if let searchText, !searchText.isEmpty {
+                return byDate && $0.hasTrackers(startsWith: searchText)
+            } else {
+                return byDate
+            }
         })
         trackersView.reloadData()
         emptyTrackersPlaceholderView.isHidden = !visibleCategories.isEmpty
@@ -178,6 +184,7 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func searchTextChanged() {
+        updateContent()
     }
 }
 
