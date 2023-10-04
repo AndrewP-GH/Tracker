@@ -159,25 +159,25 @@ final class TrackersViewController: UIViewController {
     }
 
     private func updateContent() {
-        visibleCategories = categories.filter({ !$0.items.isEmpty })
+        visibleCategories = categories.filter({
+            !$0.items.isEmpty
+                    && $0.items.contains(where: { $0.schedule?.days.contains(currentDate.dayOfWeek()) ?? true })
+        })
         trackersView.reloadData()
         emptyTrackersPlaceholderView.isHidden = !visibleCategories.isEmpty
     }
 
-    @objc
-    private func addTracker() {
+    @objc private func addTracker() {
         let addTrackerViewController = AddTrackerViewController()
         present(addTrackerViewController, animated: true)
     }
 
-    @objc
-    private func dateChanged() {
+    @objc private func dateChanged() {
         currentDate = datePicker.date
-        // TODO: в результате показываются только те трекеры, у которых в расписании выбран день, совпадающий с датой в currentDate;
+        updateContent()
     }
 
-    @objc
-    private func searchTextChanged() {
+    @objc private func searchTextChanged() {
     }
 }
 
@@ -276,7 +276,7 @@ extension TrackersViewController {
                         color: .green,
                         emoji: "❤️",
                         schedule: Schedule(
-                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 )
             ]),
@@ -286,7 +286,7 @@ extension TrackersViewController {
                         color: .orange,
                         emoji: "😻",
                         schedule: Schedule(
-                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 ),
                 Tracker(id: UUID(),
@@ -299,7 +299,7 @@ extension TrackersViewController {
                         color: .blue,
                         emoji: "❤️",
                         schedule: Schedule(
-                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 )
             ]),
@@ -309,7 +309,7 @@ extension TrackersViewController {
                         color: .purple,
                         emoji: "🙂",
                         schedule: Schedule(
-                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 ),
                 Tracker(id: UUID(),
@@ -317,7 +317,7 @@ extension TrackersViewController {
                         color: .ypBlue,
                         emoji: "😪",
                         schedule: Schedule(
-                                days: [.monday, .thursday, .wednesday, .thursday, .friday, .saturday, .sunday]
+                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 )
             ])

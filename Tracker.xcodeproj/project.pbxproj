@@ -22,6 +22,7 @@
 		AE09A2B7C09B71442218EDB9 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A0EF435010B3E6222FEB /* ScheduleViewController.swift */; };
 		AE09A33AAC7090BA48900B75 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */; };
 		AE09A49095C97C47B282E8C4 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */; };
+		AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A52DF510C9D636A1369D /* Date+Extensions.swift */; };
 		AE09A570D146E3E4320B766D /* AddHabitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A606C7F4ABDB4B92C9D1 /* AddHabitTableViewCell.swift */; };
 		AE09A57983110585B50DB85E /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A89F4384094A31DB9085 /* TrackersViewController.swift */; };
 		AE09A5B9E214C1026264B495 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */; };
@@ -75,6 +76,7 @@
 		AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
 		AE09A3D29C508B67F65C32E8 /* GreyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreyTableViewCell.swift; sourceTree = "<group>"; };
 		AE09A40A8963CDEF25D53C0C /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
+		AE09A52DF510C9D636A1369D /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A606C7F4ABDB4B92C9D1 /* AddHabitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitTableViewCell.swift; sourceTree = "<group>"; };
 		AE09A764067199112D2084CE /* AddHabitViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09A7FEF047DAC443E359A4 /* AddTrackerViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				1B3EDECF2A0A85FC00F12717 /* UIColor+Extensions.swift */,
 				AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */,
+				AE09A52DF510C9D636A1369D /* Date+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				AE09A49095C97C47B282E8C4 /* TrackerCollectionViewCell.swift in Sources */,
 				AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */,
 				AE09A804C4A6554511760807 /* SectionHeaderReusableView.swift in Sources */,
+				AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
