@@ -23,6 +23,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    private var isButtonEnable = false {
+        didSet {
+            setButtonEnabled()
+        }
+    }
+
     private lazy var coloredView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -90,6 +96,13 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         return button
     }()
 
+    private lazy var buttonOverlay: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .ypWhite.withAlphaComponent(0.63) // 1 - 0.37 from svg background
+        return view
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -100,11 +113,16 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with tracker: Tracker, completedDays: Int, isDone: Bool, delegate: TrackersViewControllerDelegate) {
+    func configure(with tracker: Tracker,
+                   completedDays: Int,
+                   isDone: Bool,
+                   isButtonEnable: Bool,
+                   delegate: TrackersViewControllerDelegate) {
         self.tracker = tracker
         self.delegate = delegate
         self.completedDays = completedDays
         self.isDone = isDone
+        self.isButtonEnable = isButtonEnable
         updateContentView()
     }
 
@@ -125,6 +143,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(controlView)
         controlView.addSubview(daysLabel)
         controlView.addSubview(button)
+        button.addSubview(buttonOverlay)
     }
 
     private func setupConstraints() {
@@ -163,6 +182,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     button.trailingAnchor.constraint(equalTo: controlView.trailingAnchor, constant: -12),
                     button.widthAnchor.constraint(equalToConstant: 34),
                     button.heightAnchor.constraint(equalToConstant: 34),
+
+                    buttonOverlay.topAnchor.constraint(equalTo: button.topAnchor),
+                    buttonOverlay.leadingAnchor.constraint(equalTo: button.leadingAnchor),
+                    buttonOverlay.trailingAnchor.constraint(equalTo: button.trailingAnchor),
+                    buttonOverlay.bottomAnchor.constraint(equalTo: button.bottomAnchor)
                 ]
         )
     }
@@ -178,6 +202,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
 
         setDaysLabel()
         setButtonImage()
+        setButtonEnabled()
     }
 
     @objc private func buttonTapped() {
@@ -214,5 +239,9 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
             text = "\(completedDays) дней"
         }
         daysLabel.text = text
+    }
+
+    private func setButtonEnabled() {
+        buttonOverlay.isHidden = isButtonEnable
     }
 }

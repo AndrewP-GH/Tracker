@@ -214,7 +214,12 @@ extension TrackersViewController: UICollectionViewDataSource {
         let tracker = visibleCategories[indexPath.section].items[indexPath.row]
         let days = completedTrackers.filter({ $0.trackerId == tracker.id }).count
         let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
-        cell.configure(with: tracker, completedDays: days, isDone: isDone, delegate: self);
+        let isButtonEnable = currentDate <= Date()
+        cell.configure(with: tracker,
+                       completedDays: days,
+                       isDone: isDone,
+                       isButtonEnable: isButtonEnable,
+                       delegate: self);
         return cell
     }
 
