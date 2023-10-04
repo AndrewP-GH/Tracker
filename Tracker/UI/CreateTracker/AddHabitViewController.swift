@@ -346,7 +346,7 @@ extension AddHabitViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? AddHabitTableViewCell {
-            cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
+            cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }
 }

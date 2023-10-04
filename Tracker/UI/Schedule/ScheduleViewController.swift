@@ -164,7 +164,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? WeekDayTableViewCell {
-            cell.withSeparator = !tableView.isLastCellInSection(at: indexPath)
+            cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }
 }

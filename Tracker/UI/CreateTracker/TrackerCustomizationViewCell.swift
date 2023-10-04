@@ -28,30 +28,21 @@ final class TrackerCustomizationViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
-        view.backgroundColor = .clear
         return view
     }()
-
-    private func setTitle(_ title: String?) {
-        titleLabel.text = title
-    }
 
     var value: CustomizationCellValue = .none {
         didSet {
             switch value {
             case .none:
-                setColor(nil)
-                setTitle(nil)
+                colorView.backgroundColor = nil
+                titleLabel.text = nil
             case .color(let color):
-                setColor(color)
+                colorView.backgroundColor = color
             case .emoji(let title):
-                setTitle(title)
+                titleLabel.text = title
             }
         }
-    }
-
-    private func setColor(_ color: UIColor?) {
-        colorView.backgroundColor = color
     }
 
     override init(frame: CGRect) {

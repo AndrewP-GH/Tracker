@@ -6,7 +6,7 @@ import Foundation
 
 extension Date {
     private final class Formatters {
-        static let eeeeFormatter: DateFormatter = {
+        static let weekDayOnlyFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "EEEE"
             return formatter
@@ -20,7 +20,7 @@ extension Date {
     }
 
     func dayOfWeek() -> WeekDay {
-        let weekDay = Formatters.eeeeFormatter.string(from: self)
+        let weekDay = Formatters.weekDayOnlyFormatter.string(from: self)
         switch weekDay {
         case "Monday":
             return .monday

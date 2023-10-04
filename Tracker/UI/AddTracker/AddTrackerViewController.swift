@@ -76,6 +76,7 @@ final class AddTrackerViewController: UIViewController {
         present(vc, animated: true)
     }
 
+    // TODO: will be implemented later
     @objc private func addEvent() {
     }
 

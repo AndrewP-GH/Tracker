@@ -6,9 +6,9 @@ import Foundation
 import UIKit
 
 class GreyTableViewCell: UITableViewCell {
-    var withSeparator: Bool = false {
+    var isLast: Bool = false {
         didSet {
-            showSeparator(withSeparator)
+            separatorView.isHidden = isLast
         }
     }
 
@@ -18,10 +18,6 @@ class GreyTableViewCell: UITableViewCell {
         rowSeparator.backgroundColor = .ypGray
         return rowSeparator
     }()
-
-    private func showSeparator(_ isHidden: Bool) {
-        separatorView.isHidden = !isHidden
-    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

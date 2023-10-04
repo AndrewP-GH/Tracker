@@ -5,10 +5,6 @@
 import Foundation
 
 extension TrackerCategory {
-    func hasTrackers() -> Bool {
-        !items.isEmpty
-    }
-
     func hasTrackers(for day: WeekDay, withoutSchedule: Bool = true) -> Bool {
         items.contains(where: { $0.schedule?.days.contains(day) ?? withoutSchedule })
     }
