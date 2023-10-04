@@ -178,6 +178,7 @@ final class TrackersViewController: UIViewController {
 
     @objc private func addTracker() {
         let addTrackerViewController = AddTrackerViewController()
+        addTrackerViewController.delegate = self
         present(addTrackerViewController, animated: true)
     }
 
@@ -288,6 +289,19 @@ extension TrackersViewController: TrackersViewControllerDelegate {
         let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
         completedTrackers.remove(trackerRecord)
     }
+
+    func addTrackerToCategory(category: String, tracker: Tracker) {
+        let categoryIndex = categories.firstIndex(where: { $0.header == category })
+        if let categoryIndex {
+            categories[categoryIndex] = TrackerCategory(
+                    header: category,
+                    items: categories[categoryIndex].items + [tracker]
+            )
+        } else {
+            categories.append(TrackerCategory(header: category, items: [tracker]))
+        }
+        updateContent()
+    }
 }
 
 extension TrackersViewController {
@@ -343,7 +357,8 @@ extension TrackersViewController {
                                 days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
                         )
                 )
-            ])
+            ]),
+            TrackerCategory(header: "_Новые_", items: [])
         ]
     }
 }

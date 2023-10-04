@@ -6,6 +6,8 @@ import Foundation
 import UIKit
 
 final class AddTrackerViewController: UIViewController {
+    weak var delegate: TrackersViewControllerDelegate?
+
     private lazy var header: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +95,7 @@ final class AddTrackerViewController: UIViewController {
 
 extension AddTrackerViewController: AddTrackerViewControllerDelegate {
     func addTracker(tracker: Tracker) {
-        print(tracker)
+        delegate?.addTrackerToCategory(category: "Новые", tracker: tracker)
         presentingViewController?.dismiss(
                 animated: true,
                 completion: { [weak self] in
