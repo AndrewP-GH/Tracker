@@ -212,7 +212,7 @@ extension TrackersViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! TrackerCollectionViewCell
         let tracker = visibleCategories[indexPath.section].items[indexPath.row]
         let days = completedTrackers.filter({ $0.trackerId == tracker.id }).count
-        let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate))
+        let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         cell.configure(with: tracker, completedDays: days, isDone: isDone, delegate: self);
         return cell
     }
@@ -280,12 +280,12 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 
 extension TrackersViewController: TrackersViewControllerDelegate {
     func didCompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
         completedTrackers.insert(trackerRecord)
     }
 
     func didUncompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
         completedTrackers.remove(trackerRecord)
     }
 }

@@ -11,6 +11,12 @@ extension Date {
             formatter.dateFormat = "EEEE"
             return formatter
         }()
+
+        static let timeTruncatedFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter
+        }()
     }
 
     func dayOfWeek() -> WeekDay {
@@ -33,5 +39,9 @@ extension Date {
         default:
             return .monday
         }
+    }
+
+    func dateOnly() -> String {
+        Formatters.timeTruncatedFormatter.string(from: self)
     }
 }
