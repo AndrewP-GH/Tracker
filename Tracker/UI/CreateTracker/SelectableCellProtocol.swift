@@ -3,7 +3,8 @@
 //
 
 import Foundation
+import UIKit
 
-protocol SelectableCellProtocol {
+protocol SelectableCellProtocol: UICollectionViewCell {
     var isSelected: Bool { get set }
 }

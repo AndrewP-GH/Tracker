@@ -406,7 +406,7 @@ extension AddHabitViewController: UICollectionViewDelegate {
         }
     }
 
-    private func removeSelectedStateIfNeeded<T: UICollectionViewCell & SelectableCellProtocol>(
+    private func removeSelectedStateIfNeeded<T: SelectableCellProtocol>(
             _ selectedPath: IndexPath?,
             _ collectionView: UICollectionView,
             _ type: T.Type) {
@@ -414,7 +414,7 @@ extension AddHabitViewController: UICollectionViewDelegate {
         setSelectedState(collectionView, selectedPath, type, state: false)
     }
 
-    private func setSelectedState<T: UICollectionViewCell & SelectableCellProtocol>(
+    private func setSelectedState<T: SelectableCellProtocol>(
             _ collectionView: UICollectionView,
             _ indexPath: IndexPath,
             _ type: T.Type,
