@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class EmojiCollectionViewCell: UICollectionViewCell {
+final class EmojiCollectionViewCell: UICollectionViewCell, SelectableCellProtocol {
     static let identifier = "EmojiCollectionViewCell"
 
     private lazy var titleLabel: UILabel = {
@@ -23,6 +23,16 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                contentView.backgroundColor = .ypLightGrey
+            } else {
+                contentView.backgroundColor = .clear
+            }
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -35,6 +45,9 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
 
     private func setupView() {
         backgroundColor = .clear
+        contentView.layer.cornerRadius = 16
+        contentView.layer.masksToBounds = true
+
         addSubviews()
         setupConstraints()
     }

@@ -27,6 +27,8 @@ final class AddHabitViewController: UIViewController {
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
     private var selectedDays: [WeekDay] = []
+    private var selectedEmojiPath: IndexPath?
+    private var selectedColorPath: IndexPath?
 
     private var collectionViewHeight: CGFloat {
         collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
@@ -388,6 +390,37 @@ extension AddHabitViewController: UICollectionViewDataSource {
 
 extension AddHabitViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch collectionView {
+        case emojiCollectionView:
+            if selectedEmojiPath == indexPath { return };
+            removeSelectedStateIfNeeded(selectedEmojiPath, collectionView, EmojiCollectionViewCell.self)
+            setSelectedState(collectionView, indexPath, EmojiCollectionViewCell.self, state: true)
+            selectedEmojiPath = indexPath
+        case colorCollectionView:
+            if selectedColorPath == indexPath { return }
+            removeSelectedStateIfNeeded(selectedEmojiPath, collectionView, ColorCollectionViewCell.self)
+            setSelectedState(collectionView, indexPath, ColorCollectionViewCell.self, state: true)
+            selectedColorPath = indexPath
+        default:
+            break
+        }
+    }
+
+    private func removeSelectedStateIfNeeded<T: UICollectionViewCell & SelectableCellProtocol>(
+            _ selectedPath: IndexPath?,
+            _ collectionView: UICollectionView,
+            _ type: T.Type) {
+        guard let selectedPath else { return }
+        setSelectedState(collectionView, selectedPath, type, state: false)
+    }
+
+    private func setSelectedState<T: UICollectionViewCell & SelectableCellProtocol>(
+            _ collectionView: UICollectionView,
+            _ indexPath: IndexPath,
+            _ type: T.Type,
+            state: Bool) {
+        let cell = collectionView.cellForItem(at: indexPath) as! T
+        cell.isSelected = state
     }
 }
 

@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class ColorCollectionViewCell: UICollectionViewCell {
+final class ColorCollectionViewCell: UICollectionViewCell, SelectableCellProtocol {
     static let identifier = "ColorCollectionViewCell"
 
     private lazy var colorView: UIView = {
@@ -22,6 +22,18 @@ final class ColorCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                contentView.layer.borderWidth = 3
+                contentView.layer.borderColor = value.withAlphaComponent(0.3).cgColor
+            } else {
+                contentView.layer.borderWidth = 0
+                contentView.layer.borderColor = UIColor.clear.cgColor
+            }
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -34,6 +46,9 @@ final class ColorCollectionViewCell: UICollectionViewCell {
 
     private func setupView() {
         backgroundColor = .clear
+        contentView.layer.cornerRadius = 8
+        contentView.layer.masksToBounds = true
+
         addSubviews()
         setupConstraints()
     }

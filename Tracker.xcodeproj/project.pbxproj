@@ -27,6 +27,7 @@
 		AE09A57983110585B50DB85E /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A89F4384094A31DB9085 /* TrackersViewController.swift */; };
 		AE09A5B9E214C1026264B495 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */; };
 		AE09A6C3C6E8F00B3C8A00C2 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A317014C9DD701FEF33D /* WeekDay.swift */; };
+		AE09A79FAF9BF9704B87BF4F /* SelectableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */; };
 		AE09A7FE3223E7CF5BC5B725 /* EmptyTrackersPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */; };
 		AE09A804C4A6554511760807 /* SectionHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */; };
 		AE09A8497E60BBEF2698B9AE /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A40A8963CDEF25D53C0C /* WeekDayTableViewCell.swift */; };
@@ -75,6 +76,7 @@
 		1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AE09A029231B86A0B34058A9 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A0EF435010B3E6222FEB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCellProtocol.swift; sourceTree = "<group>"; };
 		AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				AE09A606C7F4ABDB4B92C9D1 /* AddHabitTableViewCell.swift */,
 				AE09AD8BA211C8A1599E3D5C /* EmojiCollectionViewCell.swift */,
 				AE09A4646F2418EB0E0C0F90 /* ColorCollectionViewCell.swift */,
+				AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */,
 			);
 			path = CreateTracker;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */,
 				AE09AFBD4AB033EE47FD588E /* TrackersViewControllerDelegate.swift in Sources */,
 				AE09ABDE51984AC429CA79C0 /* ColorCollectionViewCell.swift in Sources */,
+				AE09A79FAF9BF9704B87BF4F /* SelectableCellProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
