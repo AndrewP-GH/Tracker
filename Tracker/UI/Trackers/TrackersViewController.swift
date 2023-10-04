@@ -181,6 +181,7 @@ final class TrackersViewController: UIViewController {
     @objc private func dateChanged() {
         currentDate = datePicker.date
         updateContent()
+        presentedViewController?.dismiss(animated: false, completion: nil)
     }
 
     @objc private func searchTextChanged() {
