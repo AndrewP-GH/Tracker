@@ -8,10 +8,18 @@ import UIKit
 final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
 
-    var tracker: Tracker?
+    private var tracker: Tracker?
+    private weak var delegate: TrackersViewControllerDelegate?
+
+    private var completedDays = 0 {
+        didSet {
+            setDaysLabel()
+        }
+    }
+
     private var isDone = false {
         didSet {
-            updateButton()
+            setButtonImage()
         }
     }
 
@@ -92,9 +100,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with tracker: Tracker) {
+    func configure(with tracker: Tracker, completedDays: Int, isDone: Bool, delegate: TrackersViewControllerDelegate) {
         self.tracker = tracker
-        updateContent()
+        self.delegate = delegate
+        self.completedDays = completedDays
+        self.isDone = isDone
+        updateContentView()
     }
 
     private func setupView() {
@@ -156,7 +167,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         )
     }
 
-    private func updateContent() {
+    private func updateContentView() {
         guard let tracker else {
             return
         }
@@ -164,19 +175,44 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         emojiLabel.text = tracker.emoji
         nameLabel.text = tracker.name
         button.tintColor = tracker.color
-        daysLabel.text = "0 дней"
-        updateButton()
+
+        setDaysLabel()
+        setButtonImage()
     }
 
     @objc private func buttonTapped() {
         isDone.toggle()
+        if let tracker, let delegate {
+            if isDone {
+                completedDays += 1
+                delegate.didCompleteTracker(id: tracker.id)
+            } else {
+                completedDays -= 1
+                delegate.didUncompleteTracker(id: tracker.id)
+            }
+        }
     }
 
-    private func updateButton() {
+    private func setButtonImage() {
         if isDone {
             button.setImage(UIImage(named: "DoneButton"), for: .normal)
         } else {
             button.setImage(UIImage(named: "PlusButton"), for: .normal)
         }
+    }
+
+    private func setDaysLabel() {
+        var text = ""
+        switch completedDays {
+        case 0:
+            text = "0 дней"
+        case 1:
+            text = "1 день"
+        case 2...4:
+            text = "\(completedDays) дня"
+        default:
+            text = "\(completedDays) дней"
+        }
+        daysLabel.text = text
     }
 }

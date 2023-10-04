@@ -208,7 +208,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as! TrackerCollectionViewCell
         let tracker = visibleCategories[indexPath.section].items[indexPath.row]
-        cell.configure(with: tracker)
+        let days = completedTrackers.filter({ $0.trackerId == tracker.id }).count
+        let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate))
+        cell.configure(with: tracker, completedDays: days, isDone: isDone, delegate: self);
         return cell
     }
 
@@ -273,6 +275,17 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension TrackersViewController: TrackersViewControllerDelegate {
+    func didCompleteTracker(id: UUID) {
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
+        completedTrackers.insert(trackerRecord)
+    }
+
+    func didUncompleteTracker(id: UUID) {
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
+        completedTrackers.remove(trackerRecord)
+    }
+}
 
 extension TrackersViewController {
     class func createTrackers() -> [TrackerCategory] {

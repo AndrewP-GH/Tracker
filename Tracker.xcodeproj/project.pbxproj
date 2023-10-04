@@ -39,6 +39,7 @@
 		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
 		AE09AE769C5982E1A071099A /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */; };
 		AE09AF3EE56D2791C0582FCC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */; };
+		AE09AFBD4AB033EE47FD588E /* TrackersViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AC1B9B297E841AE60985 /* TrackersViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrackersPlaceholderView.swift; sourceTree = "<group>"; };
 		AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderReusableView.swift; sourceTree = "<group>"; };
 		AE09AB4275607F87ED4373BF /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		AE09AC1B9B297E841AE60985 /* TrackersViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		AE09AD8BA211C8A1599E3D5C /* TrackerCustomizationViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCustomizationViewCell.swift; sourceTree = "<group>"; };
 		AE09ADC3540B22379B38D9A8 /* Tracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				AE09A89F4384094A31DB9085 /* TrackersViewController.swift */,
 				AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */,
 				AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */,
+				AE09AC1B9B297E841AE60985 /* TrackersViewControllerDelegate.swift */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */,
 				AE09AA24E7E2B461E1AD825F /* TrackerCategory+Exyensions.swift in Sources */,
 				AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */,
+				AE09AFBD4AB033EE47FD588E /* TrackersViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,5 +10,6 @@ struct TrackerRecord: Hashable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(trackerId)
+        hasher.combine(date)
     }
 }
