@@ -99,7 +99,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private lazy var buttonOverlay: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .ypWhite.withAlphaComponent(0.63) // 1 - 0.37 from svg background
+        view.backgroundColor = .ypWhite.withAlphaComponent(0.70)
         return view
     }()
 
