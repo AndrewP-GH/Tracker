@@ -10,8 +10,11 @@ import UIKit
 final class TrackersViewController: UIViewController {
     var categories: [TrackerCategory] = createTrackers()
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
-    var currentDate: Date = Date()
     var visibleCategories: [TrackerCategory] = []
+
+    private var currentDate: Date {
+        datePicker.date
+    }
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -49,7 +52,7 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
-        datePicker.date = currentDate
+        datePicker.date = Date()
         return datePicker
     }()
 
@@ -179,7 +182,6 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func dateChanged() {
-        currentDate = datePicker.date
         updateContent()
         presentedViewController?.dismiss(animated: false, completion: nil)
     }
