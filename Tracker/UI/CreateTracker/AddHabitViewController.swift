@@ -113,11 +113,17 @@ final class AddHabitViewController: UIViewController {
     }
 
     private lazy var emojiCollectionView: UICollectionView = {
-        createCollectionView()
+        let collectionView = createCollectionView()
+        collectionView.register(EmojiCollectionViewCell.self,
+                                forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
+        return collectionView
     }()
 
     private lazy var colorCollectionView: UICollectionView = {
-        createCollectionView()
+        let collectionView = createCollectionView()
+        collectionView.register(ColorCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ColorCollectionViewCell.identifier)
+        return collectionView
     }()
 
     private func createCollectionView() -> UICollectionView {
@@ -127,8 +133,6 @@ final class AddHabitViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(TrackerCustomizationViewCell.self,
-                                forCellWithReuseIdentifier: TrackerCustomizationViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -365,17 +369,20 @@ extension AddHabitViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCustomizationViewCell.identifier,
-                                                      for: indexPath) as! TrackerCustomizationViewCell
         switch collectionView {
         case emojiCollectionView:
-            cell.value = .emoji(emojis[indexPath.row])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier,
+                                                          for: indexPath) as! EmojiCollectionViewCell
+            cell.value = emojis[indexPath.row]
+            return cell
         case colorCollectionView:
-            cell.value = .color(colors[indexPath.row])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier,
+                                                          for: indexPath) as! ColorCollectionViewCell
+            cell.value = colors[indexPath.row]
+            return cell
         default:
-            break
+            return UICollectionViewCell()
         }
-        return cell
     }
 }
 
@@ -386,14 +393,14 @@ extension AddHabitViewController: UICollectionViewDelegate {
 
 extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         collectionCellSize
     }
 
     func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         0.0
     }
 
