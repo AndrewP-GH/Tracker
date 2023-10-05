@@ -403,25 +403,26 @@ extension AddHabitViewController: UICollectionViewDelegate {
         switch collectionView {
         case emojiCollectionView:
             if selectedEmojiPath == indexPath { return };
-            removeSelectedStateIfNeeded(selectedEmojiPath, collectionView, EmojiCollectionViewCell.self)
-            setSelectedState(collectionView, indexPath, EmojiCollectionViewCell.self, state: true)
+            selectCell(collectionView, indexPath, EmojiCollectionViewCell.self, selectedEmojiPath)
             selectedEmojiPath = indexPath
         case colorCollectionView:
             if selectedColorPath == indexPath { return }
-            removeSelectedStateIfNeeded(selectedEmojiPath, collectionView, ColorCollectionViewCell.self)
-            setSelectedState(collectionView, indexPath, ColorCollectionViewCell.self, state: true)
+            selectCell(collectionView, indexPath, ColorCollectionViewCell.self, selectedColorPath)
             selectedColorPath = indexPath
         default:
             break
         }
     }
 
-    private func removeSelectedStateIfNeeded<T: SelectableCellProtocol>(
-            _ selectedPath: IndexPath?,
+    private func selectCell<T: SelectableCellProtocol>(
             _ collectionView: UICollectionView,
-            _ type: T.Type) {
-        guard let selectedPath else { return }
-        setSelectedState(collectionView, selectedPath, type, state: false)
+            _ indexPath: IndexPath,
+            _ type: T.Type,
+            _ prevSelectedPath: IndexPath?) {
+        if let prevSelectedPath {
+            setSelectedState(collectionView, prevSelectedPath, type, state: false)
+        }
+        setSelectedState(collectionView, indexPath, type, state: true)
     }
 
     private func setSelectedState<T: SelectableCellProtocol>(
