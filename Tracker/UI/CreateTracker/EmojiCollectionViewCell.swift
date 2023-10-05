@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class EmojiCollectionViewCell: UICollectionViewCell, SelectableCellProtocol {
+final class EmojiCollectionViewCell: UICollectionViewCell, CellWithValueProtocol, SelectableCellProtocol {
     static let identifier = "EmojiCollectionViewCell"
 
     private lazy var titleLabel: UILabel = {

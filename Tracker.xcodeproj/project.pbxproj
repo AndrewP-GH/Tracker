@@ -15,6 +15,7 @@
 		1BAEE38229F43005001601F9 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38129F43005001601F9 /* TrackerTests.swift */; };
 		1BAEE38C29F43005001601F9 /* TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38B29F43005001601F9 /* TrackerUITests.swift */; };
 		1BAEE38E29F43005001601F9 /* TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */; };
+		AE09A0705BD6DBFDA6D4C9B9 /* CellWithValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AFD1C88F664A1F07DB85 /* CellWithValueProtocol.swift */; };
 		AE09A105DE773752C8DEC50A /* AddHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AF12C4F3D544E02D63A3 /* AddHabitViewController.swift */; };
 		AE09A133B1627915DC5B37B5 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AD8BA211C8A1599E3D5C /* EmojiCollectionViewCell.swift */; };
 		AE09A23B762FC0FE6DB5BABC /* AddTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AFFCD877240BEF97F86D /* AddTrackerViewController.swift */; };
@@ -100,6 +101,7 @@
 		AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		AE09AF12C4F3D544E02D63A3 /* AddHabitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitViewController.swift; sourceTree = "<group>"; };
 		AE09AFC837732573408E6E18 /* TrackerCategory+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerCategory+Extensions.swift"; sourceTree = "<group>"; };
+		AE09AFD1C88F664A1F07DB85 /* CellWithValueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithValueProtocol.swift; sourceTree = "<group>"; };
 		AE09AFFCD877240BEF97F86D /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -210,6 +212,7 @@
 				AE09AD8BA211C8A1599E3D5C /* EmojiCollectionViewCell.swift */,
 				AE09A4646F2418EB0E0C0F90 /* ColorCollectionViewCell.swift */,
 				AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */,
+				AE09AFD1C88F664A1F07DB85 /* CellWithValueProtocol.swift */,
 			);
 			path = CreateTracker;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				AE09AFBD4AB033EE47FD588E /* TrackersViewControllerDelegate.swift in Sources */,
 				AE09ABDE51984AC429CA79C0 /* ColorCollectionViewCell.swift in Sources */,
 				AE09A79FAF9BF9704B87BF4F /* SelectableCellProtocol.swift in Sources */,
+				AE09A0705BD6DBFDA6D4C9B9 /* CellWithValueProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

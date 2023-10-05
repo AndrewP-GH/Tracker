@@ -373,18 +373,28 @@ extension AddHabitViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case emojiCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionViewCell.identifier,
-                                                          for: indexPath) as! EmojiCollectionViewCell
-            cell.value = emojis[indexPath.row]
-            return cell
+            return dequeueCellWithValue(collectionView,
+                                        indexPath,
+                                        EmojiCollectionViewCell.self,
+                                        value: emojis[indexPath.row])
         case colorCollectionView:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier,
-                                                          for: indexPath) as! ColorCollectionViewCell
-            cell.value = colors[indexPath.row]
-            return cell
+            return dequeueCellWithValue(collectionView,
+                                        indexPath,
+                                        ColorCollectionViewCell.self,
+                                        value: colors[indexPath.row])
         default:
             return UICollectionViewCell()
         }
+    }
+
+    private func dequeueCellWithValue<T: CellWithValueProtocol>(
+            _ collectionView: UICollectionView,
+            _ indexPath: IndexPath,
+            _ type: T.Type,
+            value: T.TValue) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
+        cell.value = value
+        return cell
     }
 }
 

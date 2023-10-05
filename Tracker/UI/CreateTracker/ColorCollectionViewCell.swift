@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class ColorCollectionViewCell: UICollectionViewCell, SelectableCellProtocol {
+final class ColorCollectionViewCell: UICollectionViewCell, CellWithValueProtocol, SelectableCellProtocol {
     static let identifier = "ColorCollectionViewCell"
 
     private lazy var colorView: UIView = {
