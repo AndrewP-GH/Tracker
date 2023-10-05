@@ -295,11 +295,14 @@ extension AddHabitViewController: UITextFieldDelegate {
     }
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        updateSaveButtonState(textField: textField)
+        updateSaveButtonState()
     }
 
-    private func updateSaveButtonState(textField: UITextField) {
-        if (textField.text?.isEmpty ?? true) || selectedDays.isEmpty {
+    private func updateSaveButtonState() {
+        if (nameTextField.text?.isEmpty ?? true)
+           || selectedDays.isEmpty
+           || selectedEmojiPath == nil
+           || selectedColorPath == nil {
             disableButton(saveButton)
         } else {
             enableButton(saveButton)
@@ -412,6 +415,7 @@ extension AddHabitViewController: UICollectionViewDelegate {
         default:
             break
         }
+        updateSaveButtonState()
     }
 
     private func selectCell<T: SelectableCellProtocol>(
@@ -469,6 +473,6 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
 extension AddHabitViewController: AddHabitViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule
-        updateSaveButtonState(textField: nameTextField)
+        updateSaveButtonState()
     }
 }
