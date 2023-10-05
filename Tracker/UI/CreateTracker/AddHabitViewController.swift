@@ -278,11 +278,14 @@ final class AddHabitViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        delegate?.addTracker(tracker: Tracker(
+        guard let delegate,
+              let selectedEmojiPath,
+              let selectedColorPath else { return }
+        delegate.addTracker(tracker: Tracker(
                 id: UUID(),
                 name: nameTextField.text!,
-                color: colors[0],
-                emoji: emojis[0],
+                color: colors[selectedColorPath.row],
+                emoji: emojis[selectedEmojiPath.row],
                 schedule: Schedule(days: selectedDays))
         )
     }
