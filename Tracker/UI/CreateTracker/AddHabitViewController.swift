@@ -409,11 +409,11 @@ extension AddHabitViewController: UICollectionViewDelegate {
         switch collectionView {
         case emojiCollectionView:
             if selectedEmojiPath == indexPath { return };
-            selectCell(collectionView, indexPath, EmojiCollectionViewCell.self, selectedEmojiPath)
+            selectCell(collectionView, indexPath, EmojiCollectionViewCell.self, prevSelectedPath: selectedEmojiPath)
             selectedEmojiPath = indexPath
         case colorCollectionView:
             if selectedColorPath == indexPath { return }
-            selectCell(collectionView, indexPath, ColorCollectionViewCell.self, selectedColorPath)
+            selectCell(collectionView, indexPath, ColorCollectionViewCell.self, prevSelectedPath: selectedColorPath)
             selectedColorPath = indexPath
         default:
             break
@@ -425,7 +425,7 @@ extension AddHabitViewController: UICollectionViewDelegate {
             _ collectionView: UICollectionView,
             _ indexPath: IndexPath,
             _ type: T.Type,
-            _ prevSelectedPath: IndexPath?) {
+            prevSelectedPath: IndexPath?) {
         if let prevSelectedPath {
             setSelectedState(collectionView, prevSelectedPath, type, state: false)
         }
