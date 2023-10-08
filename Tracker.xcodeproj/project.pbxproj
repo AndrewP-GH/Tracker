@@ -167,6 +167,22 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		1B71F1102AD366C200F3A8CE /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				1BAEE37529F43005001601F9 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		1B71F1112AD366DB00F3A8CE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1BAEE37329F43005001601F9 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		1BAEE35E29F43004001601F9 = {
 			isa = PBXGroup;
 			children = (
@@ -190,10 +206,10 @@
 		1BAEE36929F43004001601F9 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				1B71F1112AD366DB00F3A8CE /* Resources */,
+				1B71F1102AD366C200F3A8CE /* Storyboards */,
 				1B71F10F2AD3666300F3A8CE /* Application */,
 				1B3EDECE2A0A85D000F12717 /* Helpers */,
-				1BAEE37329F43005001601F9 /* Assets.xcassets */,
-				1BAEE37529F43005001601F9 /* LaunchScreen.storyboard */,
 				1BAEE37829F43005001601F9 /* Info.plist */,
 				AE09AB5FCCE960083A367F9A /* Models */,
 				AE09AAA459A5F8C2DCF135BA /* Controllers */,
