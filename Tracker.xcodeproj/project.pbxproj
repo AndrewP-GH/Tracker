@@ -158,6 +158,15 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		1B71F10F2AD3666300F3A8CE /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				1BAEE36A29F43004001601F9 /* AppDelegate.swift */,
+				1BAEE36C29F43004001601F9 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		1BAEE35E29F43004001601F9 = {
 			isa = PBXGroup;
 			children = (
@@ -181,9 +190,8 @@
 		1BAEE36929F43004001601F9 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				1B71F10F2AD3666300F3A8CE /* Application */,
 				1B3EDECE2A0A85D000F12717 /* Helpers */,
-				1BAEE36A29F43004001601F9 /* AppDelegate.swift */,
-				1BAEE36C29F43004001601F9 /* SceneDelegate.swift */,
 				1BAEE37329F43005001601F9 /* Assets.xcassets */,
 				1BAEE37529F43005001601F9 /* LaunchScreen.storyboard */,
 				1BAEE37829F43005001601F9 /* Info.plist */,
