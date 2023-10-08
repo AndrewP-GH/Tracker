@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class TabBarViewController: UITabBarController {
+final class HomePageViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
