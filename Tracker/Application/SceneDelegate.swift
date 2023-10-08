@@ -17,8 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else {
             return
         }
+        guard let appDelegate else {
+            return
+        }
+        let viewController = HomePageViewController(container: appDelegate.persistentContainer)
         let window = UIWindow(windowScene: scene as! UIWindowScene)
-        let viewController = HomePageViewController()
         window.rootViewController = viewController
         self.window = window
         window.makeKeyAndVisible()
@@ -50,6 +53,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        appDelegate?.saveContext()
+    }
+
+    private var appDelegate: AppDelegate? {
+        UIApplication.shared.delegate as? AppDelegate
     }
 }
 
