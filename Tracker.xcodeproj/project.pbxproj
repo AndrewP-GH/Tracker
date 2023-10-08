@@ -142,6 +142,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		1B71F10D2AD3658300F3A8CE /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
 		1BAEE35E29F43004001601F9 = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +180,7 @@
 				1BAEE37529F43005001601F9 /* LaunchScreen.storyboard */,
 				1BAEE37829F43005001601F9 /* Info.plist */,
 				AE09AB5FCCE960083A367F9A /* Models */,
-				AE09AAA459A5F8C2DCF135BA /* UI */,
+				AE09AAA459A5F8C2DCF135BA /* Controllers */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -203,7 +211,7 @@
 			path = AddTracker;
 			sourceTree = "<group>";
 		};
-		AE09A825A50987552D726796 /* CreateTracker */ = {
+		AE09A825A50987552D726796 /* AddHabit */ = {
 			isa = PBXGroup;
 			children = (
 				AE09AF12C4F3D544E02D63A3 /* AddHabitViewController.swift */,
@@ -214,22 +222,21 @@
 				AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */,
 				AE09AFD1C88F664A1F07DB85 /* CellWithValueProtocol.swift */,
 			);
-			path = CreateTracker;
+			path = AddHabit;
 			sourceTree = "<group>";
 		};
-		AE09AAA459A5F8C2DCF135BA /* UI */ = {
+		AE09AAA459A5F8C2DCF135BA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1B71F10D2AD3658300F3A8CE /* Statistics */,
 				AE09A42206D55B5347AD67C8 /* AddTracker */,
-				AE09A825A50987552D726796 /* CreateTracker */,
-				AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */,
+				AE09A825A50987552D726796 /* AddHabit */,
 				AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */,
-				AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */,
 				AE09AEA6A3EF14E3B7D34947 /* Schedule */,
 				AE09AEADA88015377B23E149 /* Helpers */,
 				AE09AB5F564D9A32737982C7 /* Trackers */,
 			);
-			path = UI;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		AE09AB5F564D9A32737982C7 /* Trackers */ = {
@@ -237,6 +244,7 @@
 			children = (
 				AE09A89F4384094A31DB9085 /* TrackersViewController.swift */,
 				AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */,
+				AE09A9A266119970F874DAC2 /* EmptyTrackersPlaceholderView.swift */,
 				AE09AA48EFAA8EA675DBD177 /* SectionHeaderReusableView.swift */,
 				AE09AC1B9B297E841AE60985 /* TrackersViewControllerDelegate.swift */,
 			);
