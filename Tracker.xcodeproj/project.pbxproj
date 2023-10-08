@@ -41,7 +41,7 @@
 		AE09ABDE51984AC429CA79C0 /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A4646F2418EB0E0C0F90 /* ColorCollectionViewCell.swift */; };
 		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
 		AE09AE769C5982E1A071099A /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */; };
-		AE09AF3EE56D2791C0582FCC /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */; };
+		AE09AF3EE56D2791C0582FCC /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A2A7C702230DB6E659C8 /* HomePageViewController.swift */; };
 		AE09AFBD4AB033EE47FD588E /* TrackersViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AC1B9B297E841AE60985 /* TrackersViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,7 @@
 		AE09A029231B86A0B34058A9 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A0EF435010B3E6222FEB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		AE09A292FC42689EC29DA4F3 /* SelectableCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCellProtocol.swift; sourceTree = "<group>"; };
-		AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		AE09A2A7C702230DB6E659C8 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A33D912AC8AB0F48DF66 /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -148,6 +148,14 @@
 				AE09ACE3B7B1FF0057DA54E4 /* StatisticsViewController.swift */,
 			);
 			path = Statistics;
+			sourceTree = "<group>";
+		};
+		1B71F10E2AD3663900F3A8CE /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				AE09A2A7C702230DB6E659C8 /* HomePageViewController.swift */,
+			);
+			path = HomePage;
 			sourceTree = "<group>";
 		};
 		1BAEE35E29F43004001601F9 = {
@@ -228,10 +236,10 @@
 		AE09AAA459A5F8C2DCF135BA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1B71F10E2AD3663900F3A8CE /* HomePage */,
 				1B71F10D2AD3658300F3A8CE /* Statistics */,
 				AE09A42206D55B5347AD67C8 /* AddTracker */,
 				AE09A825A50987552D726796 /* AddHabit */,
-				AE09A2A7C702230DB6E659C8 /* TabBarViewController.swift */,
 				AE09AEA6A3EF14E3B7D34947 /* Schedule */,
 				AE09AEADA88015377B23E149 /* Helpers */,
 				AE09AB5F564D9A32737982C7 /* Trackers */,
@@ -423,7 +431,7 @@
 				AE09A29734C1FACC32502129 /* AddHabitViewControllerDelegate.swift in Sources */,
 				AE09A570D146E3E4320B766D /* AddHabitTableViewCell.swift in Sources */,
 				AE09A7FE3223E7CF5BC5B725 /* EmptyTrackersPlaceholderView.swift in Sources */,
-				AE09AF3EE56D2791C0582FCC /* TabBarViewController.swift in Sources */,
+				AE09AF3EE56D2791C0582FCC /* HomePageViewController.swift in Sources */,
 				AE09A33AAC7090BA48900B75 /* StatisticsViewController.swift in Sources */,
 				AE09A2B7C09B71442218EDB9 /* ScheduleViewController.swift in Sources */,
 				AE09A8497E60BBEF2698B9AE /* WeekDayTableViewCell.swift in Sources */,
