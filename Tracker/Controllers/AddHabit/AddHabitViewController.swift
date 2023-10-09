@@ -377,16 +377,6 @@ extension AddHabitViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        func dequeueCellWithValue<T: CellWithValueProtocol>(
-                _ collectionView: UICollectionView,
-                cellForItemAt indexPath: IndexPath,
-                cellType type: T.Type,
-                value: T.TValue) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
-            cell.value = value
-            return cell
-        }
-
         switch collectionView {
         case emojiCollectionView:
             return dequeueCellWithValue(collectionView,
@@ -401,6 +391,16 @@ extension AddHabitViewController: UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
+
+        func dequeueCellWithValue<T: CellWithValueProtocol>(
+                _ collectionView: UICollectionView,
+                cellForItemAt indexPath: IndexPath,
+                cellType: T.Type,
+                value: T.TValue) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
+            cell.value = value
+            return cell
+        }
     }
 }
 
@@ -409,11 +409,17 @@ extension AddHabitViewController: UICollectionViewDelegate {
         switch collectionView {
         case emojiCollectionView:
             if selectedEmojiPath == indexPath { return };
-            selectCell(collectionView, indexPath, EmojiCollectionViewCell.self, prevSelectedPath: selectedEmojiPath)
+            selectCell(collectionView,
+                       selectedPath: indexPath,
+                       cellType: EmojiCollectionViewCell.self,
+                       prevSelectedPath: selectedEmojiPath)
             selectedEmojiPath = indexPath
         case colorCollectionView:
             if selectedColorPath == indexPath { return }
-            selectCell(collectionView, indexPath, ColorCollectionViewCell.self, prevSelectedPath: selectedColorPath)
+            selectCell(collectionView,
+                       selectedPath: indexPath,
+                       cellType: ColorCollectionViewCell.self,
+                       prevSelectedPath: selectedColorPath)
             selectedColorPath = indexPath
         default:
             break
@@ -423,22 +429,18 @@ extension AddHabitViewController: UICollectionViewDelegate {
 
     private func selectCell<T: SelectableCellProtocol>(
             _ collectionView: UICollectionView,
-            _ indexPath: IndexPath,
-            _ type: T.Type,
+            selectedPath: IndexPath,
+            cellType: T.Type,
             prevSelectedPath: IndexPath?) {
-        func setSelectedState(
-                _ collectionView: UICollectionView,
-                _ indexPath: IndexPath,
-                _ type: T.Type,
-                state: Bool) {
-            let cell = collectionView.cellForItem(at: indexPath) as! T
+        if let prevSelectedPath {
+            setSelectedState(collectionView, cellForItemAt: prevSelectedPath, cellType: cellType, state: false)
+        }
+        setSelectedState(collectionView, cellForItemAt: selectedPath, cellType: cellType, state: true)
+
+        func setSelectedState(_ collectionView: UICollectionView, cellForItemAt: IndexPath, cellType: T.Type, state: Bool) {
+            let cell = collectionView.cellForItem(at: cellForItemAt) as! T
             cell.isSelected = state
         }
-
-        if let prevSelectedPath {
-            setSelectedState(collectionView, prevSelectedPath, type, state: false)
-        }
-        setSelectedState(collectionView, indexPath, type, state: true)
     }
 }
 
