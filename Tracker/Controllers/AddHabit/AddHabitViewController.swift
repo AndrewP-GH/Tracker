@@ -379,8 +379,8 @@ extension AddHabitViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         func dequeueCellWithValue<T: CellWithValueProtocol>(
                 _ collectionView: UICollectionView,
-                _ indexPath: IndexPath,
-                _ type: T.Type,
+                cellForItemAt indexPath: IndexPath,
+                cellType type: T.Type,
                 value: T.TValue) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
             cell.value = value
@@ -390,13 +390,13 @@ extension AddHabitViewController: UICollectionViewDataSource {
         switch collectionView {
         case emojiCollectionView:
             return dequeueCellWithValue(collectionView,
-                                        indexPath,
-                                        EmojiCollectionViewCell.self,
+                                        cellForItemAt: indexPath,
+                                        cellType: EmojiCollectionViewCell.self,
                                         value: emojis[indexPath.row])
         case colorCollectionView:
             return dequeueCellWithValue(collectionView,
-                                        indexPath,
-                                        ColorCollectionViewCell.self,
+                                        cellForItemAt: indexPath,
+                                        cellType: ColorCollectionViewCell.self,
                                         value: colors[indexPath.row])
         default:
             return UICollectionViewCell()
@@ -455,10 +455,9 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
         0.0
     }
 
-    func collectionView(
-            _ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         let paddingsCount = collectionItemsPerRow - 1
         if paddingsCount <= 0 {
             return 0.0
