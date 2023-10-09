@@ -377,6 +377,16 @@ extension AddHabitViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        func dequeueCellWithValue<T: CellWithValueProtocol>(
+                _ collectionView: UICollectionView,
+                _ indexPath: IndexPath,
+                _ type: T.Type,
+                value: T.TValue) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
+            cell.value = value
+            return cell
+        }
+
         switch collectionView {
         case emojiCollectionView:
             return dequeueCellWithValue(collectionView,
@@ -391,16 +401,6 @@ extension AddHabitViewController: UICollectionViewDataSource {
         default:
             return UICollectionViewCell()
         }
-    }
-
-    private func dequeueCellWithValue<T: CellWithValueProtocol>(
-            _ collectionView: UICollectionView,
-            _ indexPath: IndexPath,
-            _ type: T.Type,
-            value: T.TValue) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
-        cell.value = value
-        return cell
     }
 }
 
@@ -426,19 +426,19 @@ extension AddHabitViewController: UICollectionViewDelegate {
             _ indexPath: IndexPath,
             _ type: T.Type,
             prevSelectedPath: IndexPath?) {
+        func setSelectedState(
+                _ collectionView: UICollectionView,
+                _ indexPath: IndexPath,
+                _ type: T.Type,
+                state: Bool) {
+            let cell = collectionView.cellForItem(at: indexPath) as! T
+            cell.isSelected = state
+        }
+
         if let prevSelectedPath {
             setSelectedState(collectionView, prevSelectedPath, type, state: false)
         }
         setSelectedState(collectionView, indexPath, type, state: true)
-    }
-
-    private func setSelectedState<T: SelectableCellProtocol>(
-            _ collectionView: UICollectionView,
-            _ indexPath: IndexPath,
-            _ type: T.Type,
-            state: Bool) {
-        let cell = collectionView.cellForItem(at: indexPath) as! T
-        cell.isSelected = state
     }
 }
 
