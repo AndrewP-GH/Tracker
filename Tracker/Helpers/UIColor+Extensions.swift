@@ -18,6 +18,7 @@ extension UIColor {
 
     private static let rgbMultiplier = CGFloat(255.99999999999997)
 
+    //https://stackoverflow.com/a/39358741
     var hexString: String? {
         var red: CGFloat = 0
         var green: CGFloat = 0
