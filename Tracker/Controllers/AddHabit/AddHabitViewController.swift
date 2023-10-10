@@ -16,12 +16,12 @@ final class AddHabitViewController: UIViewController {
         "🥦", "🏓", "🥇", "🎸", "🏝", "😪",
     ]
     private let colors = [
-        UIColor.init(hex: "#FD4C49"), UIColor.init(hex: "#FF881E"), UIColor.init(hex: "#007BFA"),
-        UIColor.init(hex: "#6E44FE"), UIColor.init(hex: "#33CF69"), UIColor.init(hex: "#E66DD4"),
-        UIColor.init(hex: "#F9D4D4"), UIColor.init(hex: "#34A7FE"), UIColor.init(hex: "#46E69D"),
-        UIColor.init(hex: "#35347C"), UIColor.init(hex: "#FF674D"), UIColor.init(hex: "#FF99CC"),
-        UIColor.init(hex: "#F6C48B"), UIColor.init(hex: "#7994F5"), UIColor.init(hex: "#832CF1"),
-        UIColor.init(hex: "#AD56DA"), UIColor.init(hex: "#8D72E6"), UIColor.init(hex: "#2FD058"),
+        UIColor.init(hex: "#FD4C49")!, UIColor.init(hex: "#FF881E")!, UIColor.init(hex: "#007BFA")!,
+        UIColor.init(hex: "#6E44FE")!, UIColor.init(hex: "#33CF69")!, UIColor.init(hex: "#E66DD4")!,
+        UIColor.init(hex: "#F9D4D4")!, UIColor.init(hex: "#34A7FE")!, UIColor.init(hex: "#46E69D")!,
+        UIColor.init(hex: "#35347C")!, UIColor.init(hex: "#FF674D")!, UIColor.init(hex: "#FF99CC")!,
+        UIColor.init(hex: "#F6C48B")!, UIColor.init(hex: "#7994F5")!, UIColor.init(hex: "#832CF1")!,
+        UIColor.init(hex: "#AD56DA")!, UIColor.init(hex: "#8D72E6")!, UIColor.init(hex: "#2FD058")!,
     ]
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)

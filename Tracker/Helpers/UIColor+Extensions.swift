@@ -44,7 +44,7 @@ extension UIColor {
         }
     }
 
-    public convenience init(hex: String) {
+    public convenience init?(hex: String) {
         var hexColor: String
         if hex.hasPrefix("#") {
             let start = hex.index(hex.startIndex, offsetBy: 1)
@@ -79,7 +79,7 @@ extension UIColor {
         default:
             break
         }
-        self.init(red: 0, green: 0, blue: 0, alpha: 0) // TODO: maybe throw an error?
+        return nil
     }
 
 }

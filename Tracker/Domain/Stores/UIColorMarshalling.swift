@@ -12,6 +12,6 @@ final class UIColorMarshalling {
     }
 
     func color(from hexString: String) -> UIColor {
-        UIColor(hex: hexString)
+        UIColor(hex: hexString)!
     }
 }
