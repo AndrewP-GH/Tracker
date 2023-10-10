@@ -4,16 +4,8 @@
 
 import Foundation
 import UIKit
-import CoreData
 
 final class HomePageViewController: UITabBarController {
-    private var dbContainer: NSPersistentContainer!
-
-    convenience init(container: NSPersistentContainer) {
-        self.init()
-        dbContainer = container
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
