@@ -7,7 +7,6 @@ import UIKit
 
 final class ScheduleViewController: UIViewController {
     private let cellHeight: CGFloat = 75
-    private let weekDaysCount = WeekDay.allCases.count
     private let cornerRadius: CGFloat = 16
 
     weak var delegate: AddHabitViewControllerDelegate?
@@ -143,7 +142,7 @@ final class ScheduleViewController: UIViewController {
 
 extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        weekDaysCount
+        WeekDay.allCases.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,7 +153,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
                                                  for: indexPath) as! WeekDayTableViewCell
         let weekDay = WeekDay.allCases[indexPath.row]
-        cell.configure(weekDay: weekDay, title: weekDay.rawValue, isEnabled: selectedDays.contains(weekDay))
+        cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
         return cell
     }
 

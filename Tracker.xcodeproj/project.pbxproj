@@ -16,6 +16,7 @@
 		1BAEE38229F43005001601F9 /* TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38129F43005001601F9 /* TrackerTests.swift */; };
 		1BAEE38C29F43005001601F9 /* TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38B29F43005001601F9 /* TrackerUITests.swift */; };
 		1BAEE38E29F43005001601F9 /* TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */; };
+		AE09A233F225D016B8EE5166 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */; };
 		AE09A28D851161B98792AECB /* AddHabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9AB8EA69C921B9CC360 /* AddHabitViewController.swift */; };
 		AE09A31A78BE4181C4D044ED /* SelectableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADAF4FFAAD73A4158B05 /* SelectableCellProtocol.swift */; };
 		AE09A3627FA8FEA4FE6D7EBB /* EmptyTrackersPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A72F5776EAFD4F9EC053 /* EmptyTrackersPlaceholderView.swift */; };
@@ -37,6 +38,7 @@
 		AE09AA917DCD609CD2C06BCC /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADC3540B22379B38D9A8 /* Tracker.swift */; };
 		AE09AAD7578DDF93B78A438B /* AddHabitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AA6CE07421824796564D /* AddHabitTableViewCell.swift */; };
 		AE09AB1D1B67EACA4444A710 /* AddHabitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AD1C9226A517AB113F0B /* AddHabitViewControllerDelegate.swift */; };
+		AE09AB40BE9A3D80E3F93966 /* ScheduleMarshalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */; };
 		AE09ACBC4868354DC3E8573C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */; };
 		AE09AD540346DCF203831AA7 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */; };
 		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
@@ -44,6 +46,7 @@
 		AE09AE769C5982E1A071099A /* TrackerCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */; };
 		AE09AE9993EB530237DB72A1 /* AddTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE3444CC95921F5096C3 /* AddTrackerViewController.swift */; };
 		AE09AEB04D37986C0547E740 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADBC37686E4A94C60896 /* EmojiCollectionViewCell.swift */; };
+		AE09AF2B68598169D024694F /* UIColorMarshalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A59A610A996F3812B01D /* UIColorMarshalling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,12 +82,14 @@
 		1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AE09A029231B86A0B34058A9 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A0A16DCEDAFD0914E8FE /* CellWithValueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithValueProtocol.swift; sourceTree = "<group>"; };
+		AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerStore.swift; sourceTree = "<group>"; };
 		AE09A1C50B5A0DEB9FECCF19 /* TrackersViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
 		AE09A3E0D535505173B3B75A /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		AE09A52DF510C9D636A1369D /* Date+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		AE09A59A610A996F3812B01D /* UIColorMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorMarshalling.swift; sourceTree = "<group>"; };
 		AE09A69AE6AF63519A4068AF /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		AE09A6D3BF75AA220597A2C2 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		AE09A72F5776EAFD4F9EC053 /* EmptyTrackersPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTrackersPlaceholderView.swift; sourceTree = "<group>"; };
@@ -103,6 +108,7 @@
 		AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecord.swift; sourceTree = "<group>"; };
 		AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		AE09AE3444CC95921F5096C3 /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
+		AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleMarshalling.swift; sourceTree = "<group>"; };
 		AE09AE790F1FDA73E3AA7D97 /* SectionHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderReusableView.swift; sourceTree = "<group>"; };
 		AE09AFC837732573408E6E18 /* TrackerCategory+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerCategory+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -241,6 +247,9 @@
 		1BC3D8B82AD4CC69005AD3C8 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */,
+				AE09A59A610A996F3812B01D /* UIColorMarshalling.swift */,
+				AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -501,6 +510,9 @@
 				AE09A3627FA8FEA4FE6D7EBB /* EmptyTrackersPlaceholderView.swift in Sources */,
 				AE09A81CB3BB035BED93B02B /* SectionHeaderReusableView.swift in Sources */,
 				AE09A8F06488F73EEFD096BD /* TrackersViewControllerDelegate.swift in Sources */,
+				AE09A233F225D016B8EE5166 /* TrackerStore.swift in Sources */,
+				AE09AF2B68598169D024694F /* UIColorMarshalling.swift in Sources */,
+				AE09AB40BE9A3D80E3F93966 /* ScheduleMarshalling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

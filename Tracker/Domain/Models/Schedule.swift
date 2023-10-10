@@ -5,5 +5,5 @@
 import Foundation
 
 struct Schedule {
-    let days: [WeekDay]
+    let days: Set<WeekDay>
 }

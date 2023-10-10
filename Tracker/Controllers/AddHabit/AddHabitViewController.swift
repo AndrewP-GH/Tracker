@@ -286,7 +286,7 @@ final class AddHabitViewController: UIViewController {
                 name: nameTextField.text!,
                 color: colors[selectedColorPath.row],
                 emoji: emojis[selectedEmojiPath.row],
-                schedule: Schedule(days: selectedDays))
+                schedule: Schedule(days: Set(selectedDays)))
         )
     }
 }
