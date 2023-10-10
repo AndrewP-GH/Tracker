@@ -16,7 +16,7 @@ extension UIColor {
     static var ypRed: UIColor { UIColor(named: "YP Red")! }
     static var ypWhite: UIColor { UIColor(named: "YP White")! }
 
-    private static let rgbMultiplier = CGFloat(255.99999999999997)
+    private static let rgbMultiplier = CGFloat(255.999999)
 
     //https://stackoverflow.com/a/39358741
     var hexString: String? {
