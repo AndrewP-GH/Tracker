@@ -22,9 +22,9 @@ final class ScheduleMarshalling {
         }
         let byte = data[0]
         var days = Set<WeekDay>()
-        for i in WeekDay.monday.rawValue...WeekDay.sunday.rawValue {
-            if byte & (1 << i) != 0 {
-                days.insert(WeekDay(rawValue: i)!)
+        for day in WeekDay.allCases {
+            if byte & (1 << day.rawValue) != 0 {
+                days.insert(WeekDay(rawValue: day.rawValue)!)
             }
         }
         return Schedule(days: days)
