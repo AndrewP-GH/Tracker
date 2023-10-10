@@ -21,7 +21,7 @@ final class TrackerStore {
     }
 
     func add(_ tracker: Tracker) throws {
-        let _ = mapper.toEntity(from: tracker, context: context)
+        _ = mapper.toEntity(from: tracker, context: context)
         try context.save()
     }
 }
