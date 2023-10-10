@@ -1,27 +1,27 @@
 //
-// Created by Андрей Парамонов on 10.10.2023.
+// Created by Андрей Парамонов on 11.10.2023.
 //
 
 import Foundation
 import UIKit
 import CoreData
 
-final class TrackerStore {
+final class TrackerRecordStore {
     private let context: NSManagedObjectContext
-    private let mapper = TrackerEntityMapper()
 
     init(context: NSManagedObjectContext) {
         self.context = context
     }
 
     convenience init() {
-//        self.init(context: CoreDataStack.shared.context)
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         self.init(context: context)
     }
 
-    func add(_ tracker: Tracker) throws {
-        let _ = mapper.toEntity(from: tracker, context: context)
+    func add(_ trackerRecord: TrackerRecord) throws {
+        let trackerRecordEntity = TrackerRecordEntity(context: context)
+        trackerRecordEntity.date = trackerRecord.date
+        trackerRecordEntity.trackerId = trackerRecord.trackerId
         try context.save()
     }
 }
