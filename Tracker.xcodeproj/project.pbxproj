@@ -184,9 +184,18 @@
 		1B71F1122AD3675400F3A8CE /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				1B71F1132AD3679000F3A8CE /* Model.xcdatamodeld */,
+				1BC3D8B82AD4CC69005AD3C8 /* DataStore */,
+				1B8118E32AD74A3500524D56 /* Model */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		1B8118E32AD74A3500524D56 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1B71F1132AD3679000F3A8CE /* Model.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		1BAEE35E29F43004001601F9 = {
@@ -244,13 +253,12 @@
 		1BC3D8B72AD4CC5C005AD3C8 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				1BC3D8B82AD4CC69005AD3C8 /* Stores */,
 				AE09AB5FCCE960083A367F9A /* Models */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		1BC3D8B82AD4CC69005AD3C8 /* Stores */ = {
+		1BC3D8B82AD4CC69005AD3C8 /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
 				AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */,
@@ -260,7 +268,7 @@
 				AE09A03B3C9371DFD69049CD /* TrackerEntityMapper.swift */,
 				AE09AD80EC1877A1FE55DB7B /* TrackerRecordStore.swift */,
 			);
-			path = Stores;
+			path = DataStore;
 			sourceTree = "<group>";
 		};
 		AE09A1C9CF5EB408ABD400B2 /* Schedule */ = {
