@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 final class CreateTrackerTableViewCell: GreyTableViewCell {
-    static let identifier = "AddHabitTableViewCell"
+    static let identifier = "CreateTrackerTableViewCell"
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()

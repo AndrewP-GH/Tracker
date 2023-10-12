@@ -222,22 +222,6 @@ extension TrackersViewController: UICollectionViewDataSource {
                        delegate: self);
         return cell
     }
-
-    func collectionView(
-            _ collectionView: UICollectionView,
-            viewForSupplementaryElementOfKind kind: String,
-            at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let sectionHeader = collectionView.dequeueReusableSupplementaryView(
-                    ofKind: kind,
-                    withReuseIdentifier: CategoryHeaderReusableView.identifier,
-                    for: indexPath) as! CategoryHeaderReusableView
-            sectionHeader.configure(with: visibleCategories[indexPath.section].header)
-            return sectionHeader
-        } else {
-            return UICollectionReusableView()
-        }
-    }
 }
 
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
@@ -256,6 +240,22 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                 verticalFittingPriority: .fittingSizeLevel)
     }
 
+    func collectionView(
+            _ collectionView: UICollectionView,
+            viewForSupplementaryElementOfKind kind: String,
+            at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let sectionHeader = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: CategoryHeaderReusableView.identifier,
+                    for: indexPath) as! CategoryHeaderReusableView
+            sectionHeader.configure(with: visibleCategories[indexPath.section].header)
+            return sectionHeader
+        } else {
+            return UICollectionReusableView()
+        }
+    }
+
     fileprivate var itemsPerRow: CGFloat {
         2
     }
@@ -269,8 +269,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView,
-            layout collectionViewLayout: UICollectionViewLayout,
-            sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing = spacing * (itemsPerRow - 1)
         let widthPerItem = (collectionView.bounds.width - spacing) / itemsPerRow
         return CGSize(width: widthPerItem.rounded(.towardZero), height: cellHeight)
