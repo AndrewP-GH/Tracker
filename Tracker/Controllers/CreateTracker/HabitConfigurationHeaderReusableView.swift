@@ -44,7 +44,7 @@ final class HabitConfigurationHeaderReusableView: UICollectionReusableView {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    label.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+                    label.topAnchor.constraint(equalTo: topAnchor, constant: 32),
                     label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
                     label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
                     label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),

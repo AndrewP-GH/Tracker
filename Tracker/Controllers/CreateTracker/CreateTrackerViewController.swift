@@ -233,8 +233,8 @@ final class CreateTrackerViewController: UIViewController {
         switch mode {
         case .habit:
             additionalConstraints = [
-                habitConfigurationCollectionView.bottomAnchor
-                        .constraint(equalTo: buttonsStackView.topAnchor, constant: -40),
+                buttonsStackView.topAnchor
+                        .constraint(equalTo: habitConfigurationCollectionView.bottomAnchor, constant: 40),
             ]
         case .event:
             additionalConstraints = [
@@ -274,7 +274,7 @@ final class CreateTrackerViewController: UIViewController {
                     configurationTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
                     habitConfigurationCollectionView.topAnchor
-                            .constraint(equalTo: configurationTable.bottomAnchor, constant: 32),
+                            .constraint(equalTo: configurationTable.bottomAnchor),
                     habitConfigurationCollectionView.leadingAnchor
                             .constraint(equalTo: svContentG.leadingAnchor, constant: 18),
                     habitConfigurationCollectionView.trailingAnchor
@@ -546,10 +546,9 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 0 {
-            return UIEdgeInsets.zero
+            return UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         } else {
-            // Normal insets for collection
-            return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets.zero
         }
     }
 }
