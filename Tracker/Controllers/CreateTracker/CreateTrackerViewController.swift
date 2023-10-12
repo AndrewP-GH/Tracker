@@ -129,8 +129,8 @@ final class CreateTrackerViewController: UIViewController {
         return configureTable
     }()
 
-    private lazy var habitConfigurationCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero,
+    private lazy var habitConfigurationCollectionView: DynamicCollectionView = {
+        let collectionView = DynamicCollectionView(frame: .zero,
                                               collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
@@ -233,12 +233,12 @@ final class CreateTrackerViewController: UIViewController {
         switch mode {
         case .habit:
             additionalConstraints = [
-                buttonsStackView.topAnchor
-                        .constraint(equalTo: habitConfigurationCollectionView.bottomAnchor, constant: 40),
+                habitConfigurationCollectionView.bottomAnchor
+                        .constraint(equalTo: buttonsStackView.topAnchor, constant: -40),
             ]
         case .event:
             additionalConstraints = [
-                buttonsStackView.bottomAnchor
+                contentView.bottomAnchor
                         .constraint(equalTo: safeG.bottomAnchor, constant: 0),
             ]
         }
@@ -250,7 +250,7 @@ final class CreateTrackerViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
                     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
+                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
@@ -279,14 +279,11 @@ final class CreateTrackerViewController: UIViewController {
                             .constraint(equalTo: svContentG.leadingAnchor, constant: 18),
                     habitConfigurationCollectionView.trailingAnchor
                             .constraint(equalTo: svContentG.trailingAnchor, constant: -18),
-//                    habitConfigurationCollectionView.bottomAnchor
-//                            .constraint(equalTo: buttonsStackView.topAnchor, constant: 40),
-            habitConfigurationCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight * 4),
 
-            buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
-            buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
-            buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
-        ]
+                    buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
+                    buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
+                    buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
+                ]
                 + additionalConstraints
         )
     }
