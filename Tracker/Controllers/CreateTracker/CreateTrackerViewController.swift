@@ -9,7 +9,6 @@ final class CreateTrackerViewController: UIViewController {
     weak var delegate: AddTrackerViewControllerDelegate?
 
     private let tableCellHeight: CGFloat = 75
-    private let tableRows: Int = 2
     private let emojis = [
         "🙂", "😻", "🌺", "🐶", "❤️", "😱",
         "😇", "😡", "🥶", "🤔", "🙌", "🍔",
@@ -36,6 +35,15 @@ final class CreateTrackerViewController: UIViewController {
             return "Новая привычка"
         case .event:
             return "Новое нерегулярное событие"
+        }
+    }
+
+    private var tableRows: Int {
+        switch mode {
+        case .habit:
+            return 2
+        case .event:
+            return 1
         }
     }
 
@@ -273,12 +281,12 @@ final class CreateTrackerViewController: UIViewController {
                             .constraint(equalTo: svContentG.trailingAnchor, constant: -18),
 //                    habitConfigurationCollectionView.bottomAnchor
 //                            .constraint(equalTo: buttonsStackView.topAnchor, constant: 40),
-                    habitConfigurationCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight*4),
+            habitConfigurationCollectionView.heightAnchor.constraint(equalToConstant: collectionViewHeight * 4),
 
-                    buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
-                    buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
-                    buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
-                ]
+            buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
+            buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
+        ]
                 + additionalConstraints
         )
     }
@@ -312,14 +320,20 @@ extension CreateTrackerViewController: UITextFieldDelegate {
     }
 
     private func updateSaveButtonState() {
-        if (nameTextField.text?.isEmpty ?? true)
-           || selectedDays.isEmpty
-           || selectedEmojiPath == nil
-           || selectedColorPath == nil {
-            disableButton(saveButton)
-        } else {
-            enableButton(saveButton)
+        var fullConfigured: Bool
+        let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
+        switch mode {
+        case .habit:
+            fullConfigured = isNameFilled && !selectedDays.isEmpty && selectedEmojiPath != nil && selectedColorPath != nil
+        case .event:
+            fullConfigured = isNameFilled
         }
+        if fullConfigured {
+            enableButton(saveButton)
+        } else {
+            disableButton(saveButton)
+        }
+
     }
 }
 
@@ -451,10 +465,9 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
         }
         setSelectedState(collectionView, cellForItemAt: selectedPath, cellType: cellType, state: true)
 
-        func setSelectedState(
-                _ collectionView: UICollectionView, cellForItemAt: IndexPath, cellType: T.Type, state: Bool) {
+        func setSelectedState(_ collectionView: UICollectionView, cellForItemAt: IndexPath, cellType: T.Type, state: Bool) {
             let cell = collectionView.cellForItem(at: cellForItemAt) as! T
-            cell.isSelected = state
+            cell.wasSelected = state
         }
     }
 }

@@ -23,9 +23,9 @@ final class EmojiCollectionViewCell: UICollectionViewCell, CellWithValueProtocol
         }
     }
 
-    override var isSelected: Bool {
+    var wasSelected: Bool = false {
         didSet {
-            if isSelected {
+            if wasSelected {
                 contentView.backgroundColor = .ypLightGrey
             } else {
                 contentView.backgroundColor = .clear

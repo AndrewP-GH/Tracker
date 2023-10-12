@@ -22,9 +22,9 @@ final class ColorCollectionViewCell: UICollectionViewCell, CellWithValueProtocol
         }
     }
 
-    override var isSelected: Bool {
+    var wasSelected: Bool = false {
         didSet {
-            if isSelected {
+            if wasSelected {
                 contentView.layer.borderWidth = 3
                 contentView.layer.borderColor = value.withAlphaComponent(0.3).cgColor
             } else {

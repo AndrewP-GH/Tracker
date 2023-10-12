@@ -6,5 +6,5 @@ import Foundation
 import UIKit
 
 protocol SelectableCellProtocol: UICollectionViewCell {
-    var isSelected: Bool { get set }
+    var wasSelected: Bool { get set }
 }
