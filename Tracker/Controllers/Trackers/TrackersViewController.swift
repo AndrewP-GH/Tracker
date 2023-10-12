@@ -91,9 +91,9 @@ final class TrackersViewController: UIViewController {
         trackersView.backgroundColor = .clear
         trackersView.register(TrackerCollectionViewCell.self,
                               forCellWithReuseIdentifier: TrackerCollectionViewCell.identifier)
-        trackersView.register(SectionHeaderReusableView.self,
+        trackersView.register(CategoryHeaderReusableView.self,
                               forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                              withReuseIdentifier: SectionHeaderReusableView.identifier)
+                              withReuseIdentifier: CategoryHeaderReusableView.identifier)
         trackersView.dataSource = self
         trackersView.delegate = self
         trackersView.showsVerticalScrollIndicator = false
@@ -230,8 +230,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
-                    withReuseIdentifier: SectionHeaderReusableView.identifier,
-                    for: indexPath) as! SectionHeaderReusableView
+                    withReuseIdentifier: CategoryHeaderReusableView.identifier,
+                    for: indexPath) as! CategoryHeaderReusableView
             sectionHeader.configure(with: visibleCategories[indexPath.section].header)
             return sectionHeader
         } else {

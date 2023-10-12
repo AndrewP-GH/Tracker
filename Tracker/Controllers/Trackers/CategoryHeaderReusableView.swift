@@ -5,8 +5,8 @@
 import Foundation
 import UIKit
 
-final class SectionHeaderReusableView: UICollectionReusableView {
-    static let identifier = "SectionHeaderReusableView"
+final class CategoryHeaderReusableView: UICollectionReusableView {
+    static let identifier = "CategoryHeaderReusableView"
 
     private lazy var label: UILabel = {
         let label = UILabel()
