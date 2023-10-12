@@ -71,13 +71,15 @@ final class AddTrackerViewController: UIViewController {
     }
 
     @objc private func addHabit() {
-        let vc = CreateTrackerViewController()
+        let vc = CreateTrackerViewController(mode: .habit)
         vc.delegate = self
         present(vc, animated: true)
     }
 
-    // TODO: will be implemented later
     @objc private func addEvent() {
+        let vc = CreateTrackerViewController(mode: .event)
+        vc.delegate = self
+        present(vc, animated: true)
     }
 
     private func createButton(title: String, action: Selector) -> UIButton {

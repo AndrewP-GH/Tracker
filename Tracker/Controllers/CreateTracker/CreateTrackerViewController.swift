@@ -26,6 +26,8 @@ final class CreateTrackerViewController: UIViewController {
     private let collectionItemsPerRow: CGFloat = 6
     private let collectionCellSize = CGSize(width: 52, height: 52)
 
+    private var titleText: String?
+
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
@@ -53,7 +55,7 @@ final class CreateTrackerViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Новая привычка"
+        label.text = titleText
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .ypBlack
         label.textAlignment = .center
@@ -88,7 +90,8 @@ final class CreateTrackerViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(CreateTrackerTableViewCell.self, forCellReuseIdentifier: CreateTrackerTableViewCell.identifier)
+        configureTable.register(CreateTrackerTableViewCell.self,
+                                forCellReuseIdentifier: CreateTrackerTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = 16
@@ -187,6 +190,17 @@ final class CreateTrackerViewController: UIViewController {
         stackView.distribution = .fillEqually
         return stackView
     }()
+
+    convenience init(mode: CreateTrackerMode) {
+        self.init()
+        switch mode {
+        case .habit:
+            titleText = "Новая привычка"
+        case .event:
+            titleText = "Новое нерегулярное событие"
+        }
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
