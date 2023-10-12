@@ -71,7 +71,7 @@ final class AddTrackerViewController: UIViewController {
     }
 
     @objc private func addHabit() {
-        let vc = AddHabitViewController()
+        let vc = CreateTrackerViewController()
         vc.delegate = self
         present(vc, animated: true)
     }

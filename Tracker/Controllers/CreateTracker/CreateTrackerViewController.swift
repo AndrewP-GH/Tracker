@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class AddHabitViewController: UIViewController {
+final class CreateTrackerViewController: UIViewController {
     weak var delegate: AddTrackerViewControllerDelegate?
 
     private let tableCellHeight: CGFloat = 75
@@ -88,7 +88,7 @@ final class AddHabitViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(AddHabitTableViewCell.self, forCellReuseIdentifier: AddHabitTableViewCell.identifier)
+        configureTable.register(CreateTrackerTableViewCell.self, forCellReuseIdentifier: CreateTrackerTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = 16
@@ -291,7 +291,7 @@ final class AddHabitViewController: UIViewController {
     }
 }
 
-extension AddHabitViewController: UITextFieldDelegate {
+extension CreateTrackerViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -313,15 +313,15 @@ extension AddHabitViewController: UITextFieldDelegate {
     }
 }
 
-extension AddHabitViewController: UITableViewDataSource {
+extension CreateTrackerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableRows
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-                withIdentifier: AddHabitTableViewCell.identifier,
-                for: indexPath) as! AddHabitTableViewCell
+                withIdentifier: CreateTrackerTableViewCell.identifier,
+                for: indexPath) as! CreateTrackerTableViewCell
         switch indexPath.row {
         case 0:
             cell.configure(title: "Категория")
@@ -338,7 +338,7 @@ extension AddHabitViewController: UITableViewDataSource {
     }
 }
 
-extension AddHabitViewController: UITableViewDelegate {
+extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -357,14 +357,14 @@ extension AddHabitViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? AddHabitTableViewCell {
+        if let cell = cell as? CreateTrackerTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }
 }
 
 
-extension AddHabitViewController: UICollectionViewDataSource {
+extension CreateTrackerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case emojiCollectionView:
@@ -404,7 +404,7 @@ extension AddHabitViewController: UICollectionViewDataSource {
     }
 }
 
-extension AddHabitViewController: UICollectionViewDelegate {
+extension CreateTrackerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
         case emojiCollectionView:
@@ -444,7 +444,7 @@ extension AddHabitViewController: UICollectionViewDelegate {
     }
 }
 
-extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
+extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -474,7 +474,7 @@ extension AddHabitViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension AddHabitViewController: AddHabitViewControllerDelegate {
+extension CreateTrackerViewController: AddHabitViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule
         updateSaveButtonState()
