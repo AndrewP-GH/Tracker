@@ -47,15 +47,6 @@ final class CreateTrackerViewController: UIViewController {
         }
     }
 
-    private var habitConfigurationSections: Int {
-        switch mode {
-        case .habit:
-            return 2
-        case .event:
-            return 0
-        }
-    }
-
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
@@ -131,7 +122,7 @@ final class CreateTrackerViewController: UIViewController {
 
     private lazy var habitConfigurationCollectionView: DynamicCollectionView = {
         let collectionView = DynamicCollectionView(frame: .zero,
-                                              collectionViewLayout: UICollectionViewFlowLayout())
+                                                   collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
@@ -229,20 +220,6 @@ final class CreateTrackerViewController: UIViewController {
         let safeG = view.safeAreaLayoutGuide
         let svContentG = scrollView.contentLayoutGuide
 
-        var additionalConstraints: [NSLayoutConstraint] = []
-        switch mode {
-        case .habit:
-            additionalConstraints = [
-                buttonsStackView.topAnchor
-                        .constraint(equalTo: habitConfigurationCollectionView.bottomAnchor, constant: 40),
-            ]
-        case .event:
-            additionalConstraints = [
-                contentView.bottomAnchor
-                        .constraint(equalTo: safeG.bottomAnchor, constant: 0),
-            ]
-        }
-
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
@@ -280,11 +257,12 @@ final class CreateTrackerViewController: UIViewController {
                     habitConfigurationCollectionView.trailingAnchor
                             .constraint(equalTo: svContentG.trailingAnchor, constant: -18),
 
+                    buttonsStackView.topAnchor
+                            .constraint(equalTo: habitConfigurationCollectionView.bottomAnchor, constant: 40),
                     buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
                     buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
                 ]
-                + additionalConstraints
         )
     }
 
@@ -296,12 +274,13 @@ final class CreateTrackerViewController: UIViewController {
         guard let delegate,
               let selectedEmojiPath,
               let selectedColorPath else { return }
+        let schedule = selectedDays.isEmpty ? nil : Schedule(days: Set(selectedDays))
         delegate.addTracker(tracker: Tracker(
                 id: UUID(),
                 name: nameTextField.text!,
                 color: colors[selectedColorPath.row],
                 emoji: emojis[selectedEmojiPath.row],
-                schedule: Schedule(days: Set(selectedDays)))
+                schedule: schedule)
         )
     }
 }
@@ -319,11 +298,12 @@ extension CreateTrackerViewController: UITextFieldDelegate {
     private func updateSaveButtonState() {
         var fullConfigured: Bool
         let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
+        let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
         switch mode {
         case .habit:
-            fullConfigured = isNameFilled && !selectedDays.isEmpty && selectedEmojiPath != nil && selectedColorPath != nil
+            fullConfigured = isNameFilled && isDesignConfigured && !selectedDays.isEmpty
         case .event:
-            fullConfigured = isNameFilled
+            fullConfigured = isNameFilled && isDesignConfigured
         }
         if fullConfigured {
             enableButton(saveButton)
@@ -387,7 +367,7 @@ extension CreateTrackerViewController: UITableViewDelegate {
 
 extension CreateTrackerViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        habitConfigurationSections
+        2
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
