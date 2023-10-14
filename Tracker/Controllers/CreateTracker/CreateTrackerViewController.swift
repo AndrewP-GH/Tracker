@@ -89,8 +89,7 @@ final class CreateTrackerViewController: UIViewController {
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .done
         textField.delegate = self
-        textField.addTarget(self, action: #selector(textFieldDidChange(
-        _:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: textField.frame.height))
         textField.leftView = paddingView
         textField.leftViewMode = .always
@@ -164,14 +163,12 @@ final class CreateTrackerViewController: UIViewController {
         return button
     }()
 
-    private func disableButton(
-            _ button: UIButton) {
+    private func disableButton(_ button: UIButton) {
         button.isEnabled = false
         button.backgroundColor = .ypGray
     }
 
-    private func enableButton(
-            _ button: UIButton) {
+    private func enableButton(_ button: UIButton) {
         button.isEnabled = true
         button.backgroundColor = .ypBlack
     }
