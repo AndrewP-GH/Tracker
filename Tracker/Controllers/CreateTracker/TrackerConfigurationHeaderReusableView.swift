@@ -5,13 +5,12 @@
 import Foundation
 import UIKit
 
-final class HabitConfigurationHeaderReusableView: UICollectionReusableView {
-    static let identifier = "HabitConfigurationHeaderReusableView"
+final class TrackerConfigurationHeaderReusableView: UICollectionReusableView {
+    static let identifier = "TrackerConfigurationHeaderReusableView"
 
     private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Emoji Color"
         label.font = .systemFont(ofSize: 19, weight: .bold)
         label.textColor = .ypBlack
         return label

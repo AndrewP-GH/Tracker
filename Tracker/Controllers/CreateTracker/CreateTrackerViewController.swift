@@ -125,9 +125,9 @@ final class CreateTrackerViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(HabitConfigurationHeaderReusableView.self,
+        collectionView.register(TrackerConfigurationHeaderReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: HabitConfigurationHeaderReusableView.identifier)
+                                withReuseIdentifier: TrackerConfigurationHeaderReusableView.identifier)
         collectionView.register(EmojiCollectionViewCell.self,
                                 forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
         collectionView.register(ColorCollectionViewCell.self,
@@ -468,8 +468,8 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
         if kind == UICollectionView.elementKindSectionHeader {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
-                    withReuseIdentifier: HabitConfigurationHeaderReusableView.identifier,
-                    for: indexPath) as! HabitConfigurationHeaderReusableView
+                    withReuseIdentifier: TrackerConfigurationHeaderReusableView.identifier,
+                    for: indexPath) as! TrackerConfigurationHeaderReusableView
             var title = ""
             switch indexPath.section {
             case emojiSectionIndex:
