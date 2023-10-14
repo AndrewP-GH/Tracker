@@ -51,10 +51,6 @@ final class CreateTrackerViewController: UIViewController {
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
 
-    private var collectionViewHeight: CGFloat {
-        collectionCellSize.height * (CGFloat(emojis.count) / collectionItemsPerRow).rounded(.up)
-    }
-
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
