@@ -4,6 +4,6 @@
 
 import Foundation
 
-protocol AddHabitViewControllerDelegate: AnyObject {
+protocol CreateTrackerViewControllerDelegate: AnyObject {
     func setSchedule(schedule: [WeekDay])
 }

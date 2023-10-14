@@ -41,7 +41,7 @@
 		AE09AA59E8697661198A9C3D /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AB4275607F87ED4373BF /* Schedule.swift */; };
 		AE09AA917DCD609CD2C06BCC /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADC3540B22379B38D9A8 /* Tracker.swift */; };
 		AE09AAD7578DDF93B78A438B /* CreateTrackerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AA6CE07421824796564D /* CreateTrackerTableViewCell.swift */; };
-		AE09AB1D1B67EACA4444A710 /* AddHabitViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AD1C9226A517AB113F0B /* AddHabitViewControllerDelegate.swift */; };
+		AE09AB1D1B67EACA4444A710 /* CreateTrackerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AD1C9226A517AB113F0B /* CreateTrackerViewControllerDelegate.swift */; };
 		AE09AB40BE9A3D80E3F93966 /* ScheduleMarshalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */; };
 		AE09AC3774617354CE255E9A /* DynamicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A37F8929E021D401576E /* DynamicCollectionView.swift */; };
 		AE09ACBC4868354DC3E8573C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */; };
@@ -112,7 +112,7 @@
 		AE09AA76EFF88383931079A5 /* TrackerCategoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCategoryStore.swift; sourceTree = "<group>"; };
 		AE09AB4275607F87ED4373BF /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AE09AB9BFDA240F6007BE259 /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
-		AE09AD1C9226A517AB113F0B /* AddHabitViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHabitViewControllerDelegate.swift; sourceTree = "<group>"; };
+		AE09AD1C9226A517AB113F0B /* CreateTrackerViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09AD80EC1877A1FE55DB7B /* TrackerRecordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecordStore.swift; sourceTree = "<group>"; };
 		AE09ADAF4FFAAD73A4158B05 /* SelectableCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCellProtocol.swift; sourceTree = "<group>"; };
 		AE09ADBC37686E4A94C60896 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				AE09A9AB8EA69C921B9CC360 /* CreateTrackerViewController.swift */,
-				AE09AD1C9226A517AB113F0B /* AddHabitViewControllerDelegate.swift */,
+				AE09AD1C9226A517AB113F0B /* CreateTrackerViewControllerDelegate.swift */,
 				AE09AA6CE07421824796564D /* CreateTrackerTableViewCell.swift */,
 				AE09ADBC37686E4A94C60896 /* EmojiCollectionViewCell.swift */,
 				AE09A6D3BF75AA220597A2C2 /* ColorCollectionViewCell.swift */,
@@ -522,7 +522,7 @@
 				AE09AE9993EB530237DB72A1 /* AddTrackerViewController.swift in Sources */,
 				AE09A46881EF34C00082E643 /* AddTrackerViewControllerDelegate.swift in Sources */,
 				AE09A28D851161B98792AECB /* CreateTrackerViewController.swift in Sources */,
-				AE09AB1D1B67EACA4444A710 /* AddHabitViewControllerDelegate.swift in Sources */,
+				AE09AB1D1B67EACA4444A710 /* CreateTrackerViewControllerDelegate.swift in Sources */,
 				AE09AAD7578DDF93B78A438B /* CreateTrackerTableViewCell.swift in Sources */,
 				AE09AEB04D37986C0547E740 /* EmojiCollectionViewCell.swift in Sources */,
 				AE09A3C8DFFBF90D0362C3DF /* ColorCollectionViewCell.swift in Sources */,

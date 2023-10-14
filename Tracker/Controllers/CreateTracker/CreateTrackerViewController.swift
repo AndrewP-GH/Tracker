@@ -529,7 +529,7 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CreateTrackerViewController: AddHabitViewControllerDelegate {
+extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule
         updateSaveButtonState()
