@@ -116,7 +116,7 @@ final class CreateTrackerViewController: UIViewController {
         return configureTable
     }()
 
-    private lazy var habitConfigurationCollectionView: DynamicCollectionView = {
+    private lazy var configurationCollectionView: DynamicCollectionView = {
         let collectionView = DynamicCollectionView(frame: .zero,
                                                    collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,9 +125,9 @@ final class CreateTrackerViewController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(TrackerConfigurationHeaderReusableView.self,
+        collectionView.register(ConfigurationHeaderReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: TrackerConfigurationHeaderReusableView.identifier)
+                                withReuseIdentifier: ConfigurationHeaderReusableView.identifier)
         collectionView.register(EmojiCollectionViewCell.self,
                                 forCellWithReuseIdentifier: EmojiCollectionViewCell.identifier)
         collectionView.register(ColorCollectionViewCell.self,
@@ -207,7 +207,7 @@ final class CreateTrackerViewController: UIViewController {
         contentView.addSubview(titleLabel)
         contentView.addSubview(nameTextField)
         contentView.addSubview(configurationTable)
-        contentView.addSubview(habitConfigurationCollectionView)
+        contentView.addSubview(configurationCollectionView)
         contentView.addSubview(buttonsStackView)
     }
 
@@ -246,15 +246,14 @@ final class CreateTrackerViewController: UIViewController {
                             .constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
                     configurationTable.heightAnchor.constraint(equalToConstant: tableCellHeight * CGFloat(tableRows)),
 
-                    habitConfigurationCollectionView.topAnchor
-                            .constraint(equalTo: configurationTable.bottomAnchor),
-                    habitConfigurationCollectionView.leadingAnchor
+                    configurationCollectionView.topAnchor.constraint(equalTo: configurationTable.bottomAnchor),
+                    configurationCollectionView.leadingAnchor
                             .constraint(equalTo: svContentG.leadingAnchor, constant: 18),
-                    habitConfigurationCollectionView.trailingAnchor
+                    configurationCollectionView.trailingAnchor
                             .constraint(equalTo: svContentG.trailingAnchor, constant: -18),
 
                     buttonsStackView.topAnchor
-                            .constraint(equalTo: habitConfigurationCollectionView.bottomAnchor, constant: 40),
+                            .constraint(equalTo: configurationCollectionView.bottomAnchor, constant: 40),
                     buttonsStackView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: 20),
                     buttonsStackView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -20),
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
@@ -468,8 +467,8 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
         if kind == UICollectionView.elementKindSectionHeader {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
-                    withReuseIdentifier: TrackerConfigurationHeaderReusableView.identifier,
-                    for: indexPath) as! TrackerConfigurationHeaderReusableView
+                    withReuseIdentifier: ConfigurationHeaderReusableView.identifier,
+                    for: indexPath) as! ConfigurationHeaderReusableView
             var title = ""
             switch indexPath.section {
             case emojiSectionIndex:

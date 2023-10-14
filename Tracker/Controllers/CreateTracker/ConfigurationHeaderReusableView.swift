@@ -5,8 +5,8 @@
 import Foundation
 import UIKit
 
-final class TrackerConfigurationHeaderReusableView: UICollectionReusableView {
-    static let identifier = "TrackerConfigurationHeaderReusableView"
+final class ConfigurationHeaderReusableView: UICollectionReusableView {
+    static let identifier = "ConfigurationHeaderReusableView"
 
     private lazy var label: UILabel = {
         let label = UILabel()
