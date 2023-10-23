@@ -9,7 +9,7 @@ final class TrackerEntityMapper {
     private let colorMarshalling = UIColorMarshalling()
     private let scheduleMarshalling = ScheduleMarshalling()
 
-    func toEntity(from tracker: Tracker, context: NSManagedObjectContext) -> TrackerEntity {
+    func createEntity(from tracker: Tracker, context: NSManagedObjectContext) -> TrackerEntity {
         let trackerEntity = TrackerEntity(context: context)
         trackerEntity.id = tracker.id
         trackerEntity.name = tracker.name

@@ -14,14 +14,8 @@ final class TrackerStore {
         self.context = context
     }
 
-    convenience init() {
-//        self.init(context: CoreDataStack.shared.context)
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        self.init(context: context)
-    }
-
     func add(_ tracker: Tracker) throws {
-        _ = mapper.toEntity(from: tracker, context: context)
+        _ = mapper.createEntity(from: tracker, context: context)
         try context.save()
     }
 }
