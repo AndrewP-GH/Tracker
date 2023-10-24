@@ -272,7 +272,8 @@ final class CreateTrackerViewController: UIViewController {
                 name: nameTextField.text!,
                 color: colors[selectedColorPath.row],
                 emoji: emojis[selectedEmojiPath.row],
-                schedule: schedule)
+                schedule: schedule,
+                createdAt: Date())
         )
     }
 }

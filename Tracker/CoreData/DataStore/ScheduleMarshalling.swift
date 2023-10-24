@@ -9,11 +9,7 @@ final class ScheduleMarshalling {
         guard let schedule else {
             return nil
         }
-        var byte: UInt8 = 0
-        schedule.days.forEach { day in
-            byte |= 1 << day.rawValue
-        }
-        return Data([byte])
+        return toByte(from: schedule.days)
     }
 
     func toSchedule(from data: Data?) -> Schedule? {
@@ -28,5 +24,13 @@ final class ScheduleMarshalling {
             }
         }
         return Schedule(days: days)
+    }
+
+    func toByte(from days: Set<WeekDay>) -> Data {
+        var byte: UInt8 = 0
+        days.forEach { day in
+            byte |= 1 << day.rawValue
+        }
+        return Data([byte])
     }
 }

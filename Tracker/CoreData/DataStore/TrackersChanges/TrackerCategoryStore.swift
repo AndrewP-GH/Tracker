@@ -18,7 +18,7 @@ final class TrackerCategoryStore {
         let trackerCategoryEntity = TrackerCategoryEntity(context: context)
         trackerCategoryEntity.header = trackerCategory.header
         trackerCategoryEntity.addToItems(
-                NSSet(array: trackerCategory.items.map { trackerMapper.createEntity(from: $0, context: context) })
+                NSSet(array: trackerCategory.items.map { trackerMapper.map(from: $0, context: context) })
         )
         try context.save()
     }

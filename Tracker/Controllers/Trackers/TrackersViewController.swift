@@ -8,9 +8,8 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    var categories: [TrackerCategory] = createTrackers()
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
-    var visibleCategories: [TrackerCategory] = []
+    let trackerStore: TrackersStoreProtocol = TrackerStore()
 
     private var currentDate: Date {
         datePicker.date
@@ -164,16 +163,8 @@ final class TrackersViewController: UIViewController {
     private func updateContent() {
         let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        visibleCategories = categories.filter({
-            let byDate = $0.hasTrackers(for: dayOfWeek)
-            if let searchText, !searchText.isEmpty {
-                return byDate && $0.hasTrackers(startsWith: searchText)
-            } else {
-                return byDate
-            }
-        })
-        trackersView.reloadData()
-        emptyTrackersPlaceholderView.isHidden = !visibleCategories.isEmpty
+        trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
+        emptyTrackersPlaceholderView.isHidden = trackerStore.categoriesCount() != 0
     }
 
     @objc private func addTracker() {
@@ -201,17 +192,17 @@ extension TrackersViewController: UITextFieldDelegate {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        visibleCategories.count
+        trackerStore.categoriesCount()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        visibleCategories[section].items.count
+        trackerStore.trackersCount(for: section)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as! TrackerCollectionViewCell
-        let tracker = visibleCategories[indexPath.section].items[indexPath.row]
+        let tracker = trackerStore.tracker(at: indexPath)
         let days = completedTrackers.filter({ $0.trackerId == tracker.id }).count
         let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         let isButtonEnable = currentDate <= Date()
@@ -249,7 +240,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                     ofKind: kind,
                     withReuseIdentifier: CategoryHeaderReusableView.identifier,
                     for: indexPath) as! CategoryHeaderReusableView
-            sectionHeader.configure(with: visibleCategories[indexPath.section].header)
+            sectionHeader.configure(with: trackerStore.categoryName(at: indexPath.section))
             return sectionHeader
         } else {
             return UICollectionReusableView()
@@ -296,74 +287,27 @@ extension TrackersViewController: TrackersViewControllerDelegate {
     }
 
     func addTrackerToCategory(category: String, tracker: Tracker) {
-        let categoryIndex = categories.firstIndex(where: { $0.header == category })
-        if let categoryIndex {
-            categories[categoryIndex] = TrackerCategory(
-                    header: category,
-                    items: categories[categoryIndex].items + [tracker]
-            )
-        } else {
-            categories.append(TrackerCategory(header: category, items: [tracker]))
-        }
+//        let categoryIndex = categories.firstIndex(where: { $0.header == category })
+//        if let categoryIndex {
+//            categories[categoryIndex] = TrackerCategory(
+//                    header: category,
+//                    items: categories[categoryIndex].items + [tracker]
+//            )
+//        } else {
+//            categories.append(TrackerCategory(header: category, items: [tracker]))
+//        }
         updateContent()
     }
-}
 
-extension TrackersViewController {
-    class func createTrackers() -> [TrackerCategory] {
-        [
-            TrackerCategory(header: "Домашний уют", items: [
-                Tracker(id: UUID(),
-                        name: "Поливать растения",
-                        color: .green,
-                        emoji: "❤️",
-                        schedule: Schedule(
-                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-                        )
-                )
-            ]),
-            TrackerCategory(header: "Радостные мелочи", items: [
-                Tracker(id: UUID(),
-                        name: "Кошка заслонила камеру на созвоне",
-                        color: .orange,
-                        emoji: "😻",
-                        schedule: Schedule(
-                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-                        )
-                ),
-                Tracker(id: UUID(),
-                        name: "Бабушка прислала открытку в вотсапе",
-                        color: .red,
-                        emoji: "🌺",
-                        schedule: nil),
-                Tracker(id: UUID(),
-                        name: "Свидания в апреле",
-                        color: .blue,
-                        emoji: "❤️",
-                        schedule: Schedule(
-                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-                        )
-                )
-            ]),
-            TrackerCategory(header: "Самочувствие", items: [
-                Tracker(id: UUID(),
-                        name: "Хорошее настроение",
-                        color: .purple,
-                        emoji: "🙂",
-                        schedule: Schedule(
-                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-                        )
-                ),
-                Tracker(id: UUID(),
-                        name: "Легкая тревожность",
-                        color: .ypBlue,
-                        emoji: "😪",
-                        schedule: Schedule(
-                                days: [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
-                        )
-                )
-            ]),
-            TrackerCategory(header: "_Новые_", items: [])
-        ]
+    func updateTrackers(changes: TrackersChanges) {
+        trackersView.performBatchUpdates({
+            trackersView.insertItems(at: changes.insertions)
+            trackersView.deleteItems(at: changes.deletions)
+            trackersView.reloadItems(at: changes.updates)
+        })
+        for move in changes.moves {
+            trackersView.moveItem(at: move.from, to: move.to)
+        }
+        updateContent()
     }
 }
