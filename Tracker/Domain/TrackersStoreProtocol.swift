@@ -10,4 +10,5 @@ protocol TrackersStoreProtocol {
     func categoryName(at index: Int) -> String
     func tracker(at indexPath: IndexPath) -> Tracker
     func filter(prefix: String?, weekDay: WeekDay)
+    func performFetch()
 }

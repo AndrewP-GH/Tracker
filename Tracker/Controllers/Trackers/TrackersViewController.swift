@@ -10,6 +10,7 @@ import UIKit
 final class TrackersViewController: UIViewController {
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
     let trackerStore: TrackersStoreProtocol = TrackerStore()
+    let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
 
     private var currentDate: Date {
         datePicker.date
@@ -287,15 +288,12 @@ extension TrackersViewController: TrackersViewControllerDelegate {
     }
 
     func addTrackerToCategory(category: String, tracker: Tracker) {
-//        let categoryIndex = categories.firstIndex(where: { $0.header == category })
-//        if let categoryIndex {
-//            categories[categoryIndex] = TrackerCategory(
-//                    header: category,
-//                    items: categories[categoryIndex].items + [tracker]
-//            )
-//        } else {
-//            categories.append(TrackerCategory(header: category, items: [tracker]))
-//        }
+        do {
+            try categoryStore.createOrUpdate(header: category, tracker: tracker)
+            trackerStore.performFetch()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
         updateContent()
     }
 

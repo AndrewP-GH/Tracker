@@ -22,7 +22,7 @@ final class TrackerStore: NSObject {
         ]
         let fetchedResultsController = NSFetchedResultsController<TrackerEntity>(fetchRequest: fetchRequest,
                                                                                  managedObjectContext: context,
-                                                                                 sectionNameKeyPath: "category?.header",
+                                                                                 sectionNameKeyPath: "category.header",
                                                                                  cacheName: nil)
         fetchedResultsController.delegate = self
         try? fetchedResultsController.performFetch()
@@ -38,11 +38,6 @@ final class TrackerStore: NSObject {
 
     init(context: NSManagedObjectContext) {
         self.context = context
-    }
-
-    func add(_ tracker: Tracker) throws {
-        _ = mapper.map(from: tracker, context: context)
-        try context.save()
     }
 }
 
@@ -60,15 +55,18 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
                     at indexPath: IndexPath?,
                     for type: NSFetchedResultsChangeType,
                     newIndexPath: IndexPath?) {
-        guard let indexPath else { fatalError("indexPath is nil") }
         switch type {
         case .insert:
-            changes.insertions.append(indexPath)
+            guard let newIndexPath else { fatalError("newIndexPath is nil") }
+            changes.insertions.append(newIndexPath)
         case .delete:
+        guard let indexPath else { fatalError("indexPath is nil") }
             changes.deletions.append(indexPath)
         case .update:
+            guard let indexPath else { fatalError("indexPath is nil") }
             changes.updates.append(indexPath)
         case .move:
+            guard let indexPath else { fatalError("indexPath is nil") }
             guard let newIndexPath else { fatalError("newIndexPath is nil") }
             changes.moves.append((from: indexPath, to: newIndexPath))
         @unknown default:
@@ -97,15 +95,16 @@ extension TrackerStore: TrackersStoreProtocol {
     }
 
     func filter(prefix: String?, weekDay: WeekDay) {
-        let fetchRequest = TrackerEntity.fetchRequest() as NSFetchRequest<TrackerEntity>
-        fetchRequest.predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND schedule.weekDay == %d",
-                                             prefix ?? "",
-                                             mapper.map(from: weekDay))
-        fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \TrackerEntity.name, ascending: true),
-            NSSortDescriptor(keyPath: \TrackerEntity.createdAt, ascending: true)
-        ]
-        let trackers = try? context.fetch(fetchRequest)
-        return trackers?.compactMap { mapper.map(from: $0) } ?? []
+//        let predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND schedule.weekDay == %d",
+//                                    prefix ?? "",
+//                                    mapper.map(from: weekDay).base64EncodedString())
+//        let predicate = NSPredicate(format: "schedule.weekDay == %d",
+//                                            mapper.map(from: weekDay).base64EncodedString())
+        let predicate = NSPredicate(format: "schedule == schedule")
+        fetchedResultsController.fetchRequest.predicate = predicate
+        try? fetchedResultsController.performFetch()
+    }
+    func performFetch() {
+        try? fetchedResultsController.performFetch()
     }
 }

@@ -15,7 +15,7 @@ final class TrackerEntityMapper {
         trackerEntity.name = tracker.name
         trackerEntity.hexColor = colorMarshalling.hexString(from: tracker.color)
         trackerEntity.emoji = tracker.emoji
-        trackerEntity.schedule = scheduleMarshalling.toByte(from: tracker.schedule)
+        trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
         trackerEntity.createdAt = tracker.createdAt
         return trackerEntity
     }
@@ -31,8 +31,8 @@ final class TrackerEntityMapper {
                        createdAt: trackerEntity.createdAt!)
     }
 
-    func map(from dayOfWeak: WeekDay) -> Data? {
+    func map(from dayOfWeak: WeekDay) -> String {
         let days: Set<WeekDay> = [dayOfWeak]
-        return scheduleMarshalling.toByte(from: days)
+        return scheduleMarshalling.toString(from: days)
     }
 }
