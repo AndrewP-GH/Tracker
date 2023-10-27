@@ -210,7 +210,7 @@ extension TrackersViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! TrackerCollectionViewCell
         let tracker = trackerStore.tracker(at: indexPath)
         let days = trackerRecordStore.count(for: tracker.id)
-        let isDone = trackerRecordStore.isDone(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
+        let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         let isButtonEnable = currentDate <= Date()
         cell.configure(with: tracker,
                        completedDays: days,

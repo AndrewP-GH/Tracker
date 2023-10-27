@@ -8,5 +8,5 @@ protocol TrackerRecordStoreProtocol {
     func add(_ trackerRecord: TrackerRecord) throws
     func remove(_ trackerRecord: TrackerRecord) throws
     func count(for trackerId: UUID) -> Int
-    func isDone(_ trackerRecord: TrackerRecord) -> Bool
+    func exists(_ trackerRecord: TrackerRecord) -> Bool
 }

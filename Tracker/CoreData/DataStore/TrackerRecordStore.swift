@@ -49,7 +49,7 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
         return trackerRecordEntities?.count ?? 0
     }
 
-    func isDone(_ record: TrackerRecord) -> Bool {
+    func exists(_ record: TrackerRecord) -> Bool {
         let fetchRequest = TrackerRecordEntity.fetchRequest() as NSFetchRequest<TrackerRecordEntity>
         fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
                                              #keyPath(TrackerRecordEntity.trackerId),
