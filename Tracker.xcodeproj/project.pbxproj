@@ -40,7 +40,6 @@
 		AE09A93E3F99B598852DC79A /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3E0D535505173B3B75A /* StatisticsViewController.swift */; };
 		AE09AA10163DB1928B23D0D3 /* GreyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9221104E549F6ABA2A4 /* GreyTableViewCell.swift */; };
 		AE09AA12DDE33483B044B55F /* TrackersStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A03E6D2BF055EF28CC01 /* TrackersStoreProtocol.swift */; };
-		AE09AA24E7E2B461E1AD825F /* TrackerCategory+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AFC837732573408E6E18 /* TrackerCategory+Extensions.swift */; };
 		AE09AA59E8697661198A9C3D /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AB4275607F87ED4373BF /* Schedule.swift */; };
 		AE09AA917DCD609CD2C06BCC /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADC3540B22379B38D9A8 /* Tracker.swift */; };
 		AE09AAD7578DDF93B78A438B /* CreateTrackerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AA6CE07421824796564D /* CreateTrackerTableViewCell.swift */; };
@@ -128,7 +127,6 @@
 		AE09AE3444CC95921F5096C3 /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
 		AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleMarshalling.swift; sourceTree = "<group>"; };
 		AE09AE790F1FDA73E3AA7D97 /* CategoryHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderReusableView.swift; sourceTree = "<group>"; };
-		AE09AFC837732573408E6E18 /* TrackerCategory+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrackerCategory+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +160,6 @@
 				1B3EDECF2A0A85FC00F12717 /* UIColor+Extensions.swift */,
 				AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */,
 				AE09A52DF510C9D636A1369D /* Date+Extensions.swift */,
-				AE09AFC837732573408E6E18 /* TrackerCategory+Extensions.swift */,
 				AE09A029231B86A0B34058A9 /* String+Extensions.swift */,
 			);
 			path = Helpers;
@@ -523,7 +520,6 @@
 				AE09A6C3C6E8F00B3C8A00C2 /* WeekDay.swift in Sources */,
 				AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */,
 				AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */,
-				AE09AA24E7E2B461E1AD825F /* TrackerCategory+Extensions.swift in Sources */,
 				AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */,
 				1B71F1152AD3679000F3A8CE /* Model.xcdatamodeld in Sources */,
 				AE09ACBC4868354DC3E8573C /* HomePageViewController.swift in Sources */,

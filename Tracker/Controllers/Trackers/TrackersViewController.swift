@@ -303,15 +303,7 @@ extension TrackersViewController: TrackersViewControllerDelegate {
     }
 
     func updateTrackers(changes: TrackersChanges) {
-        trackersView.performBatchUpdates({
-            trackersView.insertItems(at: changes.insertions)
-            trackersView.deleteItems(at: changes.deletions)
-            trackersView.reloadItems(at: changes.updates)
-        })
-        for move in changes.moves {
-            trackersView.moveItem(at: move.from, to: move.to)
-        }
-        updateContent()
+        reloadData()
     }
 
     func reloadData() {
