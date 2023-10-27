@@ -17,8 +17,8 @@ final class TrackerStore: NSObject {
     private lazy var fetchedResultsController: NSFetchedResultsController<TrackerEntity> = {
         let fetchRequest = TrackerEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(keyPath: \TrackerEntity.name, ascending: true),
-            NSSortDescriptor(keyPath: \TrackerEntity.createdAt, ascending: true)
+            NSSortDescriptor(keyPath: \TrackerEntity.category!.header, ascending: true),
+            NSSortDescriptor(keyPath: \TrackerEntity.name, ascending: true)
         ]
         let fetchedResultsController = NSFetchedResultsController<TrackerEntity>(fetchRequest: fetchRequest,
                                                                                  managedObjectContext: context,
@@ -97,7 +97,7 @@ extension TrackerStore: TrackersStoreProtocol {
     func filter(prefix: String?, weekDay: WeekDay) {
         let schedulePredicate = "schedule CONTAINS %@"
         let predicate = if let prefix, !prefix.isEmpty {
-            NSPredicate(format: "name CONTAINS %@ AND \(schedulePredicate)",
+            NSPredicate(format: "name BEGINSWITH[c] %@ AND \(schedulePredicate)",
                         prefix,
                         mapper.map(from: weekDay))
         } else {
