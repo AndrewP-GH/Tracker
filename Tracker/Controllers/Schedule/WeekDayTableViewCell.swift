@@ -76,11 +76,11 @@ final class WeekDayTableViewCell: GreyTableViewCell {
                     allCellButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
                     allCellButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
-                    titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                    titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                    titleLabel.centerYAnchor.constraint(equalTo: allCellButton.centerYAnchor),
+                    titleLabel.leadingAnchor.constraint(equalTo: allCellButton.leadingAnchor, constant: 16),
 
-                    switchView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                    switchView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+                    switchView.centerYAnchor.constraint(equalTo: allCellButton.centerYAnchor),
+                    switchView.trailingAnchor.constraint(equalTo: allCellButton.trailingAnchor, constant: -16),
                 ]
         )
     }
