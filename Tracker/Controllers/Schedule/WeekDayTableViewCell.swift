@@ -33,6 +33,14 @@ final class WeekDayTableViewCell: GreyTableViewCell {
         return switchView
     }()
 
+    private lazy var allCellButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(cellTapped), for: .touchUpInside)
+        return button
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -55,13 +63,19 @@ final class WeekDayTableViewCell: GreyTableViewCell {
     }
 
     private func addSubviews() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(switchView)
+        contentView.addSubview(allCellButton)
+        allCellButton.addSubview(titleLabel)
+        allCellButton.addSubview(switchView)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
+                    allCellButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    allCellButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+                    allCellButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    allCellButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
                     titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
                     titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
 
@@ -69,5 +83,9 @@ final class WeekDayTableViewCell: GreyTableViewCell {
                     switchView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
                 ]
         )
+    }
+
+    @objc private func cellTapped() {
+        switchView.setOn(!switchView.isOn, animated: true)
     }
 }
