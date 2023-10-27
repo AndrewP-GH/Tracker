@@ -8,8 +8,8 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
     let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
+    let trackerRecordStore: TrackerRecordStoreProtocol = TrackerRecordStore()
 
     private var currentDate: Date {
         datePicker.date
@@ -209,8 +209,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as! TrackerCollectionViewCell
         let tracker = trackerStore.tracker(at: indexPath)
-        let days = completedTrackers.filter({ $0.trackerId == tracker.id }).count
-        let isDone = completedTrackers.contains(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
+        let days = trackerRecordStore.count(for: tracker.id)
+        let isDone = trackerRecordStore.isDone(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         let isButtonEnable = currentDate <= Date()
         cell.configure(with: tracker,
                        completedDays: days,
@@ -284,12 +284,20 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 extension TrackersViewController: TrackersViewControllerDelegate {
     func didCompleteTracker(id: UUID) {
         let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        completedTrackers.insert(trackerRecord)
+        do {
+            try trackerRecordStore.add(trackerRecord)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 
     func didUncompleteTracker(id: UUID) {
         let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        completedTrackers.remove(trackerRecord)
+        do {
+            try trackerRecordStore.remove(trackerRecord)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 
     func addTrackerToCategory(category: String, tracker: Tracker) {

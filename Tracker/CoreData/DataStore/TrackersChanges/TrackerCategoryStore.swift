@@ -23,7 +23,7 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
 
     func createOrUpdate(header: String, tracker: Tracker) throws {
         let findRequest = TrackerCategoryEntity.fetchRequest()
-        findRequest.predicate = NSPredicate(format: "header == %@",  header)
+        findRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryEntity.header), header)
         let findResult = try? context.fetch(findRequest)
         if let findResult = findResult, findResult.count > 0 {
             let trackerCategoryEntity = findResult.first!
