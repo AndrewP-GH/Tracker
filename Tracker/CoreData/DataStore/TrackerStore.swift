@@ -60,7 +60,7 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
             guard let newIndexPath else { fatalError("newIndexPath is nil") }
             changes.insertions.append(newIndexPath)
         case .delete:
-        guard let indexPath else { fatalError("indexPath is nil") }
+            guard let indexPath else { fatalError("indexPath is nil") }
             changes.deletions.append(indexPath)
         case .update:
             guard let indexPath else { fatalError("indexPath is nil") }
@@ -95,15 +95,20 @@ extension TrackerStore: TrackersStoreProtocol {
     }
 
     func filter(prefix: String?, weekDay: WeekDay) {
-//        let predicate = NSPredicate(format: "name BEGINSWITH[c] %@ AND schedule.weekDay == %d",
-//                                    prefix ?? "",
-//                                    mapper.map(from: weekDay).base64EncodedString())
-//        let predicate = NSPredicate(format: "schedule.weekDay == %d",
-//                                            mapper.map(from: weekDay).base64EncodedString())
-        let predicate = NSPredicate(format: "schedule == schedule")
+        let schedulePredicate = "schedule CONTAINS %@"
+        let predicate = if let prefix, !prefix.isEmpty {
+            NSPredicate(format: "name CONTAINS %@ AND \(schedulePredicate)",
+                        prefix,
+                        mapper.map(from: weekDay))
+        } else {
+            NSPredicate(format: schedulePredicate, mapper.map(from: weekDay))
+        }
+
         fetchedResultsController.fetchRequest.predicate = predicate
         try? fetchedResultsController.performFetch()
+        delegate?.reloadData()
     }
+
     func performFetch() {
         try? fetchedResultsController.performFetch()
     }

@@ -11,4 +11,6 @@ protocol TrackersStoreProtocol {
     func tracker(at indexPath: IndexPath) -> Tracker
     func filter(prefix: String?, weekDay: WeekDay)
     func performFetch()
+
+    var delegate: TrackersViewControllerDelegate? { get set }
 }

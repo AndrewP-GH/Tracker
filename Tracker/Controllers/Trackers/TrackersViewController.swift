@@ -9,7 +9,6 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
-    let trackerStore: TrackersStoreProtocol = TrackerStore()
     let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
 
     private var currentDate: Date {
@@ -105,6 +104,12 @@ final class TrackersViewController: UIViewController {
         let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView()
         emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         return emptyTrackersPlaceholderView
+    }()
+
+    private lazy var trackerStore: TrackerStore = {
+        let trackerStore = TrackerStore()
+        trackerStore.delegate = self
+        return trackerStore
     }()
 
     override func viewDidLoad() {
@@ -307,5 +312,9 @@ extension TrackersViewController: TrackersViewControllerDelegate {
             trackersView.moveItem(at: move.from, to: move.to)
         }
         updateContent()
+    }
+
+    func reloadData() {
+        trackersView.reloadData()
     }
 }

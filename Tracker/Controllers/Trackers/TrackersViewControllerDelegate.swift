@@ -9,4 +9,5 @@ protocol TrackersViewControllerDelegate: AnyObject {
     func didUncompleteTracker(id: UUID)
     func addTrackerToCategory(category: String, tracker: Tracker)
     func updateTrackers(changes: TrackersChanges)
+    func reloadData()
 }
