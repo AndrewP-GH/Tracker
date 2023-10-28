@@ -313,9 +313,9 @@ extension CreateTrackerViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
+        guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: CreateTrackerTableViewCell.identifier,
-                for: indexPath) as! CreateTrackerTableViewCell
+                for: indexPath) as? CreateTrackerTableViewCell else { return CreateTrackerTableViewCell() }
         switch indexPath.row {
         case 0:
             cell.configure(title: "Категория")
