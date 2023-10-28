@@ -467,7 +467,7 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: ConfigurationHeaderReusableView.identifier,
-                    for: indexPath) as! ConfigurationHeaderReusableView
+                    for: indexPath) as? ConfigurationHeaderReusableView ?? ConfigurationHeaderReusableView()
             var title = ""
             switch indexPath.section {
             case emojiSectionIndex:

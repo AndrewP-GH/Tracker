@@ -246,7 +246,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             let sectionHeader = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
                     withReuseIdentifier: CategoryHeaderReusableView.identifier,
-                    for: indexPath) as! CategoryHeaderReusableView
+                    for: indexPath) as? CategoryHeaderReusableView ?? CategoryHeaderReusableView()
             sectionHeader.configure(with: trackerStore.categoryName(at: indexPath.section))
             return sectionHeader
         } else {
