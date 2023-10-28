@@ -26,7 +26,7 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         findRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryEntity.header), header)
         let findResult = try? context.fetch(findRequest)
         if let findResult = findResult, findResult.count > 0 {
-            let trackerCategoryEntity = findResult.first!
+            guard let trackerCategoryEntity = findResult.first else { return }
             try addTacker(tracker, to: trackerCategoryEntity)
         } else {
             let trackerCategoryEntity = TrackerCategoryEntity(context: context)
