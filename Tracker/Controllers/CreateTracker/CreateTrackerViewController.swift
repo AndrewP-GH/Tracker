@@ -313,9 +313,9 @@ extension CreateTrackerViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
+        let cell = tableView.dequeueReusableCell(
                 withIdentifier: CreateTrackerTableViewCell.identifier,
-                for: indexPath) as? CreateTrackerTableViewCell else { return CreateTrackerTableViewCell() }
+                for: indexPath) as? CreateTrackerTableViewCell ?? CreateTrackerTableViewCell()
         switch indexPath.row {
         case 0:
             cell.configure(title: "Категория")
@@ -395,7 +395,8 @@ extension CreateTrackerViewController: UICollectionViewDataSource {
                 cellForItemAt indexPath: IndexPath,
                 cellType: T.Type,
                 value: T.TValue) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as! T
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier,
+                                                          for: indexPath) as? T ?? T()
             cell.value = value
             return cell
         }
@@ -436,7 +437,7 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
         setSelectedState(collectionView, cellForItemAt: selectedPath, cellType: cellType, state: true)
 
         func setSelectedState(_ collectionView: UICollectionView, cellForItemAt: IndexPath, cellType: T.Type, state: Bool) {
-            let cell = collectionView.cellForItem(at: cellForItemAt) as! T
+            let cell = collectionView.cellForItem(at: cellForItemAt) as? T ?? T()
             cell.wasSelected = state
         }
     }

@@ -207,7 +207,8 @@ extension TrackersViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
-                                                      for: indexPath) as! TrackerCollectionViewCell
+                                                      for: indexPath) as? TrackerCollectionViewCell
+                ?? TrackerCollectionViewCell()
         let tracker = trackerStore.tracker(at: indexPath)
         let days = trackerRecordStore.count(for: tracker.id)
         let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
