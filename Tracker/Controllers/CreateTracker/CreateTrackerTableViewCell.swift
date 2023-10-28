@@ -35,6 +35,16 @@ final class CreateTrackerTableViewCell: GreyTableViewCell {
         return imageView
     }()
 
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 2
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        return stackView
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -47,11 +57,13 @@ final class CreateTrackerTableViewCell: GreyTableViewCell {
 
     func configure(title: String) {
         titleLabel.text = title
+        subtitleLabel.isHidden = true
     }
 
-    func set(title: String, subtitle: String) {
+    func configure(title: String, subtitle: String) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
+        subtitleLabel.isHidden = false
     }
 
     private func setupView() {
@@ -60,8 +72,9 @@ final class CreateTrackerTableViewCell: GreyTableViewCell {
     }
 
     private func addSubviews() {
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subtitleLabel)
+        contentView.addSubview(stackView)
+        stackView.addSubview(titleLabel)
+        stackView.addSubview(subtitleLabel)
         contentView.addSubview(arrowImageView)
     }
 
@@ -73,13 +86,17 @@ final class CreateTrackerTableViewCell: GreyTableViewCell {
                     arrowImageView.widthAnchor.constraint(equalToConstant: 24),
                     arrowImageView.heightAnchor.constraint(equalToConstant: 24),
 
-                    titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                    titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -16),
-                    titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                    stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+                    stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                    stackView.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -16),
+                    stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+                    stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-                    subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 2),
-                    subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-                    subtitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+                    titleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+                    titleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+
+                    subtitleLabel.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+                    subtitleLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
                 ]
         )
     }

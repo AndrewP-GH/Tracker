@@ -320,7 +320,14 @@ extension CreateTrackerViewController: UITableViewDataSource {
         case 0:
             cell.configure(title: "Категория")
         case 1:
-            cell.configure(title: "Расписание")
+            if selectedDays.isEmpty {
+                cell.configure(title: "Расписание")
+            } else {
+                let schedule = selectedDays.count == WeekDay.allCases.count
+                        ? "Каждый день"
+                        : selectedDays.map { $0.shortDescription }.joined(separator: ", ")
+                cell.configure(title: "Расписание", subtitle: schedule)
+            }
         default:
             break
         }
@@ -529,7 +536,8 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
 
 extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
-        selectedDays = schedule
+        selectedDays = schedule.sorted()
+        configurationTable.reloadData()
         updateSaveButtonState()
     }
 }
