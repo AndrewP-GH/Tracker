@@ -209,16 +209,20 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
-        let tracker = trackerStore.tracker(at: indexPath)
-        let days = trackerRecordStore.count(for: tracker.id)
-        let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
-        let isButtonEnable = currentDate <= Date()
-        cell.configure(with: tracker,
-                       completedDays: days,
-                       isDone: isDone,
-                       isButtonEnable: isButtonEnable,
-                       delegate: self);
-        return cell
+        do {
+            let tracker = try trackerStore.tracker(at: indexPath)
+            let days = trackerRecordStore.count(for: tracker.id)
+            let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
+            let isButtonEnable = currentDate <= Date()
+            cell.configure(with: tracker,
+                           completedDays: days,
+                           isDone: isDone,
+                           isButtonEnable: isButtonEnable,
+                           delegate: self);
+            return cell
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 }
 

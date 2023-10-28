@@ -20,15 +20,21 @@ final class TrackerEntityMapper {
         return trackerEntity
     }
 
-    func map(from trackerEntity: TrackerEntity) -> Tracker {
+    func map(from trackerEntity: TrackerEntity) throws -> Tracker {
         let color = colorMarshalling.color(from: trackerEntity.hexColor!)
         let schedule = scheduleMarshalling.toSchedule(from: trackerEntity.schedule)
-        return Tracker(id: trackerEntity.id!,
-                       name: trackerEntity.name!,
+        guard
+                let id = trackerEntity.id,
+                let name = trackerEntity.name,
+                let emoji = trackerEntity.emoji,
+                let createdAt = trackerEntity.createdAt
+        else { throw StoreError.decodeError }
+        return Tracker(id: id,
+                       name: name,
                        color: color,
-                       emoji: trackerEntity.emoji!,
+                       emoji: emoji,
                        schedule: schedule,
-                       createdAt: trackerEntity.createdAt!)
+                       createdAt: createdAt)
     }
 
     func map(from dayOfWeak: WeekDay) -> String {

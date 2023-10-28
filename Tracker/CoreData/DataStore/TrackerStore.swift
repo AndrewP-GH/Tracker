@@ -89,9 +89,9 @@ extension TrackerStore: TrackersStoreProtocol {
         return section.name
     }
 
-    func tracker(at indexPath: IndexPath) -> Tracker {
+    func tracker(at indexPath: IndexPath) throws -> Tracker {
         let trackerEntity = fetchedResultsController.object(at: indexPath)
-        return mapper.map(from: trackerEntity)
+        return try mapper.map(from: trackerEntity)
     }
 
     func filter(prefix: String?, weekDay: WeekDay) {

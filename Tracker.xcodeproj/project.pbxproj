@@ -49,6 +49,7 @@
 		AE09AC3774617354CE255E9A /* DynamicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A37F8929E021D401576E /* DynamicCollectionView.swift */; };
 		AE09ACBC4868354DC3E8573C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */; };
 		AE09AD540346DCF203831AA7 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */; };
+		AE09AD890964CFFE7760C40D /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A95C5AA5E5C858512255 /* StoreError.swift */; };
 		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
 		AE09AE22A965CF8EDDA74C33 /* TrackerEntityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A03B3C9371DFD69049CD /* TrackerEntityMapper.swift */; };
 		AE09AE502C4486DE419938B9 /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AB9BFDA240F6007BE259 /* WeekDayTableViewCell.swift */; };
@@ -113,6 +114,7 @@
 		AE09A86FC89E6F0CBA1EA3AC /* AddTrackerViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09A9221104E549F6ABA2A4 /* GreyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreyTableViewCell.swift; sourceTree = "<group>"; };
 		AE09A95A8A647EFFE0DCDA78 /* TrackerRecordStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecordStoreProtocol.swift; sourceTree = "<group>"; };
+		AE09A95C5AA5E5C858512255 /* StoreError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreError.swift; sourceTree = "<group>"; };
 		AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		AE09A9AB8EA69C921B9CC360 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
 		AE09AA32579ED28DD7C576D9 /* TrackersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				AE09AD80EC1877A1FE55DB7B /* TrackerRecordStore.swift */,
 				AE09A2050CE8522850FF44F7 /* TrackerCategoryStore.swift */,
 				AE09A6975EF0CFB0500256A8 /* TrackersChanges.swift */,
+				AE09A95C5AA5E5C858512255 /* StoreError.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				AE09AA12DDE33483B044B55F /* TrackersStoreProtocol.swift in Sources */,
 				AE09A401C79AC7FDFC391FE7 /* TrackerCategoryStoreProtocol.swift in Sources */,
 				AE09A72DA6F7C98E763B5030 /* TrackerRecordStoreProtocol.swift in Sources */,
+				AE09AD890964CFFE7760C40D /* StoreError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
