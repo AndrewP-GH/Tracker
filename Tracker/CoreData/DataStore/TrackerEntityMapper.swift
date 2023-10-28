@@ -9,11 +9,11 @@ final class TrackerEntityMapper {
     private let colorMarshalling = UIColorMarshalling()
     private let scheduleMarshalling = ScheduleMarshalling()
 
-    func map(from tracker: Tracker, context: NSManagedObjectContext) -> TrackerEntity {
+    func map(from tracker: Tracker, context: NSManagedObjectContext) throws -> TrackerEntity {
         let trackerEntity = TrackerEntity(context: context)
         trackerEntity.id = tracker.id
         trackerEntity.name = tracker.name
-        trackerEntity.hexColor = colorMarshalling.hexString(from: tracker.color)
+        trackerEntity.hexColor = try colorMarshalling.hexString(from: tracker.color)
         trackerEntity.emoji = tracker.emoji
         trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
         trackerEntity.createdAt = tracker.createdAt
@@ -21,7 +21,7 @@ final class TrackerEntityMapper {
     }
 
     func map(from trackerEntity: TrackerEntity) throws -> Tracker {
-        let color = colorMarshalling.color(from: trackerEntity.hexColor!)
+        let color = try colorMarshalling.color(from: trackerEntity.hexColor!)
         let schedule = scheduleMarshalling.toSchedule(from: trackerEntity.schedule)
         guard
                 let id = trackerEntity.id,

@@ -38,7 +38,7 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     private func addTacker(_ tracker: Tracker, to category: TrackerCategoryEntity) throws {
-        let trackerEntity = trackerMapper.map(from: tracker, context: context)
+        let trackerEntity = try trackerMapper.map(from: tracker, context: context)
         category.addToItems(trackerEntity)
     }
 }

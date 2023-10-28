@@ -5,13 +5,14 @@
 import Foundation
 import UIKit
 
-// TODO: rewrite this implementation
 final class UIColorMarshalling {
-    func hexString(from color: UIColor) -> String {
-        color.hexString!
+    func hexString(from color: UIColor) throws -> String {
+        guard let hex = color.hexString else { throw StoreError.encodeError }
+        return hex
     }
 
-    func color(from hexString: String) -> UIColor {
-        UIColor(hex: hexString)!
+    func color(from hexString: String) throws -> UIColor {
+        guard let color = UIColor(hex: hexString) else { throw StoreError.decodeError }
+        return color
     }
 }
