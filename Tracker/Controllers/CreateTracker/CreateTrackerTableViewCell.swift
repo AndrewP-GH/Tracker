@@ -41,7 +41,7 @@ final class CreateTrackerTableViewCell: GreyTableViewCell {
         stackView.axis = .vertical
         stackView.spacing = 2
         stackView.alignment = .center
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .equalCentering
         return stackView
     }()
 
