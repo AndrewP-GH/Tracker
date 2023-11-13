@@ -11,7 +11,7 @@ final class TrackersViewController: UIViewController {
     let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
     let trackerRecordStore: TrackerRecordStoreProtocol = TrackerRecordStore()
 
-    private var currentDate: Date {
+    var currentDate: Date {
         datePicker.date
     }
 
@@ -84,7 +84,7 @@ final class TrackersViewController: UIViewController {
         return searchTextField
     }()
 
-    private lazy var trackersView: UICollectionView = {
+    lazy var trackersView: UICollectionView = {
         let trackersView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         trackersView.translatesAutoresizingMaskIntoConstraints = false
         trackersView.backgroundColor = .clear
@@ -106,7 +106,7 @@ final class TrackersViewController: UIViewController {
         return emptyTrackersPlaceholderView
     }()
 
-    private lazy var trackerStore: TrackerStore = {
+    lazy var trackerStore: TrackerStore = {
         let trackerStore = TrackerStore()
         trackerStore.delegate = self
         return trackerStore
@@ -166,7 +166,7 @@ final class TrackersViewController: UIViewController {
         )
     }
 
-    private func updateContent() {
+    func updateContent() {
         let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
@@ -283,43 +283,5 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         spacing
-    }
-}
-
-extension TrackersViewController: TrackersViewControllerDelegate {
-    func didCompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        do {
-            try trackerRecordStore.add(trackerRecord)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-
-    func didUncompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        do {
-            try trackerRecordStore.remove(trackerRecord)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-
-    func addTrackerToCategory(category: String, tracker: Tracker) {
-        do {
-            try categoryStore.createOrUpdate(header: category, tracker: tracker)
-            trackerStore.performFetch()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-        updateContent()
-    }
-
-    func updateTrackers(changes: TrackersChanges) {
-        reloadData()
-    }
-
-    func reloadData() {
-        trackersView.reloadData()
     }
 }
