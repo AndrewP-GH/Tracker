@@ -17,12 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else {
             return
         }
-        let viewController = UserDefaults.standard.bool(forKey: "onboardingWasShown")
+        let viewController = OnboardingDataStore.shared.isOnboardingWasShown()
                 ? HomePageViewController()
                 : OnboardingViewController()
-        HomePageViewController()
         let window = UIWindow(windowScene: scene as! UIWindowScene)
-        viewController.modalPresentationStyle = .fullScreen
         window.rootViewController = viewController
         self.window = window
         window.makeKeyAndVisible()
