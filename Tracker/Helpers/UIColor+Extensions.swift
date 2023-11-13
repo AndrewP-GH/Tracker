@@ -16,7 +16,35 @@ extension UIColor {
     static var ypRed: UIColor { UIColor(named: "YP Red")! }
     static var ypWhite: UIColor { UIColor(named: "YP White")! }
 
-    public convenience init(hex: String) {
+    private static let rgbMultiplier = CGFloat(255.999999)
+
+    //https://stackoverflow.com/a/39358741
+    var hexString: String? {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        guard getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return nil
+        }
+        if alpha == 1.0 {
+            return String(
+                    format: "#%02lX%02lX%02lX",
+                    Int(red * UIColor.rgbMultiplier),
+                    Int(green * UIColor.rgbMultiplier),
+                    Int(blue * UIColor.rgbMultiplier)
+            )
+        } else {
+            return String(format: "#%02lX%02lX%02lX%02lX",
+                          Int(red * UIColor.rgbMultiplier),
+                          Int(green * UIColor.rgbMultiplier),
+                          Int(blue * UIColor.rgbMultiplier),
+                          Int(alpha * UIColor.rgbMultiplier)
+            )
+        }
+    }
+
+    public convenience init?(hex: String) {
         var hexColor: String
         if hex.hasPrefix("#") {
             let start = hex.index(hex.startIndex, offsetBy: 1)
@@ -51,7 +79,7 @@ extension UIColor {
         default:
             break
         }
-        self.init(red: 0, green: 0, blue: 0, alpha: 0) // TODO: maybe throw an error?
+        return nil
     }
 
 }
