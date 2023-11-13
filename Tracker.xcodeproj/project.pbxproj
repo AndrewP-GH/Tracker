@@ -234,7 +234,7 @@
 		1BAEE36929F43004001601F9 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				AE09ADFE3D5F053792E421FD /* UI */,
+				AE09ADFE3D5F053792E421FD /* Controllers */,
 				1BC3D8B72AD4CC5C005AD3C8 /* Domain */,
 				1B71F1122AD3675400F3A8CE /* CoreData */,
 				1B71F1112AD366DB00F3A8CE /* Resources */,
@@ -372,7 +372,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		AE09ADFE3D5F053792E421FD /* UI */ = {
+		AE09ADFE3D5F053792E421FD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				AE09A5799496CE79581BCB0B /* HomePage */,
@@ -383,7 +383,7 @@
 				AE09A7E930BACAF822E9015B /* Helpers */,
 				AE09A6A8F3CC7EAAB7A0919F /* Trackers */,
 			);
-			path = UI;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
