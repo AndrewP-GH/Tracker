@@ -8,11 +8,11 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    var categories: [TrackerCategory] = createTrackers()
+    var categories: [TrackerCategory] = []
     var completedTrackers: Set<TrackerRecord> = [] // trackers for selected date
     var visibleCategories: [TrackerCategory] = []
 
-    private var currentDate: Date {
+    var currentDate: Date {
         datePicker.date
     }
 
@@ -161,7 +161,7 @@ final class TrackersViewController: UIViewController {
         )
     }
 
-    private func updateContent() {
+    func updateContent() {
         let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         visibleCategories = categories.filter({
@@ -281,30 +281,5 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         spacing
-    }
-}
-
-extension TrackersViewController: TrackersViewControllerDelegate {
-    func didCompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        completedTrackers.insert(trackerRecord)
-    }
-
-    func didUncompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        completedTrackers.remove(trackerRecord)
-    }
-
-    func addTrackerToCategory(category: String, tracker: Tracker) {
-        let categoryIndex = categories.firstIndex(where: { $0.header == category })
-        if let categoryIndex {
-            categories[categoryIndex] = TrackerCategory(
-                    header: category,
-                    items: categories[categoryIndex].items + [tracker]
-            )
-        } else {
-            categories.append(TrackerCategory(header: category, items: [tracker]))
-        }
-        updateContent()
     }
 }
