@@ -59,7 +59,7 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
     }
 
     private func setupView() {
-        view.backgroundColor = .ypWhite
+        view.backgroundColor = .ypBlack
         addSubviews()
         setupConstraints()
     }
