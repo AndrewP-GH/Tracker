@@ -5,9 +5,9 @@
 //  Created by Андрей Парамонов on 22.04.2023.
 //
 
-import UIKit
+import Foundation
 
-extension TrackersViewController: TrackersViewControllerDelegate {
+extension TrackersViewModel: TrackersViewDelegate {
     func didCompleteTracker(id: UUID) {
         let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
         do {
@@ -41,6 +41,6 @@ extension TrackersViewController: TrackersViewControllerDelegate {
     }
 
     func reloadData() {
-        trackersView.reloadData()
+        reloadDataDelegate?()
     }
 }

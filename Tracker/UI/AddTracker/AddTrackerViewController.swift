@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 final class AddTrackerViewController: UIViewController {
-    weak var delegate: TrackersViewControllerDelegate?
+    weak var delegate: TrackersViewDelegate?
 
     private lazy var header: UILabel = {
         let label = UILabel()

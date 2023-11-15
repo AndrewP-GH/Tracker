@@ -8,12 +8,7 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
-    let trackerRecordStore: TrackerRecordStoreProtocol = TrackerRecordStore()
-
-    var currentDate: Date {
-        datePicker.date
-    }
+    private var viewModel: TrackersViewModel!
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -51,7 +46,7 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
-        datePicker.date = Date()
+        datePicker.date = viewModel.currentDate
         return datePicker
     }()
 
@@ -106,14 +101,16 @@ final class TrackersViewController: UIViewController {
         return emptyTrackersPlaceholderView
     }()
 
-    lazy var trackerStore: TrackerStore = {
-        let trackerStore = TrackerStore()
-        trackerStore.delegate = self
-        return trackerStore
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = TrackersViewModel()
+        viewModel.reloadDataDelegate = { [weak self] in
+            self?.trackersView.reloadData()
+        }
+        viewModel.$showPlaceholder.bind { [weak self] show in
+            self?.emptyTrackersPlaceholderView.isHidden = !show
+        }
         setupView()
     }
 
@@ -122,7 +119,6 @@ final class TrackersViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupConstraints()
-        updateContent()
     }
 
     private func setupNavigationBar() {
@@ -166,26 +162,19 @@ final class TrackersViewController: UIViewController {
         )
     }
 
-    func updateContent() {
-        let dayOfWeek = currentDate.dayOfWeek()
-        let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
-        emptyTrackersPlaceholderView.isHidden = trackerStore.categoriesCount() != 0
-    }
-
     @objc private func addTracker() {
         let addTrackerViewController = AddTrackerViewController()
-        addTrackerViewController.delegate = self
+        addTrackerViewController.delegate = viewModel
         present(addTrackerViewController, animated: true)
     }
 
     @objc private func dateChanged() {
-        updateContent()
+        viewModel.dateChanged(to: datePicker.date)
         presentedViewController?.dismiss(animated: false, completion: nil)
     }
 
     @objc private func searchTextChanged() {
-        updateContent()
+        viewModel.searchTextChanged(to: searchTextField.text)
     }
 }
 
@@ -198,11 +187,11 @@ extension TrackersViewController: UITextFieldDelegate {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        trackerStore.categoriesCount()
+        viewModel.numberOfSections()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerStore.trackersCount(for: section)
+        viewModel.numberOfItems(in: section)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -210,15 +199,15 @@ extension TrackersViewController: UICollectionViewDataSource {
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
         do {
-            let tracker = try trackerStore.tracker(at: indexPath)
-            let days = trackerRecordStore.count(for: tracker.id)
-            let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
-            let isButtonEnable = currentDate <= Date()
+            let tracker = try viewModel.tracker(at: indexPath)
+            let days = viewModel.days(for: tracker)
+            let isDone = viewModel.isDone(for: tracker)
+            let isButtonEnable = viewModel.isCompleteEnabled()
             cell.configure(with: tracker,
                            completedDays: days,
                            isDone: isDone,
-                           isButtonEnable: isButtonEnable,
-                           delegate: self);
+                           isButtonEnabled: isButtonEnable,
+                           delegate: viewModel);
             return cell
         } catch {
             fatalError(error.localizedDescription)
@@ -251,7 +240,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                     ofKind: kind,
                     withReuseIdentifier: CategoryHeaderReusableView.identifier,
                     for: indexPath) as? CategoryHeaderReusableView ?? CategoryHeaderReusableView()
-            sectionHeader.configure(with: trackerStore.categoryName(at: indexPath.section))
+            sectionHeader.configure(with: viewModel.categoryName(at: indexPath.section))
             return sectionHeader
         } else {
             return UICollectionReusableView()

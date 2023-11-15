@@ -12,7 +12,7 @@ final class TrackerStore: NSObject {
 
     private var changes = TrackersChanges()
 
-    weak var delegate: TrackersViewControllerDelegate?
+    weak var delegate: TrackersViewDelegate?
 
     private lazy var fetchedResultsController: NSFetchedResultsController<TrackerEntity> = {
         let fetchRequest = TrackerEntity.fetchRequest()
