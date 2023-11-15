@@ -96,14 +96,16 @@ extension TrackerStore: TrackersStoreProtocol {
 
     func filter(prefix: String?, weekDay: WeekDay) {
         let noSchedulePredicate = NSPredicate(format: "%K == nil", #keyPath(TrackerEntity.schedule))
-        var byArgPredicates = [
-            NSPredicate(format: "%K CONTAINS %@", #keyPath(TrackerEntity.schedule), mapper.map(from: weekDay))
+        let byDayPredicate = NSPredicate(format: "%K CONTAINS %@",
+                                         #keyPath(TrackerEntity.schedule),
+                                         mapper.map(from: weekDay))
+        var predicates: [NSPredicate] = [
+            NSCompoundPredicate(orPredicateWithSubpredicates: [noSchedulePredicate, byDayPredicate])
         ]
         if let prefix, !prefix.isEmpty {
-            byArgPredicates.append(NSPredicate(format: "%K BEGINSWITH[c] %@", #keyPath(TrackerEntity.name), prefix))
+            predicates.append(NSPredicate(format: "%K BEGINSWITH[c] %@", #keyPath(TrackerEntity.name), prefix))
         }
-        let byArgsPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: byArgPredicates)
-        let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [noSchedulePredicate, byArgsPredicate])
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchedResultsController.fetchRequest.predicate = predicate
         try? fetchedResultsController.performFetch()
         delegate?.reloadData()
