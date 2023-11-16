@@ -10,8 +10,6 @@ final class TrackerStore: NSObject {
     private let context: NSManagedObjectContext
     private let mapper = TrackerEntityMapper()
 
-    private var changes = TrackersChanges()
-
     weak var delegate: TrackersViewDelegate?
 
     private lazy var fetchedResultsController: NSFetchedResultsController<TrackerEntity> = {
@@ -42,36 +40,8 @@ final class TrackerStore: NSObject {
 }
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        changes.reset()
-    }
-
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        delegate?.updateTrackers(changes: changes)
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            guard let newIndexPath else { fatalError("newIndexPath is nil") }
-            changes.insertions.append(newIndexPath)
-        case .delete:
-            guard let indexPath else { fatalError("indexPath is nil") }
-            changes.deletions.append(indexPath)
-        case .update:
-            guard let indexPath else { fatalError("indexPath is nil") }
-            changes.updates.append(indexPath)
-        case .move:
-            guard let indexPath else { fatalError("indexPath is nil") }
-            guard let newIndexPath else { fatalError("newIndexPath is nil") }
-            changes.moves.append((from: indexPath, to: newIndexPath))
-        @unknown default:
-            fatalError("unknown NSFetchedResultsChangeType")
-        }
+        delegate?.reloadData()
     }
 }
 

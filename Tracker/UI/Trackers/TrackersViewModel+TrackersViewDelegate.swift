@@ -36,10 +36,6 @@ extension TrackersViewModel: TrackersViewDelegate {
         updateContent()
     }
 
-    func updateTrackers(changes: TrackersChanges) {
-        reloadData()
-    }
-
     func reloadData() {
         reloadDataDelegate?()
     }
