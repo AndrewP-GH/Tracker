@@ -104,6 +104,7 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         viewModel = TrackersViewModel()
         viewModel.reloadDataDelegate = { [weak self] in
             self?.trackersView.reloadData()
@@ -111,7 +112,7 @@ final class TrackersViewController: UIViewController {
         viewModel.$showPlaceholder.bind { [weak self] show in
             self?.emptyTrackersPlaceholderView.isHidden = !show
         }
-        setupView()
+        viewModel.updateContent()
     }
 
     private func setupView() {
