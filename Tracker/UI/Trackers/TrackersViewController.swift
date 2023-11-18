@@ -116,16 +116,7 @@ final class TrackersViewController: UIViewController {
             self?.trackersView.reloadData()
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
-            guard let self else { return }
-            switch state {
-            case .hide:
-                self.trackersView.isHidden = false
-                self.emptyTrackersPlaceholderView.isHidden = true
-            default:
-                self.emptyTrackersPlaceholderView.configure(state: state)
-                self.trackersView.isHidden = true
-                self.emptyTrackersPlaceholderView.isHidden = false
-            }
+            self?.setPlaceholder(state: state)
         }
         setupView()
         viewModel.viewDidLoad()
@@ -192,6 +183,18 @@ final class TrackersViewController: UIViewController {
 
     @objc private func searchTextChanged() {
         viewModel.searchTextChanged(to: searchTextField.text)
+    }
+
+    private func setPlaceholder(state: PlaceholderState) {
+        switch state {
+        case .hide:
+            trackersView.isHidden = false
+            emptyTrackersPlaceholderView.isHidden = true
+        default:
+            emptyTrackersPlaceholderView.configure(state: state)
+            trackersView.isHidden = true
+            emptyTrackersPlaceholderView.isHidden = false
+        }
     }
 }
 
