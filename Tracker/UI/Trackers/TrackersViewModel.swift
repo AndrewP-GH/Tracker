@@ -4,6 +4,12 @@
 
 import Foundation
 
+enum PlaceholderState {
+    case hide
+    case empty
+    case noResults
+}
+
 final class TrackersViewModel: TrackersViewModelProtocol {
     let categoryStore: TrackerCategoryStoreProtocol
     let trackerRecordStore: TrackerRecordStoreProtocol
@@ -28,9 +34,9 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     @Observable
-    private(set) var showPlaceholder: Bool = false
-    var showPlaceholderObservable: Observable<Bool> {
-        $showPlaceholder
+    private(set) var placeholderState: PlaceholderState = .empty
+    var placeholderStateObservable: Observable<PlaceholderState> {
+        $placeholderState
     }
 
     init(categoryStore: TrackerCategoryStoreProtocol, trackerRecordStore: TrackerRecordStoreProtocol) {
@@ -54,7 +60,17 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
-        showPlaceholder = trackerStore.categoriesCount() == 0
+        placeholderState = getPlaceholderState()
+    }
+
+    private func getPlaceholderState() -> PlaceholderState {
+        if trackerStore.categoriesCount() != 0 {
+            return .hide
+        }
+        if searchQuery?.isEmpty != false {
+            return .empty
+        }
+        return .noResults
     }
 
     func numberOfSections() -> Int {

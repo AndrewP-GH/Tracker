@@ -9,7 +9,6 @@ final class EmptyTrackersPlaceholderView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Что будем отслеживать?"
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .ypBlack
         return label
@@ -18,7 +17,6 @@ final class EmptyTrackersPlaceholderView: UIView {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "EmptyTrackers")
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         return imageView
@@ -53,6 +51,20 @@ final class EmptyTrackersPlaceholderView: UIView {
                     titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
                 ]
         )
+    }
+
+    func configure(state: PlaceholderState) {
+        switch state {
+        case .hide:
+            titleLabel.text = ""
+            imageView.image = nil
+        case .empty:
+            titleLabel.text = "Что будем отслеживать?"
+            imageView.image = UIImage(named: "EmptyTrackers")
+        case .noResults:
+            titleLabel.text = "Ничего не найдено"
+            imageView.image = UIImage(named: "NoResults")
+        }
     }
 
 }

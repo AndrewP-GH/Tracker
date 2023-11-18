@@ -8,7 +8,7 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate {
     var reloadDataDelegate: (() -> Void)? { get set }
     var currentDate: Date { get }
 
-    var showPlaceholderObservable: Observable<Bool> { get }
+    var placeholderStateObservable: Observable<PlaceholderState> { get }
 
     func dateChanged(to date: Date)
     func searchTextChanged(to text: String?)

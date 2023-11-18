@@ -115,8 +115,17 @@ final class TrackersViewController: UIViewController {
         viewModel.reloadDataDelegate = { [weak self] in
             self?.trackersView.reloadData()
         }
-        viewModel.showPlaceholderObservable.bind { [weak self] show in
-            self?.emptyTrackersPlaceholderView.isHidden = !show
+        viewModel.placeholderStateObservable.bind { [weak self] state in
+            guard let self else { return }
+            switch state {
+            case .hide:
+                self.trackersView.isHidden = false
+                self.emptyTrackersPlaceholderView.isHidden = true
+            default:
+                self.emptyTrackersPlaceholderView.configure(state: state)
+                self.trackersView.isHidden = true
+                self.emptyTrackersPlaceholderView.isHidden = false
+            }
         }
         setupView()
         viewModel.viewDidLoad()
