@@ -6,8 +6,8 @@ import Foundation
 
 protocol TrackersViewModelProtocol: TrackersViewDelegate {
     var reloadDataDelegate: (() -> Void)? { get set }
-    var currentDate: Date { get }
 
+    var currentDate: Date { get }
     var placeholderStateObservable: Observable<PlaceholderState> { get }
 
     func dateChanged(to date: Date)
