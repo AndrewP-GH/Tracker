@@ -4,9 +4,9 @@
 
 import Foundation
 
-final class TrackersViewModel {
-    let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
-    let trackerRecordStore: TrackerRecordStoreProtocol = TrackerRecordStore()
+final class TrackersViewModel: TrackersViewModelProtocol {
+    let categoryStore: TrackerCategoryStoreProtocol
+    let trackerRecordStore: TrackerRecordStoreProtocol
 
     lazy var trackerStore: TrackerStore = {
         let trackerStore = TrackerStore()
@@ -16,12 +16,12 @@ final class TrackersViewModel {
 
     var reloadDataDelegate: (() -> Void)?
 
-    var currentDate: Date = Date() {
+    private(set) var currentDate: Date = Date() {
         didSet {
             updateContent()
         }
     }
-    var searchQuery: String? {
+    private(set) var searchQuery: String? {
         didSet {
             updateContent()
         }
@@ -29,8 +29,13 @@ final class TrackersViewModel {
 
     @Observable
     private(set) var showPlaceholder: Bool = false
+    var showPlaceholderObservable: Observable<Bool> {
+        $showPlaceholder
+    }
 
-    init() {
+    init(categoryStore: TrackerCategoryStoreProtocol, trackerRecordStore: TrackerRecordStoreProtocol) {
+        self.categoryStore = categoryStore
+        self.trackerRecordStore = trackerRecordStore
     }
 
     func dateChanged(to date: Date) {
@@ -39,6 +44,10 @@ final class TrackersViewModel {
 
     func searchTextChanged(to text: String?) {
         searchQuery = text
+    }
+
+    func viewDidLoad() {
+        updateContent()
     }
 
     func updateContent() {
@@ -56,23 +65,18 @@ final class TrackersViewModel {
         trackerStore.trackersCount(for: section)
     }
 
-    func tracker(at indexPath: IndexPath) throws -> Tracker {
-        try trackerStore.tracker(at: indexPath)
-    }
-
-    func days(for tracker: Tracker) -> Int {
-        trackerRecordStore.count(for: tracker.id)
-    }
-
-    func isDone(for tracker: Tracker) -> Bool {
-        trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
-    }
-
     func categoryName(at section: Int) -> String {
         trackerStore.categoryName(at: section)
     }
 
-    func isCompleteEnabled() -> Bool {
-        currentDate <= Date()
+    func cellModel(at indexPath: IndexPath) -> CellModel {
+        let tracker = try! trackerStore.tracker(at: indexPath)
+        let completedDays = trackerRecordStore.count(for: tracker.id)
+        let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
+        let isButtonEnabled = currentDate <= Date()
+        return CellModel(tracker: tracker,
+                         completedDays: completedDays,
+                         isDone: isDone,
+                         canBeDone: isButtonEnabled)
     }
 }

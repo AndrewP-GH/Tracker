@@ -8,7 +8,7 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    private var viewModel: TrackersViewModel!
+    private let viewModel: TrackersViewModelProtocol
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -101,18 +101,25 @@ final class TrackersViewController: UIViewController {
         return emptyTrackersPlaceholderView
     }()
 
+    init(viewModel: TrackersViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = TrackersViewModel()
         viewModel.reloadDataDelegate = { [weak self] in
             self?.trackersView.reloadData()
         }
-        viewModel.$showPlaceholder.bind { [weak self] show in
+        viewModel.showPlaceholderObservable.bind { [weak self] show in
             self?.emptyTrackersPlaceholderView.isHidden = !show
         }
         setupView()
-        viewModel.updateContent()
+        viewModel.viewDidLoad()
     }
 
     private func setupView() {
@@ -200,15 +207,7 @@ extension TrackersViewController: UICollectionViewDataSource {
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
         do {
-            let tracker = try viewModel.tracker(at: indexPath)
-            let days = viewModel.days(for: tracker)
-            let isDone = viewModel.isDone(for: tracker)
-            let isButtonEnable = viewModel.isCompleteEnabled()
-            cell.configure(with: tracker,
-                           completedDays: days,
-                           isDone: isDone,
-                           isButtonEnabled: isButtonEnable,
-                           delegate: viewModel);
+            cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
             return cell
         } catch {
             fatalError(error.localizedDescription)
