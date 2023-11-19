@@ -10,5 +10,4 @@ protocol CategoryViewModelProtocol {
 
     func numberOfItems() -> Int
     func category(at index: Int) -> CategoryModel
-    func applyTapped()
 }

@@ -63,7 +63,7 @@ final class CategoryViewController: UIViewController {
         button.setTitle("Добавить категорию", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypWhite, for: .normal)
-        button.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addCategory), for: .touchUpInside)
         return button
     }()
 
@@ -134,11 +134,8 @@ final class CategoryViewController: UIViewController {
         )
     }
 
-    @objc private func applyTapped() {
-        defer {
-            dismiss(animated: true)
-        }
-        viewModel.applyTapped()
+    @objc private func addCategory() {
+
     }
 }
 

@@ -548,7 +548,7 @@ extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
         updateSaveButtonState()
     }
 
-    func setCategory(category: TrackerCategory) {
+    func setCategory(category: TrackerCategory?) {
         selectedCategory = category
         configurationTable.reloadData()
         updateSaveButtonState()

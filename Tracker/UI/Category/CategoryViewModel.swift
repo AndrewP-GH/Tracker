@@ -28,16 +28,15 @@ final class CategoryViewModel: CategoryViewModelProtocol {
         let categories = try! categoryStore.getAll()
         let category = categories[index]
         return CategoryModel(category: category, isSelected: category == selectedCategory) { [weak self] category in
-            guard let self else { return }
-            self.selectedCategory = self.selectedCategory == category
-                    ? nil
-                    : category
-            self.categoryChangedDelegate?()
+            self?.categorySelected(category)
         }
     }
 
-    func applyTapped() {
-        guard let selectedCategory = selectedCategory else { return }
+    private func categorySelected(_ category: TrackerCategory) {
+        selectedCategory = selectedCategory == category
+                ? nil
+                : category
         delegate?.setCategory(category: selectedCategory)
+        categoryChangedDelegate?()
     }
 }
