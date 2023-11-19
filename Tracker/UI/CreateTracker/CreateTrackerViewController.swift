@@ -328,7 +328,6 @@ extension CreateTrackerViewController: UITableViewDataSource {
             } else {
                 cell.configure(title: "Категория")
             }
-            cell.configure(title: "Категория")
         case 1:
             if selectedDays.isEmpty {
                 cell.configure(title: "Расписание")
