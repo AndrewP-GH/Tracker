@@ -51,7 +51,6 @@ final class CategoryViewController: UIViewController {
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
-        configureTable.isHidden = true
         return configureTable
     }()
 
