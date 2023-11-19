@@ -63,7 +63,7 @@ final class CategoriesViewController: UIViewController {
         button.setTitle("Добавить категорию", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypWhite, for: .normal)
-        button.addTarget(self, action: #selector(addCategory), for: .touchUpInside)
+        button.addTarget(self, action: #selector(createCategory), for: .touchUpInside)
         return button
     }()
 
@@ -157,8 +157,10 @@ final class CategoriesViewController: UIViewController {
         )
     }
 
-    @objc private func addCategory() {
-
+    @objc private func createCategory() {
+        let vc = CreateCategoryViewController()
+        vc.delegate = self
+        present(vc, animated: true)
     }
 
     private func placeholderDidChange(state: PlaceholderState) {
@@ -199,5 +201,17 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         if let cell = cell as? CategoriesTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
+    }
+}
+
+extension CategoriesViewController: AddCategoryViewControllerDelegate {
+    func addCategory(category: TrackerCategory) {
+        viewModel.addCategory(category: category)
+        presentingViewController?.dismiss(
+                animated: true,
+                completion: { [weak self] in
+                    self?.dismiss(animated: false)
+                }
+        )
     }
 }

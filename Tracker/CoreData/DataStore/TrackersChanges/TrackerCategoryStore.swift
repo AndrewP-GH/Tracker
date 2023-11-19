@@ -22,21 +22,28 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         self.context = context
     }
 
-    func createOrUpdate(category: TrackerCategory, tracker: Tracker) throws {
-        let findRequest = TrackerCategoryEntity.fetchRequest()
-        findRequest.predicate = NSPredicate(format: "%K == %@",
-                                            (\TrackerCategoryEntity.id)._kvcKeyPathString!,
-                                            category.id as CVarArg)
-        let findResult = try? context.fetch(findRequest)
+    func addTracker(to category: TrackerCategory, tracker: Tracker) throws {
+        let fetchRequest = TrackerCategoryEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "%K == %@",
+                                             (\TrackerCategoryEntity.id)._kvcKeyPathString!,
+                                             category.id as CVarArg)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(TrackerCategoryEntity.header),
+                                                         ascending: true)]
+        let findResult = try? context.fetch(fetchRequest)
         if let findResult, findResult.count > 0 {
             guard let trackerCategoryEntity = findResult.first else { return }
-            try addTacker(tracker, to: trackerCategoryEntity)
+            try addTacker(to: trackerCategoryEntity, tracker)
+            try context.save()
         } else {
-            let trackerCategoryEntity = TrackerCategoryEntity(context: context)
-            trackerCategoryEntity.id = category.id
-            trackerCategoryEntity.header = category.header
-            try addTacker(tracker, to: trackerCategoryEntity)
+            throw StoreError.notFound
         }
+    }
+
+    func create(category: TrackerCategory) throws {
+        let trackerCategoryEntity = TrackerCategoryEntity(context: context)
+        trackerCategoryEntity.id = category.id
+        trackerCategoryEntity.header = category.header
+        trackerCategoryEntity.items = []
         try context.save()
     }
 
@@ -56,7 +63,8 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         }
     }
 
-    private func addTacker(_ tracker: Tracker, to category: TrackerCategoryEntity) throws {
+    private func addTacker(to category: TrackerCategoryEntity, _ tracker: Tracker?) throws {
+        guard let tracker = tracker else { return }
         let trackerEntity = try trackerMapper.map(from: tracker, context: context)
         category.addToItems(trackerEntity)
     }

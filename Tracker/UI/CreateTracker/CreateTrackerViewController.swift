@@ -280,17 +280,6 @@ final class CreateTrackerViewController: UIViewController {
                 category: selectedCategory
         )
     }
-}
-
-extension CreateTrackerViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        updateSaveButtonState()
-    }
 
     private func updateSaveButtonState() {
         var fullConfigured: Bool
@@ -308,7 +297,18 @@ extension CreateTrackerViewController: UITextFieldDelegate {
         } else {
             disableButton(saveButton)
         }
+    }
 
+}
+
+extension CreateTrackerViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        updateSaveButtonState()
     }
 }
 
@@ -323,6 +323,11 @@ extension CreateTrackerViewController: UITableViewDataSource {
                 for: indexPath) as? CreateTrackerTableViewCell ?? CreateTrackerTableViewCell()
         switch indexPath.row {
         case 0:
+            if let selectedCategory {
+                cell.configure(title: "Категория", subtitle: selectedCategory.header)
+            } else {
+                cell.configure(title: "Категория")
+            }
             cell.configure(title: "Категория")
         case 1:
             if selectedDays.isEmpty {

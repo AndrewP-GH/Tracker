@@ -30,6 +30,14 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
         }
     }
 
+    func addCategory(category: TrackerCategory) {
+        do {
+            try categoryStore.create(category: category)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+
     func category(at index: Int) -> CategoriesCellModel {
         let categories = try! categoryStore.getAll()
         let category = categories[index]

@@ -13,4 +13,6 @@ protocol CategoriesViewModelProtocol {
     func numberOfItems() -> Int
     func category(at index: Int) -> CategoriesCellModel
     func viewDidLoad()
+
+    func addCategory(category: TrackerCategory)
 }
