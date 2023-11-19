@@ -348,9 +348,9 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let viewModel = CategoryViewModel(trackerCategoryStore: TrackerCategoryStore(), delegate: self)
+            let viewModel = CategoriesViewModel(trackerCategoryStore: TrackerCategoryStore(), delegate: self)
             viewModel.selectedCategory = selectedCategory
-            let vc = CategoryViewController(viewModel: viewModel)
+            let vc = CategoriesViewController(viewModel: viewModel)
             present(vc, animated: true)
             break
         case 1:

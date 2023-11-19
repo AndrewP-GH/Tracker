@@ -5,8 +5,8 @@
 import Foundation
 import UIKit
 
-final class CategoryTableViewCell: GreyTableViewCell {
-    static let identifier = "CategoryTableViewCell"
+final class CategoriesTableViewCell: GreyTableViewCell {
+    static let identifier = "CategoriesTableViewCell"
 
     var category: TrackerCategory?
     var delegate: ((TrackerCategory) -> Void)?
@@ -47,7 +47,7 @@ final class CategoryTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func configure(model: CategoryModel) {
+    func configure(model: CategoriesCellModel) {
         category = model.category
         titleLabel.text = model.category.header
         selectButton.isHidden = !model.isSelected

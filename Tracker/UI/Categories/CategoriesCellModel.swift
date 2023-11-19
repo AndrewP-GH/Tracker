@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct CategoryModel {
+struct CategoriesCellModel {
     let category: TrackerCategory
     let isSelected: Bool
     let categorySelectedDelegate: (TrackerCategory) -> Void

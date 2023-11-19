@@ -5,10 +5,10 @@
 import Foundation
 import UIKit
 
-final class CategoryViewController: UIViewController {
+final class CategoriesViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
-    private var viewModel: CategoryViewModelProtocol
+    private var viewModel: CategoriesViewModelProtocol
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -45,7 +45,7 @@ final class CategoryViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
+        configureTable.register(CategoriesTableViewCell.self, forCellReuseIdentifier: CategoriesTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = cornerRadius
@@ -78,7 +78,7 @@ final class CategoryViewController: UIViewController {
         return emptyTrackersPlaceholderView
     }()
 
-    init(viewModel: CategoryViewModelProtocol) {
+    init(viewModel: CategoriesViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -174,7 +174,7 @@ final class CategoryViewController: UIViewController {
     }
 }
 
-extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
+extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfItems()
     }
@@ -184,9 +184,9 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier,
-                                                 for: indexPath) as? CategoryTableViewCell
-                ?? CategoryTableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: CategoriesTableViewCell.identifier,
+                                                 for: indexPath) as? CategoriesTableViewCell
+                ?? CategoriesTableViewCell()
         cell.configure(model: viewModel.category(at: indexPath.row))
         return cell
     }
@@ -196,7 +196,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? CategoryTableViewCell {
+        if let cell = cell as? CategoriesTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class CategoryViewModel: CategoryViewModelProtocol {
+final class CategoriesViewModel: CategoriesViewModelProtocol {
     let categoryStore: TrackerCategoryStoreProtocol
     weak var delegate: CreateTrackerViewControllerDelegate?
 
@@ -30,10 +30,10 @@ final class CategoryViewModel: CategoryViewModelProtocol {
         }
     }
 
-    func category(at index: Int) -> CategoryModel {
+    func category(at index: Int) -> CategoriesCellModel {
         let categories = try! categoryStore.getAll()
         let category = categories[index]
-        return CategoryModel(category: category, isSelected: category == selectedCategory) { [weak self] category in
+        return CategoriesCellModel(category: category, isSelected: category == selectedCategory) { [weak self] category in
             self?.categorySelected(category)
         }
     }

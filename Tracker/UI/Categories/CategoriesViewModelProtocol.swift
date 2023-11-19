@@ -4,13 +4,13 @@
 
 import Foundation
 
-protocol CategoryViewModelProtocol {
+protocol CategoriesViewModelProtocol {
     var categoryChangedDelegate: (() -> Void)? { get set }
     var selectedCategory: TrackerCategory? { get set }
 
     var placeholderStateObservable: Observable<PlaceholderState> { get }
 
     func numberOfItems() -> Int
-    func category(at index: Int) -> CategoryModel
+    func category(at index: Int) -> CategoriesCellModel
     func viewDidLoad()
 }
