@@ -39,7 +39,7 @@ final class CategoriesViewController: UIViewController {
         return contentView
     }()
 
-    private lazy var configureTable: UITableView = {
+    private lazy var categoriesTable: UITableView = {
         let configureTable = UITableView()
         configureTable.translatesAutoresizingMaskIntoConstraints = false
         configureTable.backgroundColor = .ypBackground
@@ -92,14 +92,11 @@ final class CategoriesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.categoryChangedDelegate = { [weak self] in
-            self?.configureTable.reloadData()
+        viewModel.categoriesChangedDelegate = { [weak self] in
+            self?.categoriesTable.reloadData()
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
             self?.placeholderDidChange(state: state)
-        }
-        viewModel.reloadDataDelegate = { [weak self] in
-            self?.configureTable.reloadData()
         }
         setupView()
         viewModel.viewDidLoad()
@@ -115,7 +112,7 @@ final class CategoriesViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
-        contentView.addSubview(configureTable)
+        contentView.addSubview(categoriesTable)
         contentView.addSubview(emptyTrackersPlaceholderView)
         view.addSubview(button)
     }
@@ -131,7 +128,7 @@ final class CategoriesViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
-                    svContentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
+                    svContentG.bottomAnchor.constraint(equalTo: categoriesTable.bottomAnchor),
 
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
@@ -143,9 +140,9 @@ final class CategoriesViewController: UIViewController {
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     titleLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
 
-                    configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-                    configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
-                    configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
+                    categoriesTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+                    categoriesTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
+                    categoriesTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
@@ -171,11 +168,11 @@ final class CategoriesViewController: UIViewController {
     private func placeholderDidChange(state: PlaceholderState) {
         switch state {
         case .hide:
-            configureTable.isHidden = false
+            categoriesTable.isHidden = false
             emptyTrackersPlaceholderView.isHidden = true
         default:
             emptyTrackersPlaceholderView.configure(state: state)
-            configureTable.isHidden = true
+            categoriesTable.isHidden = true
             emptyTrackersPlaceholderView.isHidden = false
         }
     }
@@ -184,9 +181,9 @@ final class CategoriesViewController: UIViewController {
 extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = viewModel.numberOfItems()
-        tableHeightConstraint?.isActive = false
-        let newHeightConstraint = configureTable.heightAnchor.constraint(equalToConstant: cellHeight * CGFloat(rows))
+        let newHeightConstraint = categoriesTable.heightAnchor.constraint(equalToConstant: cellHeight * CGFloat(rows))
         newHeightConstraint.isActive = true
+        tableHeightConstraint?.isActive = false
         tableHeightConstraint = newHeightConstraint
         return rows
     }

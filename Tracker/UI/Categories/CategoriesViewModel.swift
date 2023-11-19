@@ -14,9 +14,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     }
 
     var selectedCategory: TrackerCategory?
-    var categoryChangedDelegate: (() -> Void)?
-
-    var reloadDataDelegate: (() -> Void)?
+    var categoriesChangedDelegate: (() -> Void)?
 
     @Observable
     private(set) var placeholderState: PlaceholderState = .hide
@@ -35,8 +33,8 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
     func addCategory(category: TrackerCategory) {
         do {
             try categoryStore.create(category: category)
-            updateState()
-            reloadDataDelegate?()
+            setPlaceholderState()
+            categoriesChangedDelegate?()
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -55,14 +53,14 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
                 ? nil
                 : category
         delegate?.setCategory(category: selectedCategory)
-        categoryChangedDelegate?()
+        categoriesChangedDelegate?()
     }
 
     func viewDidLoad() {
-        updateState()
+        setPlaceholderState()
     }
 
-    func updateState() {
+    private func setPlaceholderState() {
         placeholderState = numberOfItems() == 0
                 ? .empty
                 : .hide

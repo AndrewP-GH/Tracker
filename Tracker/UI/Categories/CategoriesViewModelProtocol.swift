@@ -5,12 +5,10 @@
 import Foundation
 
 protocol CategoriesViewModelProtocol {
-    var categoryChangedDelegate: (() -> Void)? { get set }
+    var categoriesChangedDelegate: (() -> Void)? { get set }
     var selectedCategory: TrackerCategory? { get set }
 
     var placeholderStateObservable: Observable<PlaceholderState> { get }
-
-    var reloadDataDelegate: (() -> Void)? { get set }
 
     func numberOfItems() -> Int
     func category(at index: Int) -> CategoriesCellModel
