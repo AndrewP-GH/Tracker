@@ -153,7 +153,8 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier,
-                                                 for: indexPath) as! CategoryTableViewCell
+                                                 for: indexPath) as? CategoryTableViewCell
+                ?? CategoryTableViewCell()
         cell.configure(model: viewModel.category(at: indexPath.row))
         return cell
     }

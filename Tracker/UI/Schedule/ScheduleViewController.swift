@@ -151,7 +151,8 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
-                                                 for: indexPath) as! WeekDayTableViewCell
+                                                 for: indexPath) as? WeekDayTableViewCell
+                ?? WeekDayTableViewCell()
         let weekDay = WeekDay.allCases[indexPath.row]
         cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
         return cell
