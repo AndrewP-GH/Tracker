@@ -196,7 +196,7 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoriesTableViewCell.identifier,
                                                  for: indexPath) as? CategoriesTableViewCell
                 ?? CategoriesTableViewCell()
-        cell.configure(model: viewModel.category(at: indexPath.row))
+        cell.configure(model: viewModel.categoryCellModel(at: indexPath.row))
         return cell
     }
 

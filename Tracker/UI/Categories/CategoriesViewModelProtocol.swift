@@ -11,7 +11,7 @@ protocol CategoriesViewModelProtocol {
     var placeholderStateObservable: Observable<PlaceholderState> { get }
 
     func numberOfItems() -> Int
-    func category(at index: Int) -> CategoriesCellModel
+    func categoryCellModel(at index: Int) -> CategoryCellModel
     func viewDidLoad()
 
     func addCategory(category: TrackerCategory)

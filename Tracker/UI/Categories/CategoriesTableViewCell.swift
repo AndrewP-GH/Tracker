@@ -47,7 +47,7 @@ final class CategoriesTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func configure(model: CategoriesCellModel) {
+    func configure(model: CategoryCellModel) {
         category = model.category
         titleLabel.text = model.category.header
         selectButton.isHidden = !model.isSelected
@@ -85,7 +85,8 @@ final class CategoriesTableViewCell: GreyTableViewCell {
     }
 
     @objc private func cellTapped() {
-        guard let category, let delegate else { return }
+        guard let category,
+              let delegate else { return }
         delegate(category)
     }
 }
