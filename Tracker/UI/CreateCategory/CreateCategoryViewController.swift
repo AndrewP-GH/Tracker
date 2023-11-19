@@ -118,6 +118,12 @@ final class CreateCategoryViewController: UIViewController {
                         items: []
                 )
         )
+        presentingViewController?.dismiss(
+                animated: true,
+                completion: { [weak self] in
+                    self?.dismiss(animated: false)
+                }
+        )
     }
 }
 

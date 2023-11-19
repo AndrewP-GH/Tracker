@@ -9,6 +9,7 @@ final class CategoriesViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
     private var viewModel: CategoriesViewModelProtocol
+    private var tableHeightConstraint: NSLayoutConstraint?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -45,12 +46,14 @@ final class CategoriesViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(CategoriesTableViewCell.self, forCellReuseIdentifier: CategoriesTableViewCell.identifier)
+        configureTable.register(CategoriesTableViewCell.self,
+                                forCellReuseIdentifier: CategoriesTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
+        configureTable.rowHeight = cellHeight
         return configureTable
     }()
 
@@ -94,6 +97,9 @@ final class CategoriesViewController: UIViewController {
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
             self?.placeholderDidChange(state: state)
+        }
+        viewModel.reloadDataDelegate = { [weak self] in
+            self?.configureTable.reloadData()
         }
         setupView()
         viewModel.viewDidLoad()
@@ -140,7 +146,6 @@ final class CategoriesViewController: UIViewController {
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
                     configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
-                    configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
@@ -178,7 +183,12 @@ final class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.numberOfItems()
+        let rows = viewModel.numberOfItems()
+        tableHeightConstraint?.isActive = false
+        let newHeightConstraint = configureTable.heightAnchor.constraint(equalToConstant: cellHeight * CGFloat(rows))
+        newHeightConstraint.isActive = true
+        tableHeightConstraint = newHeightConstraint
+        return rows
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -207,11 +217,5 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
 extension CategoriesViewController: AddCategoryViewControllerDelegate {
     func addCategory(category: TrackerCategory) {
         viewModel.addCategory(category: category)
-        presentingViewController?.dismiss(
-                animated: true,
-                completion: { [weak self] in
-                    self?.dismiss(animated: false)
-                }
-        )
     }
 }

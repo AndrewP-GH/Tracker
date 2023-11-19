@@ -10,6 +10,8 @@ protocol CategoriesViewModelProtocol {
 
     var placeholderStateObservable: Observable<PlaceholderState> { get }
 
+    var reloadDataDelegate: (() -> Void)? { get set }
+
     func numberOfItems() -> Int
     func category(at index: Int) -> CategoriesCellModel
     func viewDidLoad()
