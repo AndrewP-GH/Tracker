@@ -9,11 +9,4 @@ struct CellModel {
     let completedDays: Int
     let isDone: Bool
     let canBeDone: Bool
-
-    init(tracker: Tracker, completedDays: Int, isDone: Bool, canBeDone: Bool) {
-        self.tracker = tracker
-        self.completedDays = completedDays
-        self.isDone = isDone
-        self.canBeDone = canBeDone
-    }
 }

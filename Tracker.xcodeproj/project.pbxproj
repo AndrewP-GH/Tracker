@@ -18,6 +18,7 @@
 		1BAEE38E29F43005001601F9 /* TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAEE38D29F43005001601F9 /* TrackerUITestsLaunchTests.swift */; };
 		AE09A0F5BFE52CF8F087DD04 /* TrackersViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A70E64124EAB017134B9 /* TrackersViewModelProtocol.swift */; };
 		AE09A156F10920D604EFCA4F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE32F83CB6F9EAE2D7F2 /* Observable.swift */; };
+		AE09A1725D4A7E6144F451A5 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9FA7387827FD85BBC12 /* CategoryViewModel.swift */; };
 		AE09A233F225D016B8EE5166 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */; };
 		AE09A28D851161B98792AECB /* CreateTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9AB8EA69C921B9CC360 /* CreateTrackerViewController.swift */; };
 		AE09A31A78BE4181C4D044ED /* SelectableCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADAF4FFAAD73A4158B05 /* SelectableCellProtocol.swift */; };
@@ -31,6 +32,8 @@
 		AE09A46881EF34C00082E643 /* AddTrackerViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A86FC89E6F0CBA1EA3AC /* AddTrackerViewControllerDelegate.swift */; };
 		AE09A4A7A0588B1134EF9D9F /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A52DF510C9D636A1369D /* Date+Extensions.swift */; };
 		AE09A557285237E46D31FCF1 /* TrackersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AACB21DDA0DCD777315A /* TrackersViewModel.swift */; };
+		AE09A5604343CE74D08A7097 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AD4B6264C20456CF2759 /* CategoryModel.swift */; };
+		AE09A57D6CBF74EC859D0EBE /* CategoryViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A298A378F4C5A9CB5F79 /* CategoryViewModelProtocol.swift */; };
 		AE09A5B9E214C1026264B495 /* TrackerRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */; };
 		AE09A6A16C850C3047251EA6 /* TrackerCategoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A2050CE8522850FF44F7 /* TrackerCategoryStore.swift */; };
 		AE09A6C3C6E8F00B3C8A00C2 /* WeekDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A317014C9DD701FEF33D /* WeekDay.swift */; };
@@ -40,8 +43,10 @@
 		AE09A7C926BDC4ECDB292AC1 /* CreateTrackerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A12D0AF0872B9163F1EF /* CreateTrackerMode.swift */; };
 		AE09A81CB3BB035BED93B02B /* CategoryHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE790F1FDA73E3AA7D97 /* CategoryHeaderReusableView.swift */; };
 		AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */; };
+		AE09A8A80F72729CFF7763AD /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A0C13430F3BF88BE4331 /* CategoryTableViewCell.swift */; };
 		AE09A8F06488F73EEFD096BD /* TrackersViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1C50B5A0DEB9FECCF19 /* TrackersViewDelegate.swift */; };
 		AE09A93E3F99B598852DC79A /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3E0D535505173B3B75A /* StatisticsViewController.swift */; };
+		AE09A948F1E74CA90461A78E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1448859550489DD547D /* CategoryViewController.swift */; };
 		AE09AA10163DB1928B23D0D3 /* GreyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9221104E549F6ABA2A4 /* GreyTableViewCell.swift */; };
 		AE09AA12DDE33483B044B55F /* TrackersStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A03E6D2BF055EF28CC01 /* TrackersStoreProtocol.swift */; };
 		AE09AA59E8697661198A9C3D /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AB4275607F87ED4373BF /* Schedule.swift */; };
@@ -102,10 +107,13 @@
 		AE09A03E6D2BF055EF28CC01 /* TrackersStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersStoreProtocol.swift; sourceTree = "<group>"; };
 		AE09A07EDBA58F87D931701A /* ConfigurationHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationHeaderReusableView.swift; sourceTree = "<group>"; };
 		AE09A0A16DCEDAFD0914E8FE /* CellWithValueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithValueProtocol.swift; sourceTree = "<group>"; };
+		AE09A0C13430F3BF88BE4331 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
 		AE09A12D0AF0872B9163F1EF /* CreateTrackerMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerMode.swift; sourceTree = "<group>"; };
+		AE09A1448859550489DD547D /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerStore.swift; sourceTree = "<group>"; };
 		AE09A1C50B5A0DEB9FECCF19 /* TrackersViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewDelegate.swift; sourceTree = "<group>"; };
 		AE09A2050CE8522850FF44F7 /* TrackerCategoryStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrackerCategoryStore.swift; path = TrackersChanges/TrackerCategoryStore.swift; sourceTree = "<group>"; };
+		AE09A298A378F4C5A9CB5F79 /* CategoryViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModelProtocol.swift; sourceTree = "<group>"; };
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 		AE09A95C5AA5E5C858512255 /* StoreError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreError.swift; sourceTree = "<group>"; };
 		AE09A97CEAE82D0270AFC4B7 /* TrackerCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCategory.swift; sourceTree = "<group>"; };
 		AE09A9AB8EA69C921B9CC360 /* CreateTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewController.swift; sourceTree = "<group>"; };
+		AE09A9FA7387827FD85BBC12 /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		AE09AA32579ED28DD7C576D9 /* TrackersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		AE09AA6CE07421824796564D /* CreateTrackerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerTableViewCell.swift; sourceTree = "<group>"; };
 		AE09AAAA4A1C36F31B9C0759 /* OnboardingDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataStore.swift; sourceTree = "<group>"; };
@@ -134,6 +143,7 @@
 		AE09AB9BFDA240F6007BE259 /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
 		AE09AD1C9226A517AB113F0B /* CreateTrackerViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTrackerViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09AD3A4310AC7722FE787B /* CellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		AE09AD4B6264C20456CF2759 /* CategoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		AE09AD80EC1877A1FE55DB7B /* TrackerRecordStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerRecordStore.swift; sourceTree = "<group>"; };
 		AE09ADAF4FFAAD73A4158B05 /* SelectableCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableCellProtocol.swift; sourceTree = "<group>"; };
 		AE09ADBC37686E4A94C60896 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -387,6 +397,18 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		AE09AB5DDE813212398440E1 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				AE09A1448859550489DD547D /* CategoryViewController.swift */,
+				AE09A0C13430F3BF88BE4331 /* CategoryTableViewCell.swift */,
+				AE09A9FA7387827FD85BBC12 /* CategoryViewModel.swift */,
+				AE09A298A378F4C5A9CB5F79 /* CategoryViewModelProtocol.swift */,
+				AE09AD4B6264C20456CF2759 /* CategoryModel.swift */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		AE09AB5FCCE960083A367F9A /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +433,7 @@
 				AE09A6A8F3CC7EAAB7A0919F /* Trackers */,
 				AE09AB54FAD9B21398F7C764 /* Onboarding */,
 				AE09AE32F83CB6F9EAE2D7F2 /* Observable.swift */,
+				AE09AB5DDE813212398440E1 /* Category */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -597,6 +620,11 @@
 				AE09A156F10920D604EFCA4F /* Observable.swift in Sources */,
 				AE09A0F5BFE52CF8F087DD04 /* TrackersViewModelProtocol.swift in Sources */,
 				AE09AAFF880944F08429362C /* CellModel.swift in Sources */,
+				AE09A948F1E74CA90461A78E /* CategoryViewController.swift in Sources */,
+				AE09A8A80F72729CFF7763AD /* CategoryTableViewCell.swift in Sources */,
+				AE09A1725D4A7E6144F451A5 /* CategoryViewModel.swift in Sources */,
+				AE09A57D6CBF74EC859D0EBE /* CategoryViewModelProtocol.swift in Sources */,
+				AE09A5604343CE74D08A7097 /* CategoryModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

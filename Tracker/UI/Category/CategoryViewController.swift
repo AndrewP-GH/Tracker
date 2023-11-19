@@ -5,17 +5,15 @@
 import Foundation
 import UIKit
 
-final class ScheduleViewController: UIViewController {
+final class CategoryViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
-
-    weak var delegate: CreateTrackerViewControllerDelegate?
-    var selectedDays: [WeekDay] = []
+    private var viewModel: CategoryViewModelProtocol
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Расписание"
+        label.text = "Категория"
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .ypBlack
         label.textAlignment = .center
@@ -47,7 +45,7 @@ final class ScheduleViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(WeekDayTableViewCell.self, forCellReuseIdentifier: WeekDayTableViewCell.identifier)
+        configureTable.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = cornerRadius
@@ -62,15 +60,27 @@ final class ScheduleViewController: UIViewController {
         button.backgroundColor = .ypBlack
         button.layer.cornerRadius = cornerRadius
         button.layer.masksToBounds = true
-        button.setTitle("Готово", for: .normal)
+        button.setTitle("Добавить категорию", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypWhite, for: .normal)
         button.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
         return button
     }()
 
+    init(viewModel: CategoryViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.categoryChangedDelegate = { [weak self] in
+            self?.configureTable.reloadData()
+        }
         setupView()
     }
 
@@ -128,21 +138,13 @@ final class ScheduleViewController: UIViewController {
         defer {
             dismiss(animated: true)
         }
-        if let delegate {
-            var selected: [WeekDay] = []
-            configureTable.visibleCells.forEach { cell in
-                if let cell = cell as? WeekDayTableViewCell, cell.isEnabled, let weekDay = cell.weekDay {
-                    selected.append(weekDay)
-                }
-            }
-            delegate.setSchedule(schedule: selected)
-        }
+        viewModel.applyTapped()
     }
 }
 
-extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
+extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        WeekDay.allCases.count
+        viewModel.numberOfItems()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -150,10 +152,9 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
-                                                 for: indexPath) as! WeekDayTableViewCell
-        let weekDay = WeekDay.allCases[indexPath.row]
-        cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
+        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier,
+                                                 for: indexPath) as! CategoryTableViewCell
+        cell.configure(model: viewModel.category(at: indexPath.row))
         return cell
     }
 
@@ -162,7 +163,7 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? WeekDayTableViewCell {
+        if let cell = cell as? CategoryTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }

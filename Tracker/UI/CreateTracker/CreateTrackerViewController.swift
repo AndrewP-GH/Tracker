@@ -47,6 +47,7 @@ final class CreateTrackerViewController: UIViewController {
         }
     }
 
+    private var selectedCategory: TrackerCategory?
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
@@ -343,8 +344,13 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-//            let vc = CategoriesViewController()
-//            navigationController?.pushViewController(vc, animated: true)
+            let vc = CategoryViewController(
+                    viewModel: CategoryViewModel(
+                            trackerCategoryStore: TrackerCategoryStore(),
+                            delegate: self
+                    )
+            )
+            navigationController?.pushViewController(vc, animated: true)
             break
         case 1:
             let vc = ScheduleViewController()
@@ -537,6 +543,12 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
 extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule.sorted()
+        configurationTable.reloadData()
+        updateSaveButtonState()
+    }
+
+    func setCategory(category: TrackerCategory) {
+        selectedCategory = category
         configurationTable.reloadData()
         updateSaveButtonState()
     }

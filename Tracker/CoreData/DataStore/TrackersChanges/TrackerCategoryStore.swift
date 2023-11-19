@@ -8,6 +8,7 @@ import CoreData
 
 final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     private let context: NSManagedObjectContext
+
     private let trackerMapper = TrackerEntityMapper()
 
     init() {
@@ -35,6 +36,22 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
             try addTacker(tracker, to: trackerCategoryEntity)
         }
         try context.save()
+    }
+
+    func getAll() throws -> [TrackerCategory] {
+        let request = TrackerCategoryEntity.fetchRequest()
+        let result = try context.fetch(request)
+        return try result.map { trackerCategoryEntity in
+            guard let id = trackerCategoryEntity.id,
+                  let header = trackerCategoryEntity.header,
+                  let items = trackerCategoryEntity.items as? Set<TrackerEntity>
+            else { throw StoreError.decodeError }
+            return TrackerCategory(
+                    id: id,
+                    header: header,
+                    items: try items.map { try trackerMapper.map(from: $0) }
+            )
+        }
     }
 
     private func addTacker(_ tracker: Tracker, to category: TrackerCategoryEntity) throws {

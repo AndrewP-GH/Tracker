@@ -218,12 +218,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
-        do {
-            cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
-            return cell
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
+        return cell
     }
 }
 
