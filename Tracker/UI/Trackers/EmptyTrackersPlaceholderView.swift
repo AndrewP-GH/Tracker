@@ -6,11 +6,15 @@ import Foundation
 import UIKit
 
 final class EmptyTrackersPlaceholderView: UIView {
+    private let emptyStateText: String
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 12, weight: .medium)
         label.textColor = .ypBlack
+        label.textAlignment = .center
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
         return label
     }()
 
@@ -22,14 +26,14 @@ final class EmptyTrackersPlaceholderView: UIView {
         return imageView
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(emptyStateText: String) {
+        self.emptyStateText = emptyStateText
+        super.init(frame: .zero)
         setupView()
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupView() {
@@ -59,7 +63,7 @@ final class EmptyTrackersPlaceholderView: UIView {
             titleLabel.text = ""
             imageView.image = nil
         case .empty:
-            titleLabel.text = "Что будем отслеживать?"
+            titleLabel.text = emptyStateText
             imageView.image = UIImage(named: "EmptyTrackers")
         case .noResults:
             titleLabel.text = "Ничего не найдено"

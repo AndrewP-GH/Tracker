@@ -51,6 +51,7 @@ final class CategoryViewController: UIViewController {
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
+        configureTable.isHidden = true
         return configureTable
     }()
 
@@ -67,6 +68,17 @@ final class CategoryViewController: UIViewController {
         return button
     }()
 
+    private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
+        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(
+                emptyStateText: """
+                                Привычки и события можно
+                                объединить по смыслу
+                                """
+        )
+        emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
+        return emptyTrackersPlaceholderView
+    }()
+
     init(viewModel: CategoryViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -81,7 +93,11 @@ final class CategoryViewController: UIViewController {
         viewModel.categoryChangedDelegate = { [weak self] in
             self?.configureTable.reloadData()
         }
+        viewModel.placeholderStateObservable.bind { [weak self] state in
+            self?.placeholderDidChange(state: state)
+        }
         setupView()
+        viewModel.viewDidLoad()
     }
 
     private func setupView() {
@@ -95,6 +111,7 @@ final class CategoryViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(configureTable)
+        contentView.addSubview(emptyTrackersPlaceholderView)
         view.addSubview(button)
     }
 
@@ -126,6 +143,13 @@ final class CategoryViewController: UIViewController {
                     configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
+                    emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+                    emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+                    emptyTrackersPlaceholderView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor,
+                                                                          constant: 16),
+                    emptyTrackersPlaceholderView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor,
+                                                                           constant: -16),
+
                     button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),
                     button.leadingAnchor.constraint(equalTo: safeG.leadingAnchor, constant: 20),
                     button.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -20),
@@ -136,6 +160,18 @@ final class CategoryViewController: UIViewController {
 
     @objc private func addCategory() {
 
+    }
+
+    private func placeholderDidChange(state: PlaceholderState) {
+        switch state {
+        case .hide:
+            configureTable.isHidden = false
+            emptyTrackersPlaceholderView.isHidden = true
+        default:
+            emptyTrackersPlaceholderView.configure(state: state)
+            configureTable.isHidden = true
+            emptyTrackersPlaceholderView.isHidden = false
+        }
     }
 }
 

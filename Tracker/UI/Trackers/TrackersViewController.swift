@@ -96,7 +96,7 @@ final class TrackersViewController: UIViewController {
     }()
 
     private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView()
+        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(emptyStateText: "Что будем отслеживать?")
         emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         return emptyTrackersPlaceholderView
     }()
@@ -116,7 +116,7 @@ final class TrackersViewController: UIViewController {
             self?.trackersView.reloadData()
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
-            self?.setPlaceholder(state: state)
+            self?.placeholderDidChange(state: state)
         }
         setupView()
         viewModel.viewDidLoad()
@@ -185,7 +185,7 @@ final class TrackersViewController: UIViewController {
         viewModel.searchTextChanged(to: searchTextField.text)
     }
 
-    private func setPlaceholder(state: PlaceholderState) {
+    private func placeholderDidChange(state: PlaceholderState) {
         switch state {
         case .hide:
             trackersView.isHidden = false

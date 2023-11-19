@@ -34,7 +34,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     @Observable
-    private(set) var placeholderState: PlaceholderState = .empty
+    private(set) var placeholderState: PlaceholderState = .hide
     var placeholderStateObservable: Observable<PlaceholderState> {
         $placeholderState
     }

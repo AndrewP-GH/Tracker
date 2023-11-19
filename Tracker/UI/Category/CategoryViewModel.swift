@@ -16,6 +16,12 @@ final class CategoryViewModel: CategoryViewModelProtocol {
     var selectedCategory: TrackerCategory?
     var categoryChangedDelegate: (() -> Void)?
 
+    @Observable
+    private(set) var placeholderState: PlaceholderState = .hide
+    var placeholderStateObservable: Observable<PlaceholderState> {
+        $placeholderState
+    }
+
     func numberOfItems() -> Int {
         do {
             return try categoryStore.getAll().count
@@ -38,5 +44,13 @@ final class CategoryViewModel: CategoryViewModelProtocol {
                 : category
         delegate?.setCategory(category: selectedCategory)
         categoryChangedDelegate?()
+    }
+
+    func viewDidLoad() {
+        if numberOfItems() == 0 {
+            placeholderState = .empty
+        } else {
+            placeholderState = .hide
+        }
     }
 }
