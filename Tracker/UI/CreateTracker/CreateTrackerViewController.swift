@@ -323,19 +323,21 @@ extension CreateTrackerViewController: UITableViewDataSource {
                 for: indexPath) as? CreateTrackerTableViewCell ?? CreateTrackerTableViewCell()
         switch indexPath.row {
         case 0:
+            let categoryTitle = "Категория"
             if let selectedCategory {
-                cell.configure(title: "Категория", subtitle: selectedCategory.header)
+                cell.configure(title: categoryTitle, subtitle: selectedCategory.header)
             } else {
-                cell.configure(title: "Категория")
+                cell.configure(title: categoryTitle)
             }
         case 1:
+            let scheduleTitle = "Расписание"
             if selectedDays.isEmpty {
-                cell.configure(title: "Расписание")
+                cell.configure(title: scheduleTitle)
             } else {
                 let schedule = selectedDays.count == WeekDay.allCases.count
                         ? "Каждый день"
                         : selectedDays.map { $0.shortDescription }.joined(separator: ", ")
-                cell.configure(title: "Расписание", subtitle: schedule)
+                cell.configure(title: scheduleTitle, subtitle: schedule)
             }
         default:
             break
