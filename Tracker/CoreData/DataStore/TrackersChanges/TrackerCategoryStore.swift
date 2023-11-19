@@ -22,17 +22,19 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         self.context = context
     }
 
-    func createOrUpdate(header: String, tracker: Tracker) throws {
+    func createOrUpdate(category: TrackerCategory, tracker: Tracker) throws {
         let findRequest = TrackerCategoryEntity.fetchRequest()
-        findRequest.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryEntity.header), header)
+        findRequest.predicate = NSPredicate(format: "%K == %@",
+                                            (\TrackerCategoryEntity.id)._kvcKeyPathString!,
+                                            category.id as CVarArg)
         let findResult = try? context.fetch(findRequest)
         if let findResult, findResult.count > 0 {
             guard let trackerCategoryEntity = findResult.first else { return }
             try addTacker(tracker, to: trackerCategoryEntity)
         } else {
             let trackerCategoryEntity = TrackerCategoryEntity(context: context)
-            trackerCategoryEntity.id = UUID()
-            trackerCategoryEntity.header = header
+            trackerCategoryEntity.id = category.id
+            trackerCategoryEntity.header = category.header
             try addTacker(tracker, to: trackerCategoryEntity)
         }
         try context.save()

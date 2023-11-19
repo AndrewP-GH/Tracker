@@ -265,16 +265,19 @@ final class CreateTrackerViewController: UIViewController {
 
     @objc private func saveButtonTapped() {
         guard let delegate,
+              let selectedCategory,
               let selectedEmojiPath,
               let selectedColorPath else { return }
         let schedule = selectedDays.isEmpty ? nil : Schedule(days: Set(selectedDays))
-        delegate.addTracker(tracker: Tracker(
-                id: UUID(),
-                name: nameTextField.text!,
-                color: colors[selectedColorPath.row],
-                emoji: emojis[selectedEmojiPath.row],
-                schedule: schedule,
-                createdAt: Date())
+        delegate.addTracker(
+                tracker: Tracker(
+                        id: UUID(),
+                        name: nameTextField.text!,
+                        color: colors[selectedColorPath.row],
+                        emoji: emojis[selectedEmojiPath.row],
+                        schedule: schedule,
+                        createdAt: Date()),
+                category: selectedCategory
         )
     }
 }
@@ -293,11 +296,12 @@ extension CreateTrackerViewController: UITextFieldDelegate {
         var fullConfigured: Bool
         let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
         let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
+        let isCategorySelected = selectedCategory != nil
         switch mode {
         case .habit:
-            fullConfigured = isNameFilled && isDesignConfigured && !selectedDays.isEmpty
+            fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected && !selectedDays.isEmpty
         case .event:
-            fullConfigured = isNameFilled && isDesignConfigured
+            fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected
         }
         if fullConfigured {
             enableButton(saveButton)

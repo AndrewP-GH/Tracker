@@ -7,6 +7,6 @@ import Foundation
 protocol TrackersViewDelegate: AnyObject {
     func didCompleteTracker(id: UUID)
     func didUncompleteTracker(id: UUID)
-    func addTrackerToCategory(category: String, tracker: Tracker)
+    func addTrackerToCategory(category: TrackerCategory, tracker: Tracker)
     func reloadData()
 }

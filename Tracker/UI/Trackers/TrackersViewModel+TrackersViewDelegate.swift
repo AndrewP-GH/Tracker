@@ -26,9 +26,9 @@ extension TrackersViewModel: TrackersViewDelegate {
         }
     }
 
-    func addTrackerToCategory(category: String, tracker: Tracker) {
+    func addTrackerToCategory(category: TrackerCategory, tracker: Tracker) {
         do {
-            try categoryStore.createOrUpdate(header: category, tracker: tracker)
+            try categoryStore.createOrUpdate(category: category, tracker: tracker)
             trackerStore.performFetch()
         } catch {
             fatalError(error.localizedDescription)
