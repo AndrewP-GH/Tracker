@@ -344,13 +344,10 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let vc = CategoryViewController(
-                    viewModel: CategoryViewModel(
-                            trackerCategoryStore: TrackerCategoryStore(),
-                            delegate: self
-                    )
-            )
-            navigationController?.pushViewController(vc, animated: true)
+            let viewModel = CategoryViewModel(trackerCategoryStore: TrackerCategoryStore(), delegate: self)
+            viewModel.selectedCategory = selectedCategory
+            let vc = CategoryViewController(viewModel: viewModel)
+            present(vc, animated: true)
             break
         case 1:
             let vc = ScheduleViewController()

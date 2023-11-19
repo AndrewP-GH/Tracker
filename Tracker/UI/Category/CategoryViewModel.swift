@@ -8,14 +8,13 @@ final class CategoryViewModel: CategoryViewModelProtocol {
     let categoryStore: TrackerCategoryStoreProtocol
     weak var delegate: CreateTrackerViewControllerDelegate?
 
-    private var selectedCategory: TrackerCategory?
-
-    var categoryChangedDelegate: (() -> Void)?
-
     init(trackerCategoryStore: TrackerCategoryStoreProtocol, delegate: CreateTrackerViewControllerDelegate) {
         categoryStore = trackerCategoryStore
         self.delegate = delegate
     }
+
+    var selectedCategory: TrackerCategory?
+    var categoryChangedDelegate: (() -> Void)?
 
     func numberOfItems() -> Int {
         do {
