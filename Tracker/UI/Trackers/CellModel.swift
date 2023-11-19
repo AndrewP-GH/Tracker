@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class CellModel {
+struct CellModel {
     let tracker: Tracker
     let completedDays: Int
     let isDone: Bool
