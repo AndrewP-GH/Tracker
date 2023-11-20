@@ -7,6 +7,9 @@ import UIKit
 
 final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
+    var previewView: UIView? {
+        coloredView
+    }
 
     private var tracker: Tracker?
     private weak var delegate: TrackersViewDelegate?
@@ -34,6 +37,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(red: 174/255.0, green: 175/255.0, blue: 180/255.0, alpha: 0.3).cgColor
         return view
     }()
 
@@ -93,6 +98,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         button.setImage(UIImage(named: "PlusButton"), for: .normal)
         button.backgroundColor = .ypWhite
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.layer.cornerRadius = 17
+        button.layer.masksToBounds = true
         return button
     }()
 
@@ -124,6 +131,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupView() {
+        backgroundColor = .clear
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = true
         contentView.backgroundColor = .clear

@@ -223,6 +223,56 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 }
 
+extension TrackersViewController: UICollectionViewDelegate {
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+            point: CGPoint) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(actionProvider: { actions in
+            UIMenu(children: [
+                UIAction(title: "Закрепить") { [weak self] _ in
+//                    self?.pinTracker(at: indexPaths)
+                },
+                UIAction(title: "Редактировать") { [weak self] _ in
+//                    self?.editTracker(at: indexPaths)
+                },
+                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
+//                    self?.deleteTracker(at: indexPaths)
+                }
+            ])
+        })
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfigurationForItemsAt indexPaths: IndexPath,
+            point: CGPoint) -> UIContextMenuConfiguration? {
+        self.collectionView(collectionView, contextMenuConfigurationForItemsAt: [indexPaths], point: point)
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfiguration configuration: UIContextMenuConfiguration,
+            highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        getPreviewView(for: indexPath)
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfiguration configuration: UIContextMenuConfiguration,
+            dismissalPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        getPreviewView(for: indexPath)
+    }
+
+    private func getPreviewView(for indexPath: IndexPath) -> UITargetedPreview? {
+        guard let cell = trackersView.cellForItem(at: indexPath) as? TrackerCollectionViewCell,
+              let preview = cell.previewView else { return nil }
+        let targetedPreview = UITargetedPreview(view: preview)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+}
+
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
             _ collectionView: UICollectionView,
