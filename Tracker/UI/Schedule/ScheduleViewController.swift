@@ -65,7 +65,7 @@ final class ScheduleViewController: UIViewController {
         button.setTitle("Готово", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
         button.setTitleColor(.ypWhite, for: .normal)
-        button.addTarget(self, action: #selector(save), for: .touchUpInside)
+        button.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
         return button
     }()
 
@@ -124,7 +124,7 @@ final class ScheduleViewController: UIViewController {
         )
     }
 
-    @objc private func save() {
+    @objc private func applyTapped() {
         defer {
             dismiss(animated: true)
         }
@@ -151,7 +151,8 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekDayTableViewCell.identifier,
-                                                 for: indexPath) as! WeekDayTableViewCell
+                                                 for: indexPath) as? WeekDayTableViewCell
+                ?? WeekDayTableViewCell()
         let weekDay = WeekDay.allCases[indexPath.row]
         cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
         return cell

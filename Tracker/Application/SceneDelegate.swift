@@ -17,7 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else {
             return
         }
-        let viewController = HomePageViewController()
+        let viewController = OnboardingDataStore.shared.isOnboardingWasShown()
+                ? HomePageViewController()
+                : OnboardingViewController()
         let window = UIWindow(windowScene: scene as! UIWindowScene)
         window.rootViewController = viewController
         self.window = window

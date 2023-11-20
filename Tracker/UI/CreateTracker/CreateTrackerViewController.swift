@@ -47,6 +47,7 @@ final class CreateTrackerViewController: UIViewController {
         }
     }
 
+    private var selectedCategory: TrackerCategory?
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
@@ -264,18 +265,40 @@ final class CreateTrackerViewController: UIViewController {
 
     @objc private func saveButtonTapped() {
         guard let delegate,
+              let selectedCategory,
               let selectedEmojiPath,
               let selectedColorPath else { return }
         let schedule = selectedDays.isEmpty ? nil : Schedule(days: Set(selectedDays))
-        delegate.addTracker(tracker: Tracker(
-                id: UUID(),
-                name: nameTextField.text!,
-                color: colors[selectedColorPath.row],
-                emoji: emojis[selectedEmojiPath.row],
-                schedule: schedule,
-                createdAt: Date())
+        delegate.addTracker(
+                tracker: Tracker(
+                        id: UUID(),
+                        name: nameTextField.text!,
+                        color: colors[selectedColorPath.row],
+                        emoji: emojis[selectedEmojiPath.row],
+                        schedule: schedule,
+                        createdAt: Date()),
+                category: selectedCategory
         )
     }
+
+    private func updateSaveButtonState() {
+        var fullConfigured: Bool
+        let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
+        let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
+        let isCategorySelected = selectedCategory != nil
+        switch mode {
+        case .habit:
+            fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected && !selectedDays.isEmpty
+        case .event:
+            fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected
+        }
+        if fullConfigured {
+            enableButton(saveButton)
+        } else {
+            disableButton(saveButton)
+        }
+    }
+
 }
 
 extension CreateTrackerViewController: UITextFieldDelegate {
@@ -286,24 +309,6 @@ extension CreateTrackerViewController: UITextFieldDelegate {
 
     @objc private func textFieldDidChange(_ textField: UITextField) {
         updateSaveButtonState()
-    }
-
-    private func updateSaveButtonState() {
-        var fullConfigured: Bool
-        let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
-        let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
-        switch mode {
-        case .habit:
-            fullConfigured = isNameFilled && isDesignConfigured && !selectedDays.isEmpty
-        case .event:
-            fullConfigured = isNameFilled && isDesignConfigured
-        }
-        if fullConfigured {
-            enableButton(saveButton)
-        } else {
-            disableButton(saveButton)
-        }
-
     }
 }
 
@@ -318,15 +323,21 @@ extension CreateTrackerViewController: UITableViewDataSource {
                 for: indexPath) as? CreateTrackerTableViewCell ?? CreateTrackerTableViewCell()
         switch indexPath.row {
         case 0:
-            cell.configure(title: "Категория")
+            let categoryTitle = "Категория"
+            if let selectedCategory {
+                cell.configure(title: categoryTitle, subtitle: selectedCategory.header)
+            } else {
+                cell.configure(title: categoryTitle)
+            }
         case 1:
+            let scheduleTitle = "Расписание"
             if selectedDays.isEmpty {
-                cell.configure(title: "Расписание")
+                cell.configure(title: scheduleTitle)
             } else {
                 let schedule = selectedDays.count == WeekDay.allCases.count
                         ? "Каждый день"
                         : selectedDays.map { $0.shortDescription }.joined(separator: ", ")
-                cell.configure(title: "Расписание", subtitle: schedule)
+                cell.configure(title: scheduleTitle, subtitle: schedule)
             }
         default:
             break
@@ -343,8 +354,10 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-//            let vc = CategoriesViewController()
-//            navigationController?.pushViewController(vc, animated: true)
+            let viewModel = CategoriesViewModel(trackerCategoryStore: TrackerCategoryStore(), delegate: self)
+            viewModel.selectedCategory = selectedCategory
+            let vc = CategoriesViewController(viewModel: viewModel)
+            present(vc, animated: true)
             break
         case 1:
             let vc = ScheduleViewController()
@@ -537,6 +550,12 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
 extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule.sorted()
+        configurationTable.reloadData()
+        updateSaveButtonState()
+    }
+
+    func setCategory(category: TrackerCategory?) {
+        selectedCategory = category
         configurationTable.reloadData()
         updateSaveButtonState()
     }

@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 
 final class AddTrackerViewController: UIViewController {
-    weak var delegate: TrackersViewControllerDelegate?
+    weak var delegate: TrackersViewDelegate?
 
     private lazy var header: UILabel = {
         let label = UILabel()
@@ -97,9 +97,8 @@ final class AddTrackerViewController: UIViewController {
 }
 
 extension AddTrackerViewController: AddTrackerViewControllerDelegate {
-    func addTracker(tracker: Tracker) {
-        let min = Calendar.current.component(.minute, from: Date())
-        delegate?.addTrackerToCategory(category: "Новые \(min)" , tracker: tracker)
+    func addTracker(tracker: Tracker, category: TrackerCategory) {
+        delegate?.addTrackerToCategory(category: category, tracker: tracker)
         presentingViewController?.dismiss(
                 animated: true,
                 completion: { [weak self] in

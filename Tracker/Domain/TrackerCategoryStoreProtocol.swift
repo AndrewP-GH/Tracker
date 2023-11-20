@@ -5,5 +5,7 @@
 import Foundation
 
 protocol TrackerCategoryStoreProtocol {
-    func createOrUpdate(header: String, tracker: Tracker) throws
+    func addTracker(to: TrackerCategory, tracker: Tracker) throws
+    func getAll() throws -> [TrackerCategory]
+    func create(category: TrackerCategory) throws
 }

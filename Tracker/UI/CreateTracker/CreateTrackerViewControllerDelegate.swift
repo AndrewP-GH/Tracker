@@ -6,4 +6,5 @@ import Foundation
 
 protocol CreateTrackerViewControllerDelegate: AnyObject {
     func setSchedule(schedule: [WeekDay])
+    func setCategory(category: TrackerCategory?)
 }

@@ -4,16 +4,12 @@
 
 import Foundation
 
-struct TrackerCategory {
+struct TrackerCategory: Equatable {
     let id: UUID
     let header: String
     let items: [Tracker]
 
-    init(id: UUID,
-         header: String,
-         items: [Tracker]) {
-        self.id = id
-        self.header = header
-        self.items = items
+    static func ==(lhs: TrackerCategory, rhs: TrackerCategory) -> Bool {
+        lhs.id == rhs.id
     }
 }

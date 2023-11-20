@@ -8,12 +8,7 @@
 import UIKit
 
 final class TrackersViewController: UIViewController {
-    let categoryStore: TrackerCategoryStoreProtocol = TrackerCategoryStore()
-    let trackerRecordStore: TrackerRecordStoreProtocol = TrackerRecordStore()
-
-    private var currentDate: Date {
-        datePicker.date
-    }
+    private let viewModel: TrackersViewModelProtocol
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -51,7 +46,7 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
-        datePicker.date = Date()
+        datePicker.date = viewModel.currentDate
         return datePicker
     }()
 
@@ -84,7 +79,7 @@ final class TrackersViewController: UIViewController {
         return searchTextField
     }()
 
-    private lazy var trackersView: UICollectionView = {
+    lazy var trackersView: UICollectionView = {
         let trackersView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         trackersView.translatesAutoresizingMaskIntoConstraints = false
         trackersView.backgroundColor = .clear
@@ -101,20 +96,30 @@ final class TrackersViewController: UIViewController {
     }()
 
     private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView()
+        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(emptyStateText: "Что будем отслеживать?")
         emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         return emptyTrackersPlaceholderView
     }()
 
-    private lazy var trackerStore: TrackerStore = {
-        let trackerStore = TrackerStore()
-        trackerStore.delegate = self
-        return trackerStore
-    }()
+    init(viewModel: TrackersViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.reloadDataDelegate = { [weak self] in
+            self?.trackersView.reloadData()
+        }
+        viewModel.placeholderStateObservable.bind { [weak self] state in
+            self?.placeholderDidChange(state: state)
+        }
         setupView()
+        viewModel.viewDidLoad()
     }
 
     private func setupView() {
@@ -122,7 +127,6 @@ final class TrackersViewController: UIViewController {
         setupNavigationBar()
         addSubviews()
         setupConstraints()
-        updateContent()
     }
 
     private func setupNavigationBar() {
@@ -166,26 +170,31 @@ final class TrackersViewController: UIViewController {
         )
     }
 
-    private func updateContent() {
-        let dayOfWeek = currentDate.dayOfWeek()
-        let searchText = searchTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
-        emptyTrackersPlaceholderView.isHidden = trackerStore.categoriesCount() != 0
-    }
-
     @objc private func addTracker() {
         let addTrackerViewController = AddTrackerViewController()
-        addTrackerViewController.delegate = self
+        addTrackerViewController.delegate = viewModel
         present(addTrackerViewController, animated: true)
     }
 
     @objc private func dateChanged() {
-        updateContent()
+        viewModel.dateChanged(to: datePicker.date)
         presentedViewController?.dismiss(animated: false, completion: nil)
     }
 
     @objc private func searchTextChanged() {
-        updateContent()
+        viewModel.searchTextChanged(to: searchTextField.text)
+    }
+
+    private func placeholderDidChange(state: PlaceholderState) {
+        switch state {
+        case .hide:
+            trackersView.isHidden = false
+            emptyTrackersPlaceholderView.isHidden = true
+        default:
+            emptyTrackersPlaceholderView.configure(state: state)
+            trackersView.isHidden = true
+            emptyTrackersPlaceholderView.isHidden = false
+        }
     }
 }
 
@@ -198,31 +207,19 @@ extension TrackersViewController: UITextFieldDelegate {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        trackerStore.categoriesCount()
+        viewModel.numberOfSections()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        trackerStore.trackersCount(for: section)
+        viewModel.numberOfItems(in: section)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
-        do {
-            let tracker = try trackerStore.tracker(at: indexPath)
-            let days = trackerRecordStore.count(for: tracker.id)
-            let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
-            let isButtonEnable = currentDate <= Date()
-            cell.configure(with: tracker,
-                           completedDays: days,
-                           isDone: isDone,
-                           isButtonEnable: isButtonEnable,
-                           delegate: self);
-            return cell
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
+        return cell
     }
 }
 
@@ -251,7 +248,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                     ofKind: kind,
                     withReuseIdentifier: CategoryHeaderReusableView.identifier,
                     for: indexPath) as? CategoryHeaderReusableView ?? CategoryHeaderReusableView()
-            sectionHeader.configure(with: trackerStore.categoryName(at: indexPath.section))
+            sectionHeader.configure(with: viewModel.categoryName(at: indexPath.section))
             return sectionHeader
         } else {
             return UICollectionReusableView()
@@ -283,43 +280,5 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         spacing
-    }
-}
-
-extension TrackersViewController: TrackersViewControllerDelegate {
-    func didCompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        do {
-            try trackerRecordStore.add(trackerRecord)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-
-    func didUncompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
-        do {
-            try trackerRecordStore.remove(trackerRecord)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-
-    func addTrackerToCategory(category: String, tracker: Tracker) {
-        do {
-            try categoryStore.createOrUpdate(header: category, tracker: tracker)
-            trackerStore.performFetch()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-        updateContent()
-    }
-
-    func updateTrackers(changes: TrackersChanges) {
-        reloadData()
-    }
-
-    func reloadData() {
-        trackersView.reloadData()
     }
 }

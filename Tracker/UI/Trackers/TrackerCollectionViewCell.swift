@@ -9,7 +9,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
 
     private var tracker: Tracker?
-    private weak var delegate: TrackersViewControllerDelegate?
+    private weak var delegate: TrackersViewDelegate?
 
     private var completedDays = 0 {
         didSet {
@@ -23,7 +23,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private var isButtonEnable = false {
+    private var canBeDone = false {
         didSet {
             setButtonEnabled()
         }
@@ -113,16 +113,13 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with tracker: Tracker,
-                   completedDays: Int,
-                   isDone: Bool,
-                   isButtonEnable: Bool,
-                   delegate: TrackersViewControllerDelegate) {
-        self.tracker = tracker
+    func configure(with model: CellModel,
+                   delegate: TrackersViewDelegate) {
+        tracker = model.tracker
         self.delegate = delegate
-        self.completedDays = completedDays
-        self.isDone = isDone
-        self.isButtonEnable = isButtonEnable
+        completedDays = model.completedDays
+        isDone = model.isDone
+        canBeDone = model.canBeDone
         updateContentView()
     }
 
@@ -242,6 +239,6 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     private func setButtonEnabled() {
-        buttonOverlay.isHidden = isButtonEnable
+        buttonOverlay.isHidden = canBeDone
     }
 }
