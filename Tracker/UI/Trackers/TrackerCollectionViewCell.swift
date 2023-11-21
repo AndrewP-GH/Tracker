@@ -53,6 +53,14 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    private lazy var pinImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "Pin")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -143,6 +151,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private func addSubviews() {
         contentView.addSubview(coloredView)
         coloredView.addSubview(emojiLabel)
+        coloredView.addSubview(pinImageView)
         coloredView.addSubview(textStackView)
         textStackView.addSubview(nameLabel)
         contentView.addSubview(controlView)
@@ -163,6 +172,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     emojiLabel.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 12),
                     emojiLabel.widthAnchor.constraint(equalToConstant: 24),
                     emojiLabel.heightAnchor.constraint(equalToConstant: 24),
+
+                    pinImageView.topAnchor.constraint(equalTo: coloredView.topAnchor, constant: 12),
+                    pinImageView.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -4),
+                    pinImageView.widthAnchor.constraint(equalToConstant: 24),
+                    pinImageView.heightAnchor.constraint(equalToConstant: 24),
 
                     textStackView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
                     textStackView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 12),
@@ -204,6 +218,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         emojiLabel.text = tracker.emoji
         nameLabel.text = tracker.name
         button.tintColor = tracker.color
+        pinImageView.isHidden = !tracker.isPinned
 
         setDaysLabel()
         setButtonImage()
