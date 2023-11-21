@@ -5,7 +5,7 @@
 import Foundation
 
 protocol TrackersViewModelProtocol: TrackersViewDelegate {
-    var reloadDataDelegate: (() -> Void)? { get set }
+    var trackersDidChange: (() -> Void)? { get set }
 
     var currentDate: Date { get }
     var placeholderStateObservable: Observable<PlaceholderState> { get }

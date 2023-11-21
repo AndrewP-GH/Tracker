@@ -22,7 +22,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         return trackerStore
     }()
 
-    var reloadDataDelegate: (() -> Void)?
+    var trackersDidChange: (() -> Void)?
 
     private(set) var currentDate: Date = Date() {
         didSet {

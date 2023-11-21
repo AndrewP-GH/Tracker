@@ -112,7 +112,7 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.reloadDataDelegate = { [weak self] in
+        viewModel.trackersDidChange = { [weak self] in
             self?.trackersView.reloadData()
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
