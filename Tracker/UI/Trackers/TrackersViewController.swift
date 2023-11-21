@@ -261,9 +261,8 @@ extension TrackersViewController: UICollectionViewDelegate {
         let trackerType = viewModel.getTrackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = viewModel
-        let tacker = viewModel.cellModel(at: indexPath).tracker
-        vc.tracker = tacker
-        vc.category = viewModel.category(for: tacker)
+        let tracker = viewModel.cellModel(at: indexPath).tracker
+        vc.setState(tracker: tracker, category: viewModel.category(for: tracker))
         present(vc, animated: true)
     }
 

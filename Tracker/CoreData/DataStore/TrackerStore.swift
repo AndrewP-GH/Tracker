@@ -70,10 +70,10 @@ extension TrackerStore: TrackersStoreProtocol {
         try context.save()
     }
 
-    func category(for tracker: Tracker) throws -> TrackerCategory? {
+    func category(for tracker: Tracker) throws -> TrackerCategory {
         guard let entity = fetchedResultsController.fetchedObjects?
-                .first(where: { $0.id == tracker.id }) else { return nil }
-        guard let category = entity.category else { return nil }
+                .first(where: { $0.id == tracker.id }) else { throw StoreError.notFound }
+        guard let category = entity.category else { throw StoreError.notFound }
         guard let id = category.id,
               let header = category.header else { throw StoreError.decodeError }
         return TrackerCategory(id: id, header: header)

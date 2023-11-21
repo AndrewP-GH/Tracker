@@ -193,7 +193,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         lhs.name < rhs.name
     }
 
-    func category(for tracker: Tracker) -> TrackerCategory? {
+    func category(for tracker: Tracker) -> TrackerCategory {
         do {
             return try trackerStore.category(for: tracker)
         } catch {

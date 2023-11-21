@@ -8,12 +8,6 @@ import UIKit
 final class ConfigureTrackerViewController: UIViewController {
     weak var addTrackerDelegate: AddTrackerDelegate?
     weak var editTrackerDelegate: EditTrackerDelegate?
-    var tracker: Tracker?
-    var category: TrackerCategory? {
-        didSet {
-            selectedCategory = category
-        }
-    }
 
     private let tableCellHeight: CGFloat = 75
     private let emojis = [
@@ -78,6 +72,13 @@ final class ConfigureTrackerViewController: UIViewController {
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
+
+    private var tracker: Tracker?
+    private var category: TrackerCategory? {
+        didSet {
+            selectedCategory = category
+        }
+    }
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -223,7 +224,7 @@ final class ConfigureTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        restoreState()
+        restoreFromState()
     }
 
     private func setupView() {
@@ -292,7 +293,7 @@ final class ConfigureTrackerViewController: UIViewController {
         )
     }
 
-    private func restoreState() {
+    private func restoreFromState() {
         guard let tracker else { return }
         nameTextField.text = tracker.name
         if let index = emojis.firstIndex(of: tracker.emoji) {
@@ -369,6 +370,10 @@ final class ConfigureTrackerViewController: UIViewController {
         }
     }
 
+    func setState(tracker: Tracker, category: TrackerCategory) {
+        self.tracker = tracker
+        self.category = category
+    }
 }
 
 extension ConfigureTrackerViewController: UITextFieldDelegate {
