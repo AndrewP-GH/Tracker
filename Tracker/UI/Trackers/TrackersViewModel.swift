@@ -208,6 +208,7 @@ extension TrackersViewModel: TrackersViewDelegate {
             case .edit(let tracker):
                 try trackerStore.update(tracker: tracker)
             case .editAndMove(let tracker, let to, let from):
+                try trackerStore.update(tracker: tracker)
                 try categoryStore.moveTracker(from: from, to: to, tracker: tracker)
             }
         } catch {
