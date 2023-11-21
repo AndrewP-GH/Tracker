@@ -5,8 +5,11 @@
 import Foundation
 import UIKit
 
-final class CreateTrackerViewController: UIViewController {
-    weak var delegate: AddTrackerViewControllerDelegate?
+final class ConfigureTrackerViewController: UIViewController {
+    weak var addTrackerDelegate: AddTrackerDelegate?
+    weak var editTrackerDelegate: EditTrackerDelegate?
+    var tracker: Tracker?
+    var category: TrackerCategory?
 
     private let tableCellHeight: CGFloat = 75
     private let emojis = [
@@ -27,22 +30,33 @@ final class CreateTrackerViewController: UIViewController {
     private let emojiSectionIndex = 0
     private let colorSectionIndex = 1
 
-    private var mode: CreateTrackerMode = .habit
+    private var trackerType: TrackerType = .habit
+    private var mode: ConfigurationMode = .create
 
     private var titleText: String {
         switch mode {
-        case .habit:
-            return "Новая привычка"
-        case .event:
-            return "Новое нерегулярное событие"
+        case .create:
+            switch trackerType {
+            case .habit:
+                return "Новая привычка"
+            case .irregularEvent:
+                return "Новое нерегулярное событие"
+            }
+        case .edit:
+            switch trackerType {
+            case .habit:
+                return "Редактирование привычки"
+            case .irregularEvent:
+                return "Редактирование нерегулярного события"
+            }
         }
     }
 
     private var tableRows: Int {
-        switch mode {
+        switch trackerType {
         case .habit:
             return 2
-        case .event:
+        case .irregularEvent:
             return 1
         }
     }
@@ -106,8 +120,8 @@ final class CreateTrackerViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(CreateTrackerTableViewCell.self,
-                                forCellReuseIdentifier: CreateTrackerTableViewCell.identifier)
+        configureTable.register(ConfigureTrackerTableViewCell.self,
+                                forCellReuseIdentifier: ConfigureTrackerTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = 16
@@ -183,9 +197,13 @@ final class CreateTrackerViewController: UIViewController {
         return stackView
     }()
 
-    convenience init(mode: CreateTrackerMode) {
-        self.init()
-        self.mode = mode
+    init(trackerType: TrackerType, mode: ConfigurationMode) {
+        self.trackerType = trackerType
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -264,22 +282,42 @@ final class CreateTrackerViewController: UIViewController {
     }
 
     @objc private func saveButtonTapped() {
-        guard let delegate,
+        guard let name = nameTextField.text,
               let selectedCategory,
               let selectedEmojiPath,
               let selectedColorPath else { return }
-        let schedule = selectedDays.isEmpty ? nil : Schedule(days: Set(selectedDays))
-        delegate.addTracker(
-                tracker: Tracker(
-                        id: UUID(),
-                        name: nameTextField.text!,
-                        color: colors[selectedColorPath.row],
-                        emoji: emojis[selectedEmojiPath.row],
-                        schedule: schedule,
-                        createdAt: Date(),
-                        isPinned: false),
-                category: selectedCategory
-        )
+        let schedule = selectedDays.isEmpty
+                ? nil
+                : Schedule(days: Set(selectedDays))
+        switch mode {
+        case .create:
+            addTrackerDelegate?.invoke(
+                    tracker: Tracker(
+                            id: UUID(),
+                            name: name,
+                            color: colors[selectedColorPath.row],
+                            emoji: emojis[selectedEmojiPath.row],
+                            schedule: schedule,
+                            createdAt: Date(),
+                            isPinned: false),
+                    category: selectedCategory
+            )
+        case .edit:
+            guard let tracker,
+                  let category else { return }
+            editTrackerDelegate?.invoke(
+                    tracker: Tracker(
+                            id: tracker.id,
+                            name: name,
+                            color: colors[selectedColorPath.row],
+                            emoji: emojis[selectedEmojiPath.row],
+                            schedule: schedule,
+                            createdAt: tracker.createdAt,
+                            isPinned: tracker.isPinned),
+                    category: selectedCategory,
+                    previousCategory: category
+            )
+        }
     }
 
     private func updateSaveButtonState() {
@@ -287,10 +325,10 @@ final class CreateTrackerViewController: UIViewController {
         let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
         let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
         let isCategorySelected = selectedCategory != nil
-        switch mode {
+        switch trackerType {
         case .habit:
             fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected && !selectedDays.isEmpty
-        case .event:
+        case .irregularEvent:
             fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected
         }
         if fullConfigured {
@@ -302,7 +340,7 @@ final class CreateTrackerViewController: UIViewController {
 
 }
 
-extension CreateTrackerViewController: UITextFieldDelegate {
+extension ConfigureTrackerViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -313,15 +351,15 @@ extension CreateTrackerViewController: UITextFieldDelegate {
     }
 }
 
-extension CreateTrackerViewController: UITableViewDataSource {
+extension ConfigureTrackerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableRows
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
-                withIdentifier: CreateTrackerTableViewCell.identifier,
-                for: indexPath) as? CreateTrackerTableViewCell ?? CreateTrackerTableViewCell()
+                withIdentifier: ConfigureTrackerTableViewCell.identifier,
+                for: indexPath) as? ConfigureTrackerTableViewCell ?? ConfigureTrackerTableViewCell()
         switch indexPath.row {
         case 0:
             let categoryTitle = "Категория"
@@ -351,7 +389,7 @@ extension CreateTrackerViewController: UITableViewDataSource {
     }
 }
 
-extension CreateTrackerViewController: UITableViewDelegate {
+extension ConfigureTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -372,14 +410,14 @@ extension CreateTrackerViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? CreateTrackerTableViewCell {
+        if let cell = cell as? ConfigureTrackerTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }
 }
 
 
-extension CreateTrackerViewController: UICollectionViewDataSource {
+extension ConfigureTrackerViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         2
     }
@@ -424,7 +462,7 @@ extension CreateTrackerViewController: UICollectionViewDataSource {
     }
 }
 
-extension CreateTrackerViewController: UICollectionViewDelegate {
+extension ConfigureTrackerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
         case emojiSectionIndex:
@@ -432,14 +470,14 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
             selectCell(collectionView,
                        selectedPath: indexPath,
                        cellType: EmojiCollectionViewCell.self,
-                       prevSelectedPath: selectedEmojiPath)
+                       previousSelectedPath: selectedEmojiPath)
             selectedEmojiPath = indexPath
         case colorSectionIndex:
             if selectedColorPath == indexPath { return }
             selectCell(collectionView,
                        selectedPath: indexPath,
                        cellType: ColorCollectionViewCell.self,
-                       prevSelectedPath: selectedColorPath)
+                       previousSelectedPath: selectedColorPath)
             selectedColorPath = indexPath
         default:
             break
@@ -451,9 +489,9 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
             _ collectionView: UICollectionView,
             selectedPath: IndexPath,
             cellType: T.Type,
-            prevSelectedPath: IndexPath?) {
-        if let prevSelectedPath {
-            setSelectedState(collectionView, cellForItemAt: prevSelectedPath, cellType: cellType, state: false)
+            previousSelectedPath: IndexPath?) {
+        if let previousSelectedPath {
+            setSelectedState(collectionView, cellForItemAt: previousSelectedPath, cellType: cellType, state: false)
         }
         setSelectedState(collectionView, cellForItemAt: selectedPath, cellType: cellType, state: true)
 
@@ -464,7 +502,7 @@ extension CreateTrackerViewController: UICollectionViewDelegate {
     }
 }
 
-extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
+extension ConfigureTrackerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
             _ collectionView: UICollectionView,
             layout collectionViewLayout: UICollectionViewLayout,
@@ -548,7 +586,7 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CreateTrackerViewController: CreateTrackerViewControllerDelegate {
+extension ConfigureTrackerViewController: ConfigureTrackerViewControllerDelegate {
     func setSchedule(schedule: [WeekDay]) {
         selectedDays = schedule.sorted()
         configurationTable.reloadData()

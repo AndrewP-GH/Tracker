@@ -6,9 +6,9 @@ import Foundation
 
 final class CategoriesViewModel: CategoriesViewModelProtocol {
     let categoryStore: TrackerCategoryStoreProtocol
-    weak var delegate: CreateTrackerViewControllerDelegate?
+    weak var delegate: ConfigureTrackerViewControllerDelegate?
 
-    init(trackerCategoryStore: TrackerCategoryStoreProtocol, delegate: CreateTrackerViewControllerDelegate) {
+    init(trackerCategoryStore: TrackerCategoryStoreProtocol, delegate: ConfigureTrackerViewControllerDelegate) {
         categoryStore = trackerCategoryStore
         self.delegate = delegate
     }

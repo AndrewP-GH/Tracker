@@ -234,11 +234,11 @@ extension TrackersViewController: UICollectionViewDelegate {
             UIMenu(children: [
                 firstAction,
                 UIAction(title: "Редактировать") { [weak self] _ in
-//                    self?.editTracker(at: indexPath)
+                    self?.editTracker(at: indexPath)
                 },
-                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
+//                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
 //                    self?.deleteTracker(at: indexPath)
-                }
+//                }
             ])
         })
     }
@@ -257,6 +257,14 @@ extension TrackersViewController: UICollectionViewDelegate {
         }
     }
 
+    private func editTracker(at indexPath: IndexPath) {
+        let trackerType = viewModel.getTrackerType(at: indexPath)
+        let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
+        vc.editTrackerDelegate = viewModel
+//        vc.tracker = viewModel.cellModel(at: indexPath).tracker
+        present(vc, animated: true)
+    }
+
     func collectionView(
             _ collectionView: UICollectionView,
             contextMenuConfiguration configuration: UIContextMenuConfiguration,
@@ -273,7 +281,7 @@ extension TrackersViewController: UICollectionViewDelegate {
 
     private func getCellPreview(for indexPath: IndexPath) -> UITargetedPreview? {
         guard let cell = trackersView.cellForItem(at: indexPath) as? TrackerCollectionViewCell,
-              let cellPreview = cell.previewView else { return nil }
+              let cellPreview = cell.previousiewView else { return nil }
         let targetedPreview = UITargetedPreview(view: cellPreview)
         targetedPreview.parameters.backgroundColor = .clear
         return targetedPreview
@@ -325,7 +333,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 
     fileprivate var spacing: CGFloat {
-        0
+        1
     }
 
     fileprivate var cellHeight: CGFloat {

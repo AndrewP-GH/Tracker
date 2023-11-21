@@ -123,6 +123,12 @@ final class TrackersViewModel: TrackersViewModelProtocol {
             fatalError(error.localizedDescription)
         }
     }
+
+    func getTrackerType(at indexPath: IndexPath) -> TrackerType {
+        trackersByCategory[indexPath.section].trackers[indexPath.row].schedule != nil
+                ? .habit
+                : .irregularEvent
+    }
 }
 
 extension TrackersViewModel: TrackersViewDelegate {
@@ -185,5 +191,20 @@ extension TrackersViewModel: TrackersViewDelegate {
 
     private func trackersSortOrder(_ lhs: Tracker, _ rhs: Tracker) -> Bool {
         lhs.name < rhs.name
+    }
+}
+
+extension TrackersViewModel: EditTrackerDelegate {
+    func invoke(tracker: Tracker, category: TrackerCategory, previousCategory: TrackerCategory) {
+        do {
+            try trackerStore.update(tracker: tracker)
+            if (category != previousCategory) {
+//                try categoryStore.removeTracker(from: previousCategory, tracker: tracker)
+//                try categoryStore.addTracker(to: category, tracker: tracker)
+            }
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        updateContent()
     }
 }

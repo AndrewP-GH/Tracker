@@ -7,7 +7,7 @@ import UIKit
 
 final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
-    var previewView: UIView? {
+    var previousiewView: UIView? {
         coloredView
     }
 

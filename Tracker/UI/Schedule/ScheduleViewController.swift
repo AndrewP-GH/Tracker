@@ -9,7 +9,7 @@ final class ScheduleViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
 
-    weak var delegate: CreateTrackerViewControllerDelegate?
+    weak var delegate: ConfigureTrackerViewControllerDelegate?
     var selectedDays: [WeekDay] = []
 
     private lazy var titleLabel: UILabel = {
