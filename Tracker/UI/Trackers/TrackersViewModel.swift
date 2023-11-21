@@ -172,18 +172,18 @@ extension TrackersViewModel: TrackersViewDelegate {
                         : result.append(tracker)
             }
             if !inCategory.isEmpty {
-                filteredResult.append((category: category, trackers: inCategory.sorted(by: trackersSortRule)))
+                filteredResult.append((category: category, trackers: inCategory.sorted(by: trackersSortOrder)))
             }
         }
         filteredResult = filteredResult.sorted(by: { $0.category < $1.category })
         if pinned.isEmpty {
             return filteredResult
         }
-        return [(category: "Закрепленные", trackers: pinned.sorted(by: trackersSortRule))]
+        return [(category: "Закрепленные", trackers: pinned.sorted(by: trackersSortOrder))]
                 + filteredResult
     }
 
-    private func trackersSortRule(_ lhs: Tracker, _ rhs: Tracker) -> Bool {
+    private func trackersSortOrder(_ lhs: Tracker, _ rhs: Tracker) -> Bool {
         lhs.name < rhs.name
     }
 }
