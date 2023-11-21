@@ -526,8 +526,9 @@ extension ConfigureTrackerViewController: UICollectionViewDelegate {
         setSelectedState(collectionView, cellForItemAt: selectedPath, cellType: cellType, state: true)
 
         func setSelectedState(_ collectionView: UICollectionView, cellForItemAt: IndexPath, cellType: T.Type, state: Bool) {
-            let cell = collectionView.cellForItem(at: cellForItemAt) as? T ?? T()
-            cell.wasSelected = state
+            if let cell = collectionView.cellForItem(at: cellForItemAt) as? T {
+                cell.wasSelected = state
+            }
         }
     }
 }
