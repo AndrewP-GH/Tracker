@@ -156,7 +156,7 @@ extension TrackersViewModel: TrackersViewDelegate {
 
     func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
         self.trackersByCategory = aggregateResult(trackersByCategory)
-        reloadDataDelegate?()
+        trackersDidChange?()
     }
 
     private func aggregateResult(_ trackersByCategory: [String: [Tracker]]) -> [(category: String, trackers: [Tracker])] {
