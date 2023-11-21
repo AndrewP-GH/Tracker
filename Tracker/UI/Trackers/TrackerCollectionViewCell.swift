@@ -38,7 +38,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor(red: 174/255.0, green: 175/255.0, blue: 180/255.0, alpha: 0.3).cgColor
+        view.layer.borderColor = UIColor(r: 174, g: 175, b: 180, alpha: 0.3).cgColor
         return view
     }()
 

@@ -16,7 +16,7 @@ extension UIColor {
     static var ypRed: UIColor { UIColor(named: "YP Red")! }
     static var ypWhite: UIColor { UIColor(named: "YP White")! }
 
-    private static let rgbMultiplier = CGFloat(255.999999)
+    private static let hexRgbMultiplier = CGFloat(255.999999)
 
     //https://stackoverflow.com/a/39358741
     var hexString: String? {
@@ -30,16 +30,16 @@ extension UIColor {
         if alpha == 1.0 {
             return String(
                     format: "#%02lX%02lX%02lX",
-                    Int(red * UIColor.rgbMultiplier),
-                    Int(green * UIColor.rgbMultiplier),
-                    Int(blue * UIColor.rgbMultiplier)
+                    Int(red * UIColor.hexRgbMultiplier),
+                    Int(green * UIColor.hexRgbMultiplier),
+                    Int(blue * UIColor.hexRgbMultiplier)
             )
         } else {
             return String(format: "#%02lX%02lX%02lX%02lX",
-                          Int(red * UIColor.rgbMultiplier),
-                          Int(green * UIColor.rgbMultiplier),
-                          Int(blue * UIColor.rgbMultiplier),
-                          Int(alpha * UIColor.rgbMultiplier)
+                          Int(red * UIColor.hexRgbMultiplier),
+                          Int(green * UIColor.hexRgbMultiplier),
+                          Int(blue * UIColor.hexRgbMultiplier),
+                          Int(alpha * UIColor.hexRgbMultiplier)
             )
         }
     }
@@ -52,28 +52,29 @@ extension UIColor {
         } else {
             hexColor = hex
         }
-        let r, g, b, a: CGFloat
+        let r, g, b: UInt64
+        let a: CGFloat
         switch hexColor.count {
         case 6: // RGB
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
-                r = CGFloat((hexNumber >> 16) & 0xFF) / 255
-                g = CGFloat((hexNumber >> 8) & 0xFF) / 255
-                b = CGFloat(hexNumber & 0xFF) / 255
+                r = (hexNumber >> 16) & 0xFF
+                g = (hexNumber >> 8) & 0xFF
+                b = hexNumber & 0xFF
                 a = 1
-                self.init(red: r, green: g, blue: b, alpha: a)
+                self.init(r: r, g: g, b: b, alpha: a)
                 return
             }
         case 8: // ARGB
             let scanner = Scanner(string: hexColor)
             var hexNumber: UInt64 = 0
             if scanner.scanHexInt64(&hexNumber) {
-                r = CGFloat((hexNumber >> 24) & 0xFF) / 255
-                g = CGFloat((hexNumber >> 16) & 0xFF) / 255
-                b = CGFloat((hexNumber >> 8) & 0xFF) / 255
+                r = (hexNumber >> 24) & 0xFF
+                g = (hexNumber >> 16) & 0xFF
+                b = (hexNumber >> 8) & 0xFF
                 a = CGFloat(hexNumber & 0xFF) / 255
-                self.init(red: r, green: g, blue: b, alpha: a)
+                self.init(r: r, g: g, b: b, alpha: a)
                 return
             }
         default:
@@ -82,4 +83,12 @@ extension UIColor {
         return nil
     }
 
+    public convenience init(r: UInt64, g: UInt64, b: UInt64, alpha: CGFloat = 1.0) {
+        self.init(
+                red: CGFloat(r) / 255,
+                green: CGFloat(g) / 255,
+                blue: CGFloat(b) / 255,
+                alpha: alpha
+        )
+    }
 }
