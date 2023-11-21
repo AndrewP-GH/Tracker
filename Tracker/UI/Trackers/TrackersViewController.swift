@@ -322,7 +322,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing = spacing * (itemsPerRow - 1)
         let widthPerItem = (collectionView.bounds.width - spacing) / itemsPerRow
-        return CGSize(width: widthPerItem.rounded(.up), height: cellHeight)
+        return CGSize(width: widthPerItem.rounded(.towardZero), height: cellHeight)
     }
 
     func collectionView(
