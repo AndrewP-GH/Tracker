@@ -254,17 +254,17 @@ extension TrackersViewController: UICollectionViewDelegate {
             _ collectionView: UICollectionView,
             contextMenuConfiguration configuration: UIContextMenuConfiguration,
             highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
-        getPreviewView(for: indexPath)
+        getCellPreview(for: indexPath)
     }
 
     func collectionView(
             _ collectionView: UICollectionView,
             contextMenuConfiguration configuration: UIContextMenuConfiguration,
             dismissalPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
-        getPreviewView(for: indexPath)
+        getCellPreview(for: indexPath)
     }
 
-    private func getPreviewView(for indexPath: IndexPath) -> UITargetedPreview? {
+    private func getCellPreview(for indexPath: IndexPath) -> UITargetedPreview? {
         guard let cell = trackersView.cellForItem(at: indexPath) as? TrackerCollectionViewCell,
               let cellPreview = cell.previewView else { return nil }
         let targetedPreview = UITargetedPreview(view: cellPreview)
