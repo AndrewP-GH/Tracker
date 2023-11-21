@@ -7,7 +7,6 @@ import Foundation
 struct TrackerCategory: Equatable {
     let id: UUID
     let header: String
-    let items: [Tracker]
 
     static func ==(lhs: TrackerCategory, rhs: TrackerCategory) -> Bool {
         lhs.id == rhs.id

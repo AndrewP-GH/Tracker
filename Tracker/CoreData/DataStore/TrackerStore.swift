@@ -72,6 +72,15 @@ extension TrackerStore: TrackersStoreProtocol {
         sendResult()
     }
 
+    func category(for tracker: Tracker) throws -> TrackerCategory? {
+        guard let entity = fetchedResultsController.fetchedObjects?
+                .first(where: { $0.id == tracker.id }) else { return nil }
+        guard let category = entity.category else { return nil }
+        guard let id = category.id,
+              let header = category.header else { throw StoreError.decodeError }
+        return TrackerCategory(id: id, header: header)
+    }
+
     private func sendResult() {
         guard let delegate, let fetched = fetchedResultsController.fetchedObjects else { return }
         let trackers = Dictionary(grouping: fetched, by: { $0.category?.header ?? "" })

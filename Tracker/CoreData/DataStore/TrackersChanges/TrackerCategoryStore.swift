@@ -52,14 +52,8 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         let result = try context.fetch(request)
         return try result.map { trackerCategoryEntity in
             guard let id = trackerCategoryEntity.id,
-                  let header = trackerCategoryEntity.header,
-                  let items = trackerCategoryEntity.items as? Set<TrackerEntity>
-            else { throw StoreError.decodeError }
-            return TrackerCategory(
-                    id: id,
-                    header: header,
-                    items: try items.map { try trackerMapper.map(from: $0) }
-            )
+                  let header = trackerCategoryEntity.header else { throw StoreError.decodeError }
+            return TrackerCategory(id: id, header: header)
         }
     }
 

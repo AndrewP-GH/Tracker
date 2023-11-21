@@ -9,7 +9,11 @@ final class ConfigureTrackerViewController: UIViewController {
     weak var addTrackerDelegate: AddTrackerDelegate?
     weak var editTrackerDelegate: EditTrackerDelegate?
     var tracker: Tracker?
-    var category: TrackerCategory?
+    var category: TrackerCategory? {
+        didSet {
+            selectedCategory = category
+        }
+    }
 
     private let tableCellHeight: CGFloat = 75
     private let emojis = [
@@ -219,6 +223,7 @@ final class ConfigureTrackerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        restoreState()
     }
 
     private func setupView() {
@@ -285,6 +290,21 @@ final class ConfigureTrackerViewController: UIViewController {
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
+    }
+
+    private func restoreState() {
+        guard let tracker else { return }
+        nameTextField.text = tracker.name
+        let emojiIndex = IndexPath(row: emojis.firstIndex(of: tracker.emoji)!, section: emojiSectionIndex)
+        collectionView(configurationCollectionView, didSelectItemAt: emojiIndex)
+        let colorIndex = IndexPath(row: colors.firstIndex(of: tracker.color)!, section: colorSectionIndex)
+        collectionView(configurationCollectionView, didSelectItemAt: colorIndex)
+        if let schedule = tracker.schedule {
+            selectedDays = schedule.days.sorted()
+        }
+        selectedCategory = category
+        configurationTable.reloadData()
+        updateSaveButtonState()
     }
 
     @objc private func cancelButtonTapped() {
@@ -411,7 +431,7 @@ extension ConfigureTrackerViewController: UITableViewDelegate {
         case 1:
             let vc = ScheduleViewController()
             vc.delegate = self
-            vc.selectedDays = selectedDays
+            vc.selectedDays = Set(selectedDays)
             present(vc, animated: true)
             break
         default:

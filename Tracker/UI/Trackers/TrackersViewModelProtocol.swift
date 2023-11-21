@@ -21,4 +21,5 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate, EditTrackerDelegate {
     func pinTracker(at indexPath: IndexPath)
     func unpinTracker(at: IndexPath)
     func getTrackerType(at: IndexPath) -> TrackerType
+    func category(for tracker: Tracker) -> TrackerCategory?
 }

@@ -192,6 +192,15 @@ extension TrackersViewModel: TrackersViewDelegate {
     private func trackersSortOrder(_ lhs: Tracker, _ rhs: Tracker) -> Bool {
         lhs.name < rhs.name
     }
+
+    func category(for tracker: Tracker) -> TrackerCategory? {
+        do {
+            return try trackerStore.category(for: tracker)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+
+    }
 }
 
 extension TrackersViewModel: EditTrackerDelegate {

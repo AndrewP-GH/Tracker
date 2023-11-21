@@ -10,7 +10,7 @@ final class ScheduleViewController: UIViewController {
     private let cornerRadius: CGFloat = 16
 
     weak var delegate: ConfigureTrackerViewControllerDelegate?
-    var selectedDays: [WeekDay] = []
+    var selectedDays: Set<WeekDay> = []
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
