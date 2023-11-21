@@ -14,7 +14,7 @@ final class TrackerStore: NSObject {
 
     private lazy var fetchedResultsController: NSFetchedResultsController<TrackerEntity> = {
         let fetchRequest = TrackerEntity.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \TrackerEntity.category!.header, ascending: true) ]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \TrackerEntity.category!.header, ascending: true)]
         let fetchedResultsController = NSFetchedResultsController<TrackerEntity>(fetchRequest: fetchRequest,
                                                                                  managedObjectContext: context,
                                                                                  sectionNameKeyPath: "category.header",
@@ -61,6 +61,15 @@ extension TrackerStore: TrackersStoreProtocol {
 
     func performFetch() {
         try? fetchedResultsController.performFetch()
+    }
+
+    func update(tracker: Tracker) throws {
+        guard let entity = fetchedResultsController.fetchedObjects?
+                .first(where: { $0.id == tracker.id }) else { return }
+        try mapper.map(from: tracker, to: entity)
+        try context.save()
+        performFetch()
+        sendResult()
     }
 
     private func sendResult() {

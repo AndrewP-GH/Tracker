@@ -229,11 +229,21 @@ extension TrackersViewController: UICollectionViewDelegate {
             contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
             point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first else { return nil }
+        let pinAction = viewModel.getPinAction(at: indexPath)
+        let firstAction: UIAction
+        switch pinAction {
+        case .pin:
+            firstAction = UIAction(title: "Закрепить") { [weak self] _ in
+                self?.pinTracker(at: indexPath)
+            }
+        case .unpin:
+            firstAction = UIAction(title: "Открепить") { [weak self] _ in
+                self?.unpinTracker(at: indexPath)
+            }
+        }
         return UIContextMenuConfiguration(actionProvider: { actions in
             UIMenu(children: [
-                UIAction(title: "Закрепить") { [weak self] _ in
-                    self?.pinTracker(at: indexPath)
-                },
+                firstAction,
                 UIAction(title: "Редактировать") { [weak self] _ in
 //                    self?.editTracker(at: indexPath)
                 },
@@ -275,6 +285,10 @@ extension TrackersViewController: UICollectionViewDelegate {
 
     private func pinTracker(at indexPath: IndexPath) {
         viewModel.pinTracker(at: indexPath)
+    }
+
+    private func unpinTracker(at indexPath: IndexPath) {
+        viewModel.unpinTracker(at: indexPath)
     }
 }
 

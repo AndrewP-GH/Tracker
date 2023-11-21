@@ -44,6 +44,7 @@
 		AE09A7C926BDC4ECDB292AC1 /* CreateTrackerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A12D0AF0872B9163F1EF /* CreateTrackerMode.swift */; };
 		AE09A81CB3BB035BED93B02B /* CategoryHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE790F1FDA73E3AA7D97 /* CategoryHeaderReusableView.swift */; };
 		AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */; };
+		AE09A87DC91F55E3C4E62255 /* PinAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AED575C2A37355ED8BDA /* PinAction.swift */; };
 		AE09A8A80F72729CFF7763AD /* CategoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A0C13430F3BF88BE4331 /* CategoriesTableViewCell.swift */; };
 		AE09A8B173D1F1052563800D /* CreateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A15043B3AC503F3C42B8 /* CreateCategoryViewController.swift */; };
 		AE09A8F06488F73EEFD096BD /* TrackersViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1C50B5A0DEB9FECCF19 /* TrackersViewDelegate.swift */; };
@@ -157,6 +158,7 @@
 		AE09AE3444CC95921F5096C3 /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
 		AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleMarshalling.swift; sourceTree = "<group>"; };
 		AE09AE790F1FDA73E3AA7D97 /* CategoryHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderReusableView.swift; sourceTree = "<group>"; };
+		AE09AED575C2A37355ED8BDA /* PinAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +362,7 @@
 				AE09AACB21DDA0DCD777315A /* TrackersViewModel.swift */,
 				AE09A70E64124EAB017134B9 /* TrackersViewModelProtocol.swift */,
 				AE09AD3A4310AC7722FE787B /* CellModel.swift */,
+				AE09AED575C2A37355ED8BDA /* PinAction.swift */,
 			);
 			path = Trackers;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				AE09A5604343CE74D08A7097 /* CategoryCellModel.swift in Sources */,
 				AE09A8B173D1F1052563800D /* CreateCategoryViewController.swift in Sources */,
 				AE09A092ABC16B767C4886E6 /* AddCategoryViewControllerDelegate.swift in Sources */,
+				AE09A87DC91F55E3C4E62255 /* PinAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

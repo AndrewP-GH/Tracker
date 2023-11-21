@@ -16,7 +16,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
     private var trackersByCategory: [(category: String, trackers: [Tracker])] = []
 
-    private lazy var trackerStore: TrackerStore = {
+    private lazy var trackerStore: TrackersStoreProtocol = {
         let trackerStore = TrackerStore()
         trackerStore.delegate = self
         return trackerStore
@@ -98,8 +98,30 @@ final class TrackersViewModel: TrackersViewModelProtocol {
                          canBeDone: isButtonEnabled)
     }
 
-    func pinTracker(at indexPath: IndexPath) {
+    func getPinAction(at indexPath: IndexPath) -> PinAction {
+        trackersByCategory[indexPath.section].trackers[indexPath.row].isPinned
+                ? .unpin
+                : .pin
+    }
 
+    func pinTracker(at indexPath: IndexPath) {
+        var tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        tracker.isPinned = true
+        updateTracker(tracker)
+    }
+
+    func unpinTracker(at indexPath: IndexPath) {
+        var tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        tracker.isPinned = false
+        updateTracker(tracker)
+    }
+
+    private func updateTracker(_ tracker: Tracker) {
+        do {
+            try trackerStore.update(tracker: tracker)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 }
 
@@ -133,9 +155,35 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
     func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
-        self.trackersByCategory = trackersByCategory
-                .sorted(by: { $0.key < $1.key })
-                .map({ (category: $0.key, trackers: $0.value.sorted(by: { $0.name < $1.name })) })
+        self.trackersByCategory = aggregateResult(trackersByCategory)
         reloadDataDelegate?()
+    }
+
+    private func aggregateResult(_ trackersByCategory: [String: [Tracker]]) -> [(category: String, trackers: [Tracker])] {
+        var filteredResult = [(category: String, trackers: [Tracker])]()
+        var pinned = [Tracker]()
+        for (category, trackers) in trackersByCategory {
+            if category.isEmpty || trackers.isEmpty {
+                continue
+            }
+            let inCategory = trackers.reduce(into: [Tracker]()) { (result, tracker) in
+                tracker.isPinned
+                        ? pinned.append(tracker)
+                        : result.append(tracker)
+            }
+            if !inCategory.isEmpty {
+                filteredResult.append((category: category, trackers: inCategory.sorted(by: trackersSortRule)))
+            }
+        }
+        filteredResult = filteredResult.sorted(by: { $0.category < $1.category })
+        if pinned.isEmpty {
+            return filteredResult
+        }
+        return [(category: "Закрепленные", trackers: pinned.sorted(by: trackersSortRule))]
+                + filteredResult
+    }
+
+    private func trackersSortRule(_ lhs: Tracker, _ rhs: Tracker) -> Bool {
+        lhs.name < rhs.name
     }
 }

@@ -7,6 +7,7 @@ import Foundation
 protocol TrackersStoreProtocol {
     func filter(prefix: String?, weekDay: WeekDay)
     func performFetch()
+    func update(tracker: Tracker) throws
 
     var delegate: TrackersViewDelegate? { get set }
 }
