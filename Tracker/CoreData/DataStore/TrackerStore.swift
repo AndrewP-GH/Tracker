@@ -75,7 +75,6 @@ extension TrackerStore: TrackersStoreProtocol {
     private func sendResult() {
         guard let delegate, let fetched = fetchedResultsController.fetchedObjects else { return }
         let trackers = Dictionary(grouping: fetched, by: { $0.category?.header ?? "" })
-                .filter({ !$0.key.isEmpty })
                 .mapValues({ $0.compactMap({ try? mapper.map(from: $0) }) })
         delegate.fetchedObjects(trackersByCategory: trackers)
     }
