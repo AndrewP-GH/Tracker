@@ -41,10 +41,10 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     func create(category: TrackerCategory) throws {
-        let trackerCategoryEntity = TrackerCategoryEntity(context: context)
-        trackerCategoryEntity.id = category.id
-        trackerCategoryEntity.header = category.header
-        trackerCategoryEntity.items = []
+        let entity = TrackerCategoryEntity(context: context)
+        entity.id = category.id
+        entity.header = category.header
+        entity.items = []
         try context.save()
     }
 
@@ -58,8 +58,7 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         }
     }
 
-    private func addTacker(to category: TrackerCategoryEntity, _ tracker: Tracker?) throws {
-        guard let tracker = tracker else { return }
+    private func addTacker(to category: TrackerCategoryEntity, _ tracker: Tracker) throws {
         let trackerEntity = try trackerMapper.map(from: tracker, context: context)
         category.addToItems(trackerEntity)
     }
