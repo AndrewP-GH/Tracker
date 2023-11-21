@@ -68,8 +68,6 @@ extension TrackerStore: TrackersStoreProtocol {
                 .first(where: { $0.id == tracker.id }) else { return }
         try mapper.map(from: tracker, to: entity)
         try context.save()
-        performFetch()
-        sendResult()
     }
 
     func category(for tracker: Tracker) throws -> TrackerCategory? {
