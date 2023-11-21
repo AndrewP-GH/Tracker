@@ -73,10 +73,10 @@ final class ConfigureTrackerViewController: UIViewController {
     private var selectedEmojiPath: IndexPath?
     private var selectedColorPath: IndexPath?
 
-    private var tracker: Tracker?
-    private var category: TrackerCategory? {
+    private var initTracker: Tracker?
+    private var initCategory: TrackerCategory? {
         didSet {
-            selectedCategory = category
+            selectedCategory = initCategory
         }
     }
 
@@ -294,18 +294,18 @@ final class ConfigureTrackerViewController: UIViewController {
     }
 
     private func restoreFromState() {
-        guard let tracker else { return }
-        nameTextField.text = tracker.name
-        if let index = emojis.firstIndex(of: tracker.emoji) {
+        guard let initTracker else { return }
+        nameTextField.text = initTracker.name
+        if let index = emojis.firstIndex(of: initTracker.emoji) {
             selectedEmojiPath = IndexPath(row: index, section: emojiSectionIndex)
         }
-        if let index = colors.firstIndex(of: tracker.color) {
+        if let index = colors.firstIndex(of: initTracker.color) {
             selectedColorPath = IndexPath(row: index, section: colorSectionIndex)
         }
-        if let schedule = tracker.schedule {
+        if let schedule = initTracker.schedule {
             selectedDays = schedule.days.sorted()
         }
-        selectedCategory = category
+        selectedCategory = initCategory
         updateSaveButtonState()
     }
 
@@ -335,20 +335,20 @@ final class ConfigureTrackerViewController: UIViewController {
                     category: selectedCategory
             )
         case .edit:
-            guard let tracker,
-                  let category else { return }
-            editTrackerDelegate?.invoke(
-                    tracker: Tracker(
-                            id: tracker.id,
-                            name: name,
-                            color: colors[selectedColorPath.row],
-                            emoji: emojis[selectedEmojiPath.row],
-                            schedule: schedule,
-                            createdAt: tracker.createdAt,
-                            isPinned: tracker.isPinned),
-                    category: selectedCategory,
-                    previousCategory: category
-            )
+            guard let initTracker,
+                  let initCategory else { return }
+            let tracker = Tracker(
+                    id: initTracker.id,
+                    name: name,
+                    color: colors[selectedColorPath.row],
+                    emoji: emojis[selectedEmojiPath.row],
+                    schedule: schedule,
+                    createdAt: initTracker.createdAt,
+                    isPinned: initTracker.isPinned)
+            let result = initCategory == selectedCategory
+                    ? EditTrackerResult.edit(tracker: tracker)
+                    : EditTrackerResult.editAndMove(tracker: tracker, to: selectedCategory, from: initCategory)
+            editTrackerDelegate?.invoke(result: result)
         }
     }
 
@@ -371,8 +371,8 @@ final class ConfigureTrackerViewController: UIViewController {
     }
 
     func setState(tracker: Tracker, category: TrackerCategory) {
-        self.tracker = tracker
-        self.category = category
+        initTracker = tracker
+        initCategory = category
     }
 }
 

@@ -260,7 +260,7 @@ extension TrackersViewController: UICollectionViewDelegate {
     private func editTracker(at indexPath: IndexPath) {
         let trackerType = viewModel.getTrackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
-        vc.editTrackerDelegate = viewModel
+        vc.editTrackerDelegate = self
         let tracker = viewModel.cellModel(at: indexPath).tracker
         vc.setState(tracker: tracker, category: viewModel.category(for: tracker))
         present(vc, animated: true)
@@ -354,5 +354,14 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         spacing
+    }
+}
+
+extension TrackersViewController: EditTrackerDelegate {
+    func invoke(result: EditTrackerResult) {
+        viewModel.editTracker(result: result)
+        presentingViewController?.dismiss(animated: true) { [weak self] in
+            self?.dismiss(animated: false)
+        }
     }
 }

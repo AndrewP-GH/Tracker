@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol TrackersViewModelProtocol: TrackersViewDelegate, EditTrackerDelegate {
+protocol TrackersViewModelProtocol: TrackersViewDelegate {
     var trackersDidChange: (() -> Void)? { get set }
 
     var currentDate: Date { get }
@@ -22,4 +22,5 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate, EditTrackerDelegate {
     func unpinTracker(at: IndexPath)
     func getTrackerType(at: IndexPath) -> TrackerType
     func category(for tracker: Tracker) -> TrackerCategory
+    func editTracker(result: EditTrackerResult)
 }

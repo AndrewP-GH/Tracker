@@ -201,15 +201,14 @@ extension TrackersViewModel: TrackersViewDelegate {
         }
 
     }
-}
 
-extension TrackersViewModel: EditTrackerDelegate {
-    func invoke(tracker: Tracker, category: TrackerCategory, previousCategory: TrackerCategory) {
+    func editTracker(result: EditTrackerResult) {
         do {
-            try trackerStore.update(tracker: tracker)
-            if (category != previousCategory) {
-//                try categoryStore.removeTracker(from: previousCategory, tracker: tracker)
-//                try categoryStore.addTracker(to: category, tracker: tracker)
+            switch result {
+            case .edit(let tracker):
+                try trackerStore.update(tracker: tracker)
+            case .editAndMove(let tracker, let to, let from):
+                try categoryStore.moveTracker(from: from, to: to, tracker: tracker)
             }
         } catch {
             fatalError(error.localizedDescription)

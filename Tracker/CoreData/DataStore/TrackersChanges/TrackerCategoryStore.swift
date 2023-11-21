@@ -23,13 +23,7 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     func addTracker(to category: TrackerCategory, tracker: Tracker) throws {
-        let fetchRequest = TrackerCategoryEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "%K == %@",
-                                             (\TrackerCategoryEntity.id)._kvcKeyPathString!,
-                                             category.id as CVarArg)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(TrackerCategoryEntity.header),
-                                                         ascending: true)]
-        let findResult = try? context.fetch(fetchRequest)
+        let findResult = try? findById(id: category.id)
         if let findResult, findResult.count > 0 {
             guard let trackerCategoryEntity = findResult.first else { return }
             try addTacker(to: trackerCategoryEntity, tracker)
@@ -38,6 +32,22 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
             throw StoreError.notFound
         }
     }
+
+    private func findById(id: UUID) throws -> [TrackerCategoryEntity] {
+        let request = TrackerCategoryEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        let result = try context.fetch(request)
+        return result
+    }
+
+//        let fetchRequest = TrackerCategoryEntity.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "%K == %@",
+//                                             (\TrackerCategoryEntity.id)._kvcKeyPathString!,
+//                                             category.id as CVarArg)
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(TrackerCategoryEntity.header),
+//                                                         ascending: true)]
+//        let findResult = try? context.fetch(fetchRequest)
+//    }
 
     func create(category: TrackerCategory) throws {
         let trackerCategoryEntity = TrackerCategoryEntity(context: context)
@@ -61,5 +71,22 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         guard let tracker = tracker else { return }
         let trackerEntity = try trackerMapper.map(from: tracker, context: context)
         category.addToItems(trackerEntity)
+    }
+
+    func moveTracker(from: TrackerCategory, to: TrackerCategory, tracker: Tracker) throws {
+        try removeTracker(from: from, tracker: tracker)
+        try addTracker(to: to, tracker: tracker)
+    }
+
+    private func removeTracker(from category: TrackerCategory, tracker: Tracker) throws {
+        let findResult = try? findById(id: category.id)
+        if let findResult, findResult.count > 0 {
+            guard let trackerCategoryEntity = findResult.first else { return }
+            let trackerEntity = try trackerMapper.map(from: tracker, context: context)
+            trackerCategoryEntity.removeFromItems(trackerEntity)
+            try context.save()
+        } else {
+            throw StoreError.notFound
+        }
     }
 }
