@@ -160,8 +160,8 @@ final class TrackersViewController: UIViewController {
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
                     trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
-                    trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 11),
-                    trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -11),
+                    trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+                    trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                     trackersView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -310,7 +310,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 
     fileprivate var spacing: CGFloat {
-        0
+        -2
     }
 
     fileprivate var cellHeight: CGFloat {

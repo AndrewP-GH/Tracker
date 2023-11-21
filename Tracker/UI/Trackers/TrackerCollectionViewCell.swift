@@ -155,8 +155,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate(
                 [
                     coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    coloredView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-                    coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+                    coloredView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+                    coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                     coloredView.heightAnchor.constraint(equalToConstant: 90),
 
                     emojiLabel.topAnchor.constraint(equalTo: coloredView.topAnchor, constant: 12),
@@ -175,8 +175,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     nameLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
 
                     controlView.topAnchor.constraint(equalTo: coloredView.bottomAnchor),
-                    controlView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-                    controlView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+                    controlView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+                    controlView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                     controlView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
                     daysLabel.topAnchor.constraint(equalTo: controlView.topAnchor, constant: 16),
