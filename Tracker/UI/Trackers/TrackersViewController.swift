@@ -360,8 +360,6 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 extension TrackersViewController: EditTrackerDelegate {
     func invoke(result: EditTrackerResult) {
         viewModel.editTracker(result: result)
-        presentingViewController?.dismiss(animated: true) { [weak self] in
-            self?.dismiss(animated: false)
-        }
+        dismiss(animated: true)
     }
 }
