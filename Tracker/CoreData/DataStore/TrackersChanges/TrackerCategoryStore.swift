@@ -35,19 +35,12 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
 
     private func findById(id: UUID) throws -> [TrackerCategoryEntity] {
         let request = TrackerCategoryEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        request.predicate = NSPredicate(format: "%K == %@",
+                                        (\TrackerCategoryEntity.id)._kvcKeyPathString!,
+                                        id as CVarArg)
         let result = try context.fetch(request)
         return result
     }
-
-//        let fetchRequest = TrackerCategoryEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "%K == %@",
-//                                             (\TrackerCategoryEntity.id)._kvcKeyPathString!,
-//                                             category.id as CVarArg)
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(TrackerCategoryEntity.header),
-//                                                         ascending: true)]
-//        let findResult = try? context.fetch(fetchRequest)
-//    }
 
     func create(category: TrackerCategory) throws {
         let trackerCategoryEntity = TrackerCategoryEntity(context: context)
@@ -88,5 +81,17 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
         } else {
             throw StoreError.notFound
         }
+    }
+
+    func get(by name: String) throws -> TrackerCategory {
+        let request = TrackerCategoryEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "%K == %@",
+                                        (\TrackerCategoryEntity.header)._kvcKeyPathString!,
+                                        name as CVarArg)
+        let result = try context.fetch(request)
+        guard let trackerCategoryEntity = result.first else { throw StoreError.notFound }
+        guard let id = trackerCategoryEntity.id,
+              let header = trackerCategoryEntity.header else { throw StoreError.decodeError }
+        return TrackerCategory(id: id, header: header)
     }
 }

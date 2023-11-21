@@ -85,4 +85,11 @@ extension TrackerStore: TrackersStoreProtocol {
                 .mapValues({ $0.compactMap({ try? mapper.map(from: $0) }) })
         delegate.fetchedObjects(trackersByCategory: trackers)
     }
+
+    func delete(tracker: Tracker) throws {
+        guard let entity = fetchedResultsController.fetchedObjects?
+                .first(where: { $0.id == tracker.id }) else { return }
+        context.delete(entity)
+        try context.save()
+    }
 }

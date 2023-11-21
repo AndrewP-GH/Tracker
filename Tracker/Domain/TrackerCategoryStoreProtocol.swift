@@ -9,4 +9,5 @@ protocol TrackerCategoryStoreProtocol {
     func getAll() throws -> [TrackerCategory]
     func create(category: TrackerCategory) throws
     func moveTracker(from: TrackerCategory, to: TrackerCategory, tracker: Tracker) throws
+    func get(by name: String) throws -> TrackerCategory
 }

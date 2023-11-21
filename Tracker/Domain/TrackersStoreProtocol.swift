@@ -9,6 +9,7 @@ protocol TrackersStoreProtocol {
     func performFetch()
     func update(tracker: Tracker) throws
     func category(for tracker: Tracker) throws -> TrackerCategory
+    func delete(tracker: Tracker) throws
 
     var delegate: TrackersViewDelegate? { get set }
 }

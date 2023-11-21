@@ -193,13 +193,13 @@ extension TrackersViewModel: TrackersViewDelegate {
         lhs.name < rhs.name
     }
 
-    func category(for tracker: Tracker) -> TrackerCategory {
+    func category(at: IndexPath) -> TrackerCategory {
+        let categoryName = trackersByCategory[at.section].category
         do {
-            return try trackerStore.category(for: tracker)
+            return try categoryStore.get(by: categoryName)
         } catch {
             fatalError(error.localizedDescription)
         }
-
     }
 
     func editTracker(result: EditTrackerResult) {
@@ -211,6 +211,16 @@ extension TrackersViewModel: TrackersViewDelegate {
                 try trackerStore.update(tracker: tracker)
                 try categoryStore.moveTracker(from: from, to: to, tracker: tracker)
             }
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        updateContent()
+    }
+
+    func deleteTracker(at indexPath: IndexPath) {
+        let tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        do {
+            try trackerStore.delete(tracker: tracker)
         } catch {
             fatalError(error.localizedDescription)
         }

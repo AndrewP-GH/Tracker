@@ -236,9 +236,9 @@ extension TrackersViewController: UICollectionViewDelegate {
                 UIAction(title: "Редактировать") { [weak self] _ in
                     self?.editTracker(at: indexPath)
                 },
-//                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
-//                    self?.deleteTracker(at: indexPath)
-//                }
+                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
+                    self?.deleteTracker(at: indexPath)
+                }
             ])
         })
     }
@@ -261,9 +261,12 @@ extension TrackersViewController: UICollectionViewDelegate {
         let trackerType = viewModel.getTrackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = self
-        let tracker = viewModel.cellModel(at: indexPath).tracker
-        vc.setState(tracker: tracker, category: viewModel.category(for: tracker))
+        vc.setState(tracker: viewModel.cellModel(at: indexPath).tracker, category: viewModel.category(at: indexPath))
         present(vc, animated: true)
+    }
+
+    private func deleteTracker(at indexPath: IndexPath) {
+        viewModel.deleteTracker(at: indexPath)
     }
 
     func collectionView(
