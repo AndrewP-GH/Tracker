@@ -295,15 +295,16 @@ final class ConfigureTrackerViewController: UIViewController {
     private func restoreState() {
         guard let tracker else { return }
         nameTextField.text = tracker.name
-        let emojiIndex = IndexPath(row: emojis.firstIndex(of: tracker.emoji)!, section: emojiSectionIndex)
-        collectionView(configurationCollectionView, didSelectItemAt: emojiIndex)
-        let colorIndex = IndexPath(row: colors.firstIndex(of: tracker.color)!, section: colorSectionIndex)
-        collectionView(configurationCollectionView, didSelectItemAt: colorIndex)
+        if let index = emojis.firstIndex(of: tracker.emoji) {
+            selectedEmojiPath = IndexPath(row: index, section: emojiSectionIndex)
+        }
+        if let index = colors.firstIndex(of: tracker.color) {
+            selectedColorPath = IndexPath(row: index, section: colorSectionIndex)
+        }
         if let schedule = tracker.schedule {
             selectedDays = schedule.days.sorted()
         }
         selectedCategory = category
-        configurationTable.reloadData()
         updateSaveButtonState()
     }
 
@@ -469,12 +470,14 @@ extension ConfigureTrackerViewController: UICollectionViewDataSource {
             return dequeueCellWithValue(collectionView,
                                         cellForItemAt: indexPath,
                                         cellType: EmojiCollectionViewCell.self,
-                                        value: emojis[indexPath.row])
+                                        value: emojis[indexPath.row],
+                                        isSelected: selectedEmojiPath == indexPath)
         case colorSectionIndex:
             return dequeueCellWithValue(collectionView,
                                         cellForItemAt: indexPath,
                                         cellType: ColorCollectionViewCell.self,
-                                        value: colors[indexPath.row])
+                                        value: colors[indexPath.row],
+                                        isSelected: selectedColorPath == indexPath)
         default:
             return UICollectionViewCell()
         }
@@ -483,10 +486,12 @@ extension ConfigureTrackerViewController: UICollectionViewDataSource {
                 _ collectionView: UICollectionView,
                 cellForItemAt indexPath: IndexPath,
                 cellType: T.Type,
-                value: T.TValue) -> UICollectionViewCell {
+                value: T.TValue,
+                isSelected: Bool) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: T.identifier,
                                                           for: indexPath) as? T ?? T()
             cell.value = value
+            cell.wasSelected = isSelected
             return cell
         }
     }
@@ -515,7 +520,7 @@ extension ConfigureTrackerViewController: UICollectionViewDelegate {
         updateSaveButtonState()
     }
 
-    private func selectCell<T: SelectableCellProtocol>(
+    private func selectCell<T: CellWithValueProtocol>(
             _ collectionView: UICollectionView,
             selectedPath: IndexPath,
             cellType: T.Type,
