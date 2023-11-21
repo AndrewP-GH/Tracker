@@ -30,8 +30,8 @@ final class ConfigureTrackerViewController: UIViewController {
     private let emojiSectionIndex = 0
     private let colorSectionIndex = 1
 
-    private var trackerType: TrackerType = .habit
-    private var mode: ConfigurationMode = .create
+    private var trackerType: TrackerType
+    private var mode: ConfigurationMode
 
     private var titleText: String {
         switch mode {
@@ -199,6 +199,7 @@ final class ConfigureTrackerViewController: UIViewController {
 
     init(trackerType: TrackerType, mode: ConfigurationMode) {
         self.trackerType = trackerType
+        self.mode = mode
         super.init(nibName: nil, bundle: nil)
     }
 
