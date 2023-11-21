@@ -229,18 +229,7 @@ extension TrackersViewController: UICollectionViewDelegate {
             contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
             point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first else { return nil }
-        let pinAction = viewModel.getPinAction(at: indexPath)
-        let firstAction: UIAction
-        switch pinAction {
-        case .pin:
-            firstAction = UIAction(title: "Закрепить") { [weak self] _ in
-                self?.pinTracker(at: indexPath)
-            }
-        case .unpin:
-            firstAction = UIAction(title: "Открепить") { [weak self] _ in
-                self?.unpinTracker(at: indexPath)
-            }
-        }
+        let firstAction = getFirstAction(for: indexPath)
         return UIContextMenuConfiguration(actionProvider: { actions in
             UIMenu(children: [
                 firstAction,
@@ -254,11 +243,18 @@ extension TrackersViewController: UICollectionViewDelegate {
         })
     }
 
-    func collectionView(
-            _ collectionView: UICollectionView,
-            contextMenuConfigurationForItemsAt indexPaths: IndexPath,
-            point: CGPoint) -> UIContextMenuConfiguration? {
-        self.collectionView(collectionView, contextMenuConfigurationForItemsAt: [indexPaths], point: point)
+    private func getFirstAction(for indexPath: IndexPath) -> UIAction {
+        let pinAction = viewModel.getPinAction(at: indexPath)
+        switch pinAction {
+        case .pin:
+            return UIAction(title: "Закрепить") { [weak self] _ in
+                self?.pinTracker(at: indexPath)
+            }
+        case .unpin:
+            return UIAction(title: "Открепить") { [weak self] _ in
+                self?.unpinTracker(at: indexPath)
+            }
+        }
     }
 
     func collectionView(
