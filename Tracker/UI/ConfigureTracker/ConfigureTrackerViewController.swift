@@ -61,6 +61,15 @@ final class ConfigureTrackerViewController: UIViewController {
         }
     }
 
+    private var saveButtonTitle: String {
+        switch mode {
+        case .create:
+            return "Создать"
+        case .edit:
+            return "Сохранить"
+        }
+    }
+
     private var selectedCategory: TrackerCategory?
     private var selectedDays: [WeekDay] = []
     private var selectedEmojiPath: IndexPath?
@@ -168,7 +177,7 @@ final class ConfigureTrackerViewController: UIViewController {
     private lazy var saveButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Создать", for: .normal)
+        button.setTitle(saveButtonTitle, for: .normal)
         button.setTitleColor(.ypWhite, for: .normal)
         button.titleLabel!.font = .systemFont(ofSize: 16, weight: .medium)
         button.layer.cornerRadius = 16
