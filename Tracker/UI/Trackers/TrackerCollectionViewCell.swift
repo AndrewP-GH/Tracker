@@ -154,7 +154,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                    coloredView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3),
                     coloredView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
                     coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                     coloredView.heightAnchor.constraint(equalToConstant: 90),
