@@ -228,16 +228,17 @@ extension TrackersViewController: UICollectionViewDelegate {
             _ collectionView: UICollectionView,
             contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
             point: CGPoint) -> UIContextMenuConfiguration? {
-        UIContextMenuConfiguration(actionProvider: { actions in
+        guard let indexPath = indexPaths.first else { return nil }
+        return UIContextMenuConfiguration(actionProvider: { actions in
             UIMenu(children: [
                 UIAction(title: "Закрепить") { [weak self] _ in
-//                    self?.pinTracker(at: indexPaths)
+                    self?.pinTracker(at: indexPath)
                 },
                 UIAction(title: "Редактировать") { [weak self] _ in
-//                    self?.editTracker(at: indexPaths)
+//                    self?.editTracker(at: indexPath)
                 },
                 UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
-//                    self?.deleteTracker(at: indexPaths)
+//                    self?.deleteTracker(at: indexPath)
                 }
             ])
         })
@@ -270,6 +271,10 @@ extension TrackersViewController: UICollectionViewDelegate {
         let targetedPreview = UITargetedPreview(view: cellPreview)
         targetedPreview.parameters.backgroundColor = .clear
         return targetedPreview
+    }
+
+    private func pinTracker(at indexPath: IndexPath) {
+        viewModel.pinTracker(at: indexPath)
     }
 }
 

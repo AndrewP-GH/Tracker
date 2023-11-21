@@ -16,14 +16,12 @@ final class TrackerStore: NSObject {
         let fetchRequest = TrackerEntity.fetchRequest()
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(keyPath: \TrackerEntity.category!.header, ascending: true),
-            NSSortDescriptor(keyPath: \TrackerEntity.name, ascending: true)
         ]
         let fetchedResultsController = NSFetchedResultsController<TrackerEntity>(fetchRequest: fetchRequest,
                                                                                  managedObjectContext: context,
                                                                                  sectionNameKeyPath: "category.header",
                                                                                  cacheName: nil)
         fetchedResultsController.delegate = self
-        try? fetchedResultsController.performFetch()
         return fetchedResultsController
     }()
 
@@ -41,29 +39,11 @@ final class TrackerStore: NSObject {
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        delegate?.reloadData()
+        sendResult()
     }
 }
 
 extension TrackerStore: TrackersStoreProtocol {
-    func categoriesCount() -> Int {
-        fetchedResultsController.sections?.count ?? 0
-    }
-
-    func trackersCount(for category: Int) -> Int {
-        fetchedResultsController.sections?[category].numberOfObjects ?? 0
-    }
-
-    func categoryName(at index: Int) -> String {
-        guard let section = fetchedResultsController.sections?[index] else { fatalError("section is nil") }
-        return section.name
-    }
-
-    func tracker(at indexPath: IndexPath) throws -> Tracker {
-        let trackerEntity = fetchedResultsController.object(at: indexPath)
-        return try mapper.map(from: trackerEntity)
-    }
-
     func filter(prefix: String?, weekDay: WeekDay) {
         let noSchedulePredicate = NSPredicate(format: "%K == nil", #keyPath(TrackerEntity.schedule))
         let byDayPredicate = NSPredicate(format: "%K CONTAINS %@",
@@ -77,11 +57,19 @@ extension TrackerStore: TrackersStoreProtocol {
         }
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         fetchedResultsController.fetchRequest.predicate = predicate
-        try? fetchedResultsController.performFetch()
-        delegate?.reloadData()
+        performFetch()
+        sendResult()
     }
 
     func performFetch() {
         try? fetchedResultsController.performFetch()
+    }
+
+    private func sendResult() {
+        guard let delegate, let fetched = fetchedResultsController.fetchedObjects else { return }
+        let trackers = Dictionary(grouping: fetched, by: { $0.category?.header ?? "" })
+                .filter({ !$0.key.isEmpty })
+                .mapValues({ $0.compactMap({ try? mapper.map(from: $0) }) })
+        delegate.fetchedObjects(trackersByCategory: trackers)
     }
 }

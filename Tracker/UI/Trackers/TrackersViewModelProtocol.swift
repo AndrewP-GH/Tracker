@@ -17,4 +17,5 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate {
     func numberOfItems(in section: Int) -> Int
     func categoryName(at: Int) -> String
     func cellModel(at indexPath: IndexPath) -> CellModel
+    func pinTracker(at indexPath: IndexPath)
 }

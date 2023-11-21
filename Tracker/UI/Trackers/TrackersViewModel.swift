@@ -11,10 +11,12 @@ enum PlaceholderState {
 }
 
 final class TrackersViewModel: TrackersViewModelProtocol {
-    let categoryStore: TrackerCategoryStoreProtocol
-    let trackerRecordStore: TrackerRecordStoreProtocol
+    private let categoryStore: TrackerCategoryStoreProtocol
+    private let trackerRecordStore: TrackerRecordStoreProtocol
 
-    lazy var trackerStore: TrackerStore = {
+    private var trackersByCategory: [(category: String, trackers: [Tracker])] = []
+
+    private lazy var trackerStore: TrackerStore = {
         let trackerStore = TrackerStore()
         trackerStore.delegate = self
         return trackerStore
@@ -56,7 +58,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         updateContent()
     }
 
-    func updateContent() {
+    private func updateContent() {
         let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
@@ -64,7 +66,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     private func getPlaceholderState() -> PlaceholderState {
-        if trackerStore.categoriesCount() != 0 {
+        if trackersByCategory.count != 0 {
             return .hide
         }
         if searchQuery?.isEmpty != false {
@@ -74,19 +76,19 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func numberOfSections() -> Int {
-        trackerStore.categoriesCount()
+        trackersByCategory.count
     }
 
     func numberOfItems(in section: Int) -> Int {
-        trackerStore.trackersCount(for: section)
+        trackersByCategory[section].trackers.count
     }
 
     func categoryName(at section: Int) -> String {
-        trackerStore.categoryName(at: section)
+        trackersByCategory[section].category
     }
 
     func cellModel(at indexPath: IndexPath) -> CellModel {
-        let tracker = try! trackerStore.tracker(at: indexPath)
+        let tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
         let completedDays = trackerRecordStore.count(for: tracker.id)
         let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         let isButtonEnabled = currentDate <= Date()
@@ -94,5 +96,46 @@ final class TrackersViewModel: TrackersViewModelProtocol {
                          completedDays: completedDays,
                          isDone: isDone,
                          canBeDone: isButtonEnabled)
+    }
+
+    func pinTracker(at indexPath: IndexPath) {
+
+    }
+}
+
+extension TrackersViewModel: TrackersViewDelegate {
+    func didCompleteTracker(id: UUID) {
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
+        do {
+            try trackerRecordStore.add(trackerRecord)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+
+    func didUncompleteTracker(id: UUID) {
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
+        do {
+            try trackerRecordStore.remove(trackerRecord)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+
+    func addTrackerToCategory(category: TrackerCategory, tracker: Tracker) {
+        do {
+            try categoryStore.addTracker(to: category, tracker: tracker)
+            trackerStore.performFetch()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        updateContent()
+    }
+
+    func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
+        self.trackersByCategory = trackersByCategory
+                .sorted(by: { $0.key < $1.key })
+                .map({ (category: $0.key, trackers: $0.value.sorted(by: { $0.name < $1.name })) })
+        reloadDataDelegate?()
     }
 }
