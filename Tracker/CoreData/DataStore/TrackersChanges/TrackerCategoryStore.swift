@@ -23,23 +23,21 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     func addTracker(to category: TrackerCategory, tracker: Tracker) throws {
-        let findResult = try? findById(id: category.id)
-        if let findResult, findResult.count > 0 {
-            guard let trackerCategoryEntity = findResult.first else { return }
-            try addTacker(to: trackerCategoryEntity, tracker)
-            try context.save()
-        } else {
-            throw StoreError.notFound
-        }
+        let entity = try findById(id: category.id)
+        try addTacker(to: entity, tracker)
+        try context.save()
     }
 
-    private func findById(id: UUID) throws -> [TrackerCategoryEntity] {
+    private func findById(id: UUID) throws -> TrackerCategoryEntity {
         let request = TrackerCategoryEntity.fetchRequest()
         request.predicate = NSPredicate(format: "%K == %@",
                                         (\TrackerCategoryEntity.id)._kvcKeyPathString!,
                                         id as CVarArg)
         let result = try context.fetch(request)
-        return result
+        if let entity = result.first {
+            return entity
+        }
+        throw StoreError.notFound
     }
 
     func create(category: TrackerCategory) throws {
@@ -72,15 +70,10 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     private func removeTracker(from category: TrackerCategory, tracker: Tracker) throws {
-        let findResult = try? findById(id: category.id)
-        if let findResult, findResult.count > 0 {
-            guard let trackerCategoryEntity = findResult.first else { return }
-            let trackerEntity = try trackerMapper.map(from: tracker, context: context)
-            trackerCategoryEntity.removeFromItems(trackerEntity)
-            try context.save()
-        } else {
-            throw StoreError.notFound
-        }
+        let entity = try findById(id: category.id)
+        let trackerEntity = try trackerMapper.map(from: tracker, context: context)
+        entity.removeFromItems(trackerEntity)
+        try context.save()
     }
 
     func get(by name: String) throws -> TrackerCategory {
@@ -89,9 +82,9 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
                                         (\TrackerCategoryEntity.header)._kvcKeyPathString!,
                                         name as CVarArg)
         let result = try context.fetch(request)
-        guard let trackerCategoryEntity = result.first else { throw StoreError.notFound }
-        guard let id = trackerCategoryEntity.id,
-              let header = trackerCategoryEntity.header else { throw StoreError.decodeError }
+        guard let entity = result.first else { throw StoreError.notFound }
+        guard let id = entity.id,
+              let header = entity.header else { throw StoreError.decodeError }
         return TrackerCategory(id: id, header: header)
     }
 }
