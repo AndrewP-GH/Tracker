@@ -331,10 +331,10 @@ final class ConfigureTrackerViewController: UIViewController {
     }
 
     private func updateSaveButtonState() {
-        var fullConfigured: Bool
         let isNameFilled = !(nameTextField.text?.isEmpty ?? true)
         let isDesignConfigured = selectedEmojiPath != nil && selectedColorPath != nil
         let isCategorySelected = selectedCategory != nil
+        let fullConfigured: Bool
         switch trackerType {
         case .habit:
             fullConfigured = isNameFilled && isDesignConfigured && isCategorySelected && !selectedDays.isEmpty
