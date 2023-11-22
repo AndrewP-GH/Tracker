@@ -110,10 +110,7 @@ final class ConfigureTrackerViewController: UIViewController {
     private lazy var completedDaysLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = String.localizedStringWithFormat(
-                NSLocalizedString("numberOfDays", comment: "Кол-во выполненных дней"),
-                initCompletedDays
-        )
+        label.text = L10n.Localizable.numberOfDays(initCompletedDays)
         label.font = .systemFont(ofSize: 32, weight: .bold)
         label.textColor = .ypBlack
         label.textAlignment = .center

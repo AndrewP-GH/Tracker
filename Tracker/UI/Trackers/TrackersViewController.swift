@@ -31,7 +31,7 @@ final class TrackersViewController: UIViewController {
         trackerLabel.translatesAutoresizingMaskIntoConstraints = false
         trackerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         trackerLabel.textColor = .ypBlack
-        trackerLabel.text = NSLocalizedString("trackers.title", comment: "Заголовок экрана трекеров")
+        trackerLabel.text = L10n.Localizable.Trackers.title
         return trackerLabel
     }()
 
@@ -233,10 +233,10 @@ extension TrackersViewController: UICollectionViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { actions in
             UIMenu(children: [
                 firstAction,
-                UIAction(title: NSLocalizedString("trackers.edit", comment: "Редактировать")) { [weak self] _ in
+                UIAction(title: L10n.Localizable.Trackers.edit) { [weak self] _ in
                     self?.editTracker(at: indexPath)
                 },
-                UIAction(title: NSLocalizedString("trackers.delete", comment: "Удалить"),
+                UIAction(title: L10n.Localizable.Trackers.delete,
                          attributes: .destructive) { [weak self] _ in
                     self?.deleteTracker(at: indexPath)
                 }
@@ -255,11 +255,11 @@ extension TrackersViewController: UICollectionViewDelegate {
         let pinAction = viewModel.getPinAction(at: indexPath)
         switch pinAction {
         case .pin:
-            return UIAction(title: NSLocalizedString("trackers.pin", comment: "Закрепить")) { [weak self] _ in
+            return UIAction(title: L10n.Localizable.Trackers.pin) { [weak self] _ in
                 self?.pinTracker(at: indexPath)
             }
         case .unpin:
-            return UIAction(title: NSLocalizedString("trackers.unpin", comment: "Открепить")) { [weak self] _ in
+            return UIAction(title: L10n.Localizable.Trackers.unpin) { [weak self] _ in
                 self?.unpinTracker(at: indexPath)
             }
         }

@@ -19,6 +19,7 @@
 		1BFB8BB12B0E42BE00D5B200 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BFB8BB32B0E42BE00D5B200 /* Localizable.strings */; };
 		1BFB8BB72B0E466900D5B200 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1BFB8BB92B0E466900D5B200 /* Localizable.stringsdict */; };
 		1BFB8BBE2B0EB50E00D5B200 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1BFB8BC02B0EB50E00D5B200 /* InfoPlist.strings */; };
+		1BFB8BC72B0EBDAE00D5B200 /* L10n-Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFB8BC62B0EBDAE00D5B200 /* L10n-Constants.swift */; };
 		AE09A092ABC16B767C4886E6 /* AddCategoryViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A39055A91E3E75860CE7 /* AddCategoryViewControllerDelegate.swift */; };
 		AE09A0F5BFE52CF8F087DD04 /* TrackersViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A70E64124EAB017134B9 /* TrackersViewModelProtocol.swift */; };
 		AE09A156F10920D604EFCA4F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE32F83CB6F9EAE2D7F2 /* Observable.swift */; };
@@ -116,6 +117,7 @@
 		1BFB8BBB2B0E4A3000D5B200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		1BFB8BBF2B0EB50E00D5B200 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1BFB8BC12B0EB51300D5B200 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1BFB8BC62B0EBDAE00D5B200 /* L10n-Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "L10n-Constants.swift"; sourceTree = "<group>"; };
 		AE09A029231B86A0B34058A9 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A03B3C9371DFD69049CD /* TrackerEntityMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerEntityMapper.swift; sourceTree = "<group>"; };
 		AE09A03E6D2BF055EF28CC01 /* TrackersStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersStoreProtocol.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 		1BAEE36929F43004001601F9 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				1BFB8BC52B0EBD8B00D5B200 /* Generated */,
 				AE09ADFE3D5F053792E421FD /* UI */,
 				1BC3D8B72AD4CC5C005AD3C8 /* Domain */,
 				1B71F1122AD3675400F3A8CE /* CoreData */,
@@ -333,6 +336,14 @@
 				AE09A95C5AA5E5C858512255 /* StoreError.swift */,
 			);
 			path = DataStore;
+			sourceTree = "<group>";
+		};
+		1BFB8BC52B0EBD8B00D5B200 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				1BFB8BC62B0EBDAE00D5B200 /* L10n-Constants.swift */,
+			);
+			path = Generated;
 			sourceTree = "<group>";
 		};
 		AE09A1C9CF5EB408ABD400B2 /* Schedule */ = {
@@ -659,6 +670,7 @@
 				AE09AAFF880944F08429362C /* CellModel.swift in Sources */,
 				AE09A948F1E74CA90461A78E /* CategoriesViewController.swift in Sources */,
 				AE09A8A80F72729CFF7763AD /* CategoriesTableViewCell.swift in Sources */,
+				1BFB8BC72B0EBDAE00D5B200 /* L10n-Constants.swift in Sources */,
 				AE09A1725D4A7E6144F451A5 /* CategoriesViewModel.swift in Sources */,
 				AE09A57D6CBF74EC859D0EBE /* CategoriesViewModelProtocol.swift in Sources */,
 				AE09A5604343CE74D08A7097 /* CategoryCellModel.swift in Sources */,
