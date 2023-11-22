@@ -193,10 +193,9 @@ extension TrackersViewModel: TrackersViewDelegate {
         lhs.name < rhs.name
     }
 
-    func category(at: IndexPath) -> TrackerCategory {
-        let categoryName = trackersByCategory[at.section].category
+    func category(for tracker: Tracker) -> TrackerCategory {
         do {
-            return try categoryStore.get(by: categoryName)
+            return try trackerStore.category(for: tracker)
         } catch {
             fatalError(error.localizedDescription)
         }
