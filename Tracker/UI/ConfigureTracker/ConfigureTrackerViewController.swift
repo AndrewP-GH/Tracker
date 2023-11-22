@@ -79,6 +79,7 @@ final class ConfigureTrackerViewController: UIViewController {
             selectedCategory = initCategory
         }
     }
+    private var initCompletedDays: Int = 0
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -103,6 +104,20 @@ final class ConfigureTrackerViewController: UIViewController {
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .ypBlack
         label.textAlignment = .center
+        return label
+    }()
+
+    private lazy var completedDaysLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = String.localizedStringWithFormat(
+                NSLocalizedString("numberOfDays", comment: "Кол-во выполненных дней"),
+                initCompletedDays
+        )
+        label.font = .systemFont(ofSize: 32, weight: .bold)
+        label.textColor = .ypBlack
+        label.textAlignment = .center
+        label.isHidden = mode == .create
         return label
     }()
 
@@ -237,6 +252,7 @@ final class ConfigureTrackerViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(completedDaysLabel)
         contentView.addSubview(nameTextField)
         contentView.addSubview(configurationTable)
         contentView.addSubview(configurationCollectionView)
@@ -267,7 +283,12 @@ final class ConfigureTrackerViewController: UIViewController {
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
                     titleLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
 
-                    nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
+                    completedDaysLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
+                    completedDaysLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
+                    completedDaysLabel.trailingAnchor
+                            .constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
+
+                    nameTextFieldTopAnchor,
                     nameTextField.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
                     nameTextField.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor, constant: -sideInset),
                     nameTextField.heightAnchor.constraint(equalToConstant: 75),
@@ -291,6 +312,15 @@ final class ConfigureTrackerViewController: UIViewController {
                     buttonsStackView.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
+    }
+
+    private var nameTextFieldTopAnchor: NSLayoutConstraint {
+        switch mode {
+        case .create:
+            return nameTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38)
+        case .edit:
+            return nameTextField.topAnchor.constraint(equalTo: completedDaysLabel.bottomAnchor, constant: 40)
+        }
     }
 
     private func restoreFromState() {
@@ -371,8 +401,9 @@ final class ConfigureTrackerViewController: UIViewController {
     }
 
     func setState(_ state: EditState) {
-        initTracker = state.tracker
+        initTracker = state.cell.tracker
         initCategory = state.category
+        initCompletedDays = state.cell.completedDays
     }
 }
 

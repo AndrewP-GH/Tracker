@@ -202,9 +202,9 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
     func getEditState(at: IndexPath) -> EditState {
-        let tracker = trackersByCategory[at.section].trackers[at.row]
-        let category = category(for: tracker)
-        return EditState(tracker: tracker, category: category)
+        let cellModel = cellModel(at: at)
+        let category = category(for: cellModel.tracker)
+        return EditState(cell: cellModel, category: category)
     }
 
     func editTracker(result: EditTrackerResult) {

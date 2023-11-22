@@ -5,6 +5,6 @@
 import Foundation
 
 struct EditState {
-    let tracker: Tracker
+    let cell: CellModel
     let category: TrackerCategory
 }
