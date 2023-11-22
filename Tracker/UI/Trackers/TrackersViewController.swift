@@ -243,6 +243,13 @@ extension TrackersViewController: UICollectionViewDelegate {
         })
     }
 
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfigurationForItemAt indexPath: IndexPath,
+            point: CGPoint) -> UIContextMenuConfiguration? {
+        self.collectionView(collectionView, contextMenuConfigurationForItemsAt: [indexPath], point: point)
+    }
+
     private func getFirstAction(for indexPath: IndexPath) -> UIAction {
         let pinAction = viewModel.getPinAction(at: indexPath)
         switch pinAction {
