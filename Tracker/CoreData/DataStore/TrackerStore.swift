@@ -64,19 +64,24 @@ extension TrackerStore: TrackersStoreProtocol {
     }
 
     func update(tracker: Tracker) throws {
-        guard let entity = fetchedResultsController.fetchedObjects?
-                .first(where: { $0.id == tracker.id }) else { return }
+        let entity = try getById(id: tracker.id)
         try mapper.map(from: tracker, to: entity)
         try context.save()
     }
 
     func category(for tracker: Tracker) throws -> TrackerCategory {
-        guard let entity = fetchedResultsController.fetchedObjects?
-                .first(where: { $0.id == tracker.id }) else { throw StoreError.notFound }
+        let entity = try getById(id: tracker.id)
         guard let category = entity.category else { throw StoreError.notFound }
         guard let id = category.id,
               let header = category.header else { throw StoreError.decodeError }
         return TrackerCategory(id: id, header: header)
+    }
+
+    private func getById(id: UUID) throws -> TrackerEntity {
+        if let entity = fetchedResultsController.fetchedObjects?.first(where: { $0.id == id }) {
+            return entity
+        }
+        throw StoreError.notFound
     }
 
     private func sendResult() {
