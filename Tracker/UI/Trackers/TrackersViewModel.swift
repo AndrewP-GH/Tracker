@@ -185,7 +185,8 @@ extension TrackersViewModel: TrackersViewDelegate {
         if pinned.isEmpty {
             return filteredResult
         }
-        return [(category: "Закрепленные", trackers: pinned.sorted(by: trackersSortOrder))]
+        return [(category: NSLocalizedString("trackers.pinned", comment: "Закрепленные"),
+                trackers: pinned.sorted(by: trackersSortOrder))]
                 + filteredResult
     }
 

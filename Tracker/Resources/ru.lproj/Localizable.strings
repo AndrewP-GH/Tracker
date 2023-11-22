@@ -9,3 +9,8 @@
 "trackers.filters" = "Фильтры";
 "trackers.trackers" = "Трекеры";
 "trackers.statistics" = "Статистика";
+"trackers.pinned" = "Закрепленные";
+"trackers.pin" = "Закрепить";
+"trackers.unpin" = "Открепить";
+"trackers.edit" = "Редактировать";
+"trackers.delete" = "Удалить";

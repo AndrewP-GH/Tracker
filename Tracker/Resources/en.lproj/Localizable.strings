@@ -9,3 +9,8 @@
 "trackers.filters" = "Filters";
 "trackers.trackers" = "Trackers";
 "trackers.statistics" = "Statistics";
+"trackers.pinned" = "Pinned";
+"trackers.pin" = "Pin";
+"trackers.unpin" = "Unpin";
+"trackers.edit" = "Edit";
+"trackers.delete" = "Delete";

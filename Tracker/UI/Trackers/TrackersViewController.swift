@@ -233,10 +233,11 @@ extension TrackersViewController: UICollectionViewDelegate {
         return UIContextMenuConfiguration(actionProvider: { actions in
             UIMenu(children: [
                 firstAction,
-                UIAction(title: "Редактировать") { [weak self] _ in
+                UIAction(title: NSLocalizedString("trackers.edit", comment: "Редактировать")) { [weak self] _ in
                     self?.editTracker(at: indexPath)
                 },
-                UIAction(title: "Удалить", attributes: .destructive) { [weak self] _ in
+                UIAction(title: NSLocalizedString("trackers.delete", comment: "Удалить"),
+                         attributes: .destructive) { [weak self] _ in
                     self?.deleteTracker(at: indexPath)
                 }
             ])
@@ -254,11 +255,11 @@ extension TrackersViewController: UICollectionViewDelegate {
         let pinAction = viewModel.getPinAction(at: indexPath)
         switch pinAction {
         case .pin:
-            return UIAction(title: "Закрепить") { [weak self] _ in
+            return UIAction(title: NSLocalizedString("trackers.pin", comment: "Закрепить")) { [weak self] _ in
                 self?.pinTracker(at: indexPath)
             }
         case .unpin:
-            return UIAction(title: "Открепить") { [weak self] _ in
+            return UIAction(title: NSLocalizedString("trackers.unpin", comment: "Открепить")) { [weak self] _ in
                 self?.unpinTracker(at: indexPath)
             }
         }
