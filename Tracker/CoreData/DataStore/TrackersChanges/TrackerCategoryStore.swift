@@ -64,14 +64,12 @@ final class TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
 
     func moveTracker(from: TrackerCategory, to: TrackerCategory, tracker: Tracker) throws {
-        try removeTracker(from: from, tracker: tracker)
-        try addTracker(to: to, tracker: tracker)
-    }
-
-    private func removeTracker(from category: TrackerCategory, tracker: Tracker) throws {
-        let entity = try findById(id: category.id)
-        let trackerEntity = try trackerMapper.map(from: tracker, context: context)
-        entity.removeFromItems(trackerEntity)
+        let fromEntity = try findById(id: from.id)
+        guard let items = fromEntity.items as? Set<TrackerEntity>,
+              let trackerEntity = items.first(where: { $0.id == tracker.id }) else { throw StoreError.notFound }
+        fromEntity.removeFromItems(trackerEntity)
+        let toEntity = try findById(id: to.id)
+        toEntity.addToItems(trackerEntity)
         try context.save()
     }
 
