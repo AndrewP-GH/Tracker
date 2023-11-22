@@ -41,11 +41,13 @@ final class HomePageViewController: UITabBarController {
                 )
         )
         let navigationController = UINavigationController(rootViewController: trackersViewController)
-        navigationController.tabBarItem = UITabBarItem(title: "Трекеры",
+        navigationController.tabBarItem = UITabBarItem(title: NSLocalizedString("trackers.trackers",
+                                                                                comment: "Экран трекеров"),
                                                        image: UIImage(named: "Trackers"),
                                                        selectedImage: nil)
         let settingsViewController = StatisticsViewController()
-        settingsViewController.tabBarItem = UITabBarItem(title: "Статистика",
+        settingsViewController.tabBarItem = UITabBarItem(title: NSLocalizedString("trackers.statistics",
+                                                                                  comment: "Экран статистики"),
                                                          image: UIImage(named: "Statistics"),
                                                          selectedImage: nil)
         return [navigationController, settingsViewController]

@@ -31,7 +31,7 @@ final class TrackersViewController: UIViewController {
         trackerLabel.translatesAutoresizingMaskIntoConstraints = false
         trackerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         trackerLabel.textColor = .ypBlack
-        trackerLabel.text = "Трекеры"
+        trackerLabel.text = NSLocalizedString("trackers.title", comment: "Заголовок экрана трекеров")
         return trackerLabel
     }()
 

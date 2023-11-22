@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Андрей Парамонов on 22.11.2023.
+  
+*/
+"trackers.title" = "Trackers";
+"trackers.filters" = "Filters";
+"trackers.trackers" = "Trackers";
+"trackers.statistics" = "Statistics";
