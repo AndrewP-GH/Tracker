@@ -247,18 +247,10 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     private func setDaysLabel() {
-        var text = ""
-        switch completedDays {
-        case 0:
-            text = "0 дней"
-        case 1:
-            text = "1 день"
-        case 2...4:
-            text = "\(completedDays) дня"
-        default:
-            text = "\(completedDays) дней"
-        }
-        daysLabel.text = text
+        daysLabel.text = String.localizedStringWithFormat(
+                NSLocalizedString("numberOfDays", comment: "Кол-во выполненных дней"),
+                completedDays
+        )
     }
 
     private func setButtonEnabled() {
