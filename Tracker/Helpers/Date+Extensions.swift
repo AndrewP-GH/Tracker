@@ -6,12 +6,6 @@ import Foundation
 
 extension Date {
     private final class Formatters {
-        static let weekDayOnlyFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "EEEE"
-            return formatter
-        }()
-
         static let timeTruncatedFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
@@ -20,25 +14,13 @@ extension Date {
     }
 
     func dayOfWeek() -> WeekDay {
-        let weekDay = Formatters.weekDayOnlyFormatter.string(from: self)
-        switch weekDay {
-        case "Monday":
-            return .monday
-        case "Tuesday":
-            return .tuesday
-        case "Wednesday":
-            return .wednesday
-        case "Thursday":
-            return .thursday
-        case "Friday":
-            return .friday
-        case "Saturday":
-            return .saturday
-        case "Sunday":
-            return .sunday
-        default:
-            return .monday
+        let current = Calendar.current.component(.weekday, from: self)
+        let first = Calendar.current.firstWeekday
+        let wd = WeekDay(rawValue: (current + 7 - first) % 7 + 1)
+        guard let wd else {
+            fatalError("WeekDay is nil")
         }
+        return wd
     }
 
     func dateOnly() -> String {
