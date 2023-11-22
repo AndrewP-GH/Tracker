@@ -124,7 +124,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         }
     }
 
-    func getTrackerType(at indexPath: IndexPath) -> TrackerType {
+    func trackerType(at indexPath: IndexPath) -> TrackerType {
         trackersByCategory[indexPath.section].trackers[indexPath.row].schedule != nil
                 ? .habit
                 : .irregularEvent
@@ -199,6 +199,12 @@ extension TrackersViewModel: TrackersViewDelegate {
         } catch {
             fatalError(error.localizedDescription)
         }
+    }
+
+    func getEditState(at: IndexPath) -> EditState {
+        let tracker = trackersByCategory[at.section].trackers[at.row]
+        let category = category(for: tracker)
+        return EditState(tracker: tracker, category: category)
     }
 
     func editTracker(result: EditTrackerResult) {

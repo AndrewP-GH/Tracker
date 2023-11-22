@@ -20,8 +20,8 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate {
     func getPinAction(at: IndexPath) -> PinAction
     func pinTracker(at indexPath: IndexPath)
     func unpinTracker(at: IndexPath)
-    func getTrackerType(at: IndexPath) -> TrackerType
-    func category(for tracker: Tracker) -> TrackerCategory
+    func trackerType(at: IndexPath) -> TrackerType
+    func getEditState(at: IndexPath) -> EditState
     func editTracker(result: EditTrackerResult)
     func deleteTracker(at indexPath: IndexPath)
 }

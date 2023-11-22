@@ -370,9 +370,9 @@ final class ConfigureTrackerViewController: UIViewController {
         }
     }
 
-    func setState(tracker: Tracker, category: TrackerCategory) {
-        initTracker = tracker
-        initCategory = category
+    func setState(_ state: EditState) {
+        initTracker = state.tracker
+        initCategory = state.category
     }
 }
 
