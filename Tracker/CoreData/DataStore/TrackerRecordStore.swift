@@ -27,7 +27,7 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
         try context.save()
     }
 
-    func remove(_ record: TrackerRecord) throws {
+    func delete(_ record: TrackerRecord) throws {
         let fetchRequest = TrackerRecordEntity.fetchRequest() as NSFetchRequest<TrackerRecordEntity>
         fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
                                              #keyPath(TrackerRecordEntity.trackerId),

@@ -144,7 +144,7 @@ extension TrackersViewModel: TrackersViewDelegate {
     func didUncompleteTracker(id: UUID) {
         let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
         do {
-            try trackerRecordStore.remove(trackerRecord)
+            try trackerRecordStore.delete(trackerRecord)
         } catch {
             fatalError(error.localizedDescription)
         }
