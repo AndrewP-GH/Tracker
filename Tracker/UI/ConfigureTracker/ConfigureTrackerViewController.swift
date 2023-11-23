@@ -268,13 +268,12 @@ final class ConfigureTrackerViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor),
                     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
-                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                    contentView.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
                     contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
