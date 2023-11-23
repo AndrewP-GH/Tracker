@@ -200,7 +200,6 @@ final class ConfigureTrackerViewController: UIViewController {
         button.layer.cornerRadius = 16
         button.layer.masksToBounds = true
         button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        disableButton(button)
         return button
     }()
 
@@ -237,6 +236,7 @@ final class ConfigureTrackerViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         restoreFromState()
+        updateSaveButtonState()
     }
 
     private func setupView() {
@@ -332,7 +332,6 @@ final class ConfigureTrackerViewController: UIViewController {
             selectedDays = schedule.days.sorted()
         }
         selectedCategory = initCategory
-        updateSaveButtonState()
     }
 
     @objc private func cancelButtonTapped() {
