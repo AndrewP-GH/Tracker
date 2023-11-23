@@ -13,14 +13,9 @@ enum PlaceholderState {
 final class TrackersViewModel: TrackersViewModelProtocol {
     private let categoryStore: TrackerCategoryStoreProtocol
     private let trackerRecordStore: TrackerRecordStoreProtocol
+    private let trackerStore: TrackersStoreProtocol
 
     private var trackersByCategory: [(category: String, trackers: [Tracker])] = []
-
-    private lazy var trackerStore: TrackersStoreProtocol = {
-        let trackerStore = TrackerStore()
-        trackerStore.delegate = self
-        return trackerStore
-    }()
 
     var trackersDidChange: (() -> Void)?
 
@@ -41,7 +36,8 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         $placeholderState
     }
 
-    init(categoryStore: TrackerCategoryStoreProtocol, trackerRecordStore: TrackerRecordStoreProtocol) {
+    init(trackerStore: TrackersStoreProtocol, categoryStore: TrackerCategoryStoreProtocol, trackerRecordStore: TrackerRecordStoreProtocol) {
+        self.trackerStore = trackerStore
         self.categoryStore = categoryStore
         self.trackerRecordStore = trackerRecordStore
     }

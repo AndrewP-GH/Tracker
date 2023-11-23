@@ -34,12 +34,14 @@ final class HomePageViewController: UITabBarController {
     }
 
     private func getViewControllers() -> [UIViewController] {
-        let trackersViewController = TrackersViewController(
-                viewModel: TrackersViewModel(
-                        categoryStore: TrackerCategoryStore(),
-                        trackerRecordStore: TrackerRecordStore()
-                )
+        let trackerStore = TrackerStore()
+        let viewModel = TrackersViewModel(
+                trackerStore: trackerStore,
+                categoryStore: TrackerCategoryStore(),
+                trackerRecordStore: TrackerRecordStore()
         )
+        trackerStore.delegate = viewModel
+        let trackersViewController = TrackersViewController(viewModel: viewModel)
         let navigationController = UINavigationController(rootViewController: trackersViewController)
         navigationController.tabBarItem = UITabBarItem(title: L10n.Localizable.Trackers.trackers,
                                                        image: UIImage(named: "Trackers"),
