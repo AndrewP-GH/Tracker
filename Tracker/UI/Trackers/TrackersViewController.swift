@@ -101,6 +101,17 @@ final class TrackersViewController: UIViewController {
         return emptyTrackersPlaceholderView
     }()
 
+    private lazy var filtersButton: UIButton = {
+        let filtersButton = UIButton()
+        filtersButton.translatesAutoresizingMaskIntoConstraints = false
+        filtersButton.setTitle("Фильтры", for: .normal)
+        filtersButton.backgroundColor = .ypBlue
+        filtersButton.layer.cornerRadius = 16
+        filtersButton.layer.masksToBounds = true
+        filtersButton.addTarget(self, action: #selector(filtersTapped), for: .touchUpInside)
+        return filtersButton
+    }()
+
     init(viewModel: TrackersViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -142,6 +153,7 @@ final class TrackersViewController: UIViewController {
         view.addSubview(trackerLabel)
         view.addSubview(searchTextField)
         view.addSubview(trackersView)
+        view.addSubview(filtersButton)
         view.addSubview(emptyTrackersPlaceholderView)
     }
 
@@ -166,6 +178,11 @@ final class TrackersViewController: UIViewController {
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+                    filtersButton.widthAnchor.constraint(equalToConstant: 114),
+                    filtersButton.heightAnchor.constraint(equalToConstant: 50),
+                    filtersButton.centerXAnchor.constraint(equalTo: trackersView.centerXAnchor),
+                    filtersButton.bottomAnchor.constraint(equalTo: trackersView.bottomAnchor, constant: -16),
                 ]
         )
     }
@@ -189,12 +206,20 @@ final class TrackersViewController: UIViewController {
         switch state {
         case .hide:
             trackersView.isHidden = false
+            filtersButton.isHidden = false
             emptyTrackersPlaceholderView.isHidden = true
         default:
             emptyTrackersPlaceholderView.configure(state: state)
             trackersView.isHidden = true
+            filtersButton.isHidden = true
             emptyTrackersPlaceholderView.isHidden = false
         }
+    }
+
+    @objc private func filtersTapped() {
+//        let vc = FiltersViewController()
+//        vc.modalPresentationStyle = .overFullScreen
+//        present(vc, animated: true)
     }
 }
 
