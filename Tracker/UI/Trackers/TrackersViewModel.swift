@@ -10,13 +10,15 @@ enum PlaceholderState {
     case noResults
 }
 
+typealias Category = (category: String, trackers: [Tracker])
+
 final class TrackersViewModel: TrackersViewModelProtocol {
     private let categoryStore: TrackerCategoryStoreProtocol
     private let trackerRecordStore: TrackerRecordStoreProtocol
     private let trackerStore: TrackersStoreProtocol
     private let analyticsService = AnalyticsService()
 
-    private var trackersByCategory: [(category: String, trackers: [Tracker])] = []
+    private var visibleTrackersByCategory: [Category] = []
 
     var trackersDidChange: (() -> Void)?
 
@@ -37,7 +39,9 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         $placeholderState
     }
 
-    init(trackerStore: TrackersStoreProtocol, categoryStore: TrackerCategoryStoreProtocol, trackerRecordStore: TrackerRecordStoreProtocol) {
+    init(trackerStore: TrackersStoreProtocol,
+         categoryStore: TrackerCategoryStoreProtocol,
+         trackerRecordStore: TrackerRecordStoreProtocol) {
         self.trackerStore = trackerStore
         self.categoryStore = categoryStore
         self.trackerRecordStore = trackerRecordStore
@@ -63,7 +67,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     private func getPlaceholderState() -> PlaceholderState {
-        if trackersByCategory.count != 0 {
+        if visibleTrackersByCategory.count != 0 {
             return .hide
         }
         if searchQuery?.isEmpty != false {
@@ -73,19 +77,19 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func numberOfSections() -> Int {
-        trackersByCategory.count
+        visibleTrackersByCategory.count
     }
 
     func numberOfItems(in section: Int) -> Int {
-        trackersByCategory[section].trackers.count
+        visibleTrackersByCategory[section].trackers.count
     }
 
     func categoryName(at section: Int) -> String {
-        trackersByCategory[section].category
+        visibleTrackersByCategory[section].category
     }
 
     func cellModel(at indexPath: IndexPath) -> CellModel {
-        let tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        let tracker = visibleTrackersByCategory[indexPath.section].trackers[indexPath.row]
         let completedDays = trackerRecordStore.count(for: tracker.id)
         let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
         let isButtonEnabled = currentDate <= Date()
@@ -96,19 +100,19 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func getPinAction(at indexPath: IndexPath) -> PinAction {
-        trackersByCategory[indexPath.section].trackers[indexPath.row].isPinned
+        visibleTrackersByCategory[indexPath.section].trackers[indexPath.row].isPinned
                 ? .unpin
                 : .pin
     }
 
     func pinTracker(at indexPath: IndexPath) {
-        var tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        var tracker = visibleTrackersByCategory[indexPath.section].trackers[indexPath.row]
         tracker.isPinned = true
         updateTracker(tracker)
     }
 
     func unpinTracker(at indexPath: IndexPath) {
-        var tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        var tracker = visibleTrackersByCategory[indexPath.section].trackers[indexPath.row]
         tracker.isPinned = false
         updateTracker(tracker)
     }
@@ -122,7 +126,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func trackerType(at indexPath: IndexPath) -> TrackerType {
-        trackersByCategory[indexPath.section].trackers[indexPath.row].schedule != nil
+        visibleTrackersByCategory[indexPath.section].trackers[indexPath.row].schedule != nil
                 ? .habit
                 : .irregularEvent
     }
@@ -158,12 +162,12 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
     func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
-        self.trackersByCategory = aggregateResult(trackersByCategory)
+        self.visibleTrackersByCategory = aggregateResult(trackersByCategory)
         trackersDidChange?()
     }
 
-    private func aggregateResult(_ trackersByCategory: [String: [Tracker]]) -> [(category: String, trackers: [Tracker])] {
-        var filteredResult = [(category: String, trackers: [Tracker])]()
+    private func aggregateResult(_ trackersByCategory: [String: [Tracker]]) -> [Category] {
+        var filteredResult = [Category]()
         var pinned = [Tracker]()
         for (category, trackers) in trackersByCategory {
             if category.isEmpty || trackers.isEmpty {
@@ -220,7 +224,7 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
     func deleteTracker(at indexPath: IndexPath) {
-        let tracker = trackersByCategory[indexPath.section].trackers[indexPath.row]
+        let tracker = visibleTrackersByCategory[indexPath.section].trackers[indexPath.row]
         do {
             try trackerStore.delete(tracker: tracker)
         } catch {
