@@ -104,7 +104,7 @@ final class TrackersViewController: UIViewController {
     private lazy var filtersButton: UIButton = {
         let filtersButton = UIButton()
         filtersButton.translatesAutoresizingMaskIntoConstraints = false
-        filtersButton.setTitle("Фильтры", for: .normal)
+        filtersButton.setTitle(L10n.Localizable.Trackers.filters, for: .normal)
         filtersButton.backgroundColor = .ypBlue
         filtersButton.layer.cornerRadius = 16
         filtersButton.layer.masksToBounds = true

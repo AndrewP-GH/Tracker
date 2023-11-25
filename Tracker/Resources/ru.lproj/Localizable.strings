@@ -16,3 +16,4 @@
 "trackers.delete" = "Удалить";
 "trackers.deleteConfirm" = "Уверены, что хотите удалить трекер?";
 "trackers.deleteCancel" = "Отмена";
+"trackers.filters" = "Фильтры";
