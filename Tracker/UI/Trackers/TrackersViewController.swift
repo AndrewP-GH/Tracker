@@ -153,17 +153,18 @@ final class TrackersViewController: UIViewController {
         view.addSubview(trackerLabel)
         view.addSubview(searchTextField)
         view.addSubview(trackersView)
-        view.addSubview(filtersButton)
+        trackersView.addSubview(filtersButton)
         view.addSubview(emptyTrackersPlaceholderView)
     }
 
     private func setupConstraints() {
+        let safeG = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     plusImageButton.widthAnchor.constraint(equalToConstant: 42),
                     plusImageButton.heightAnchor.constraint(equalToConstant: 42),
 
-                    trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
+                    trackerLabel.topAnchor.constraint(equalTo: safeG.topAnchor, constant: 1),
                     trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
                     searchTextField.topAnchor.constraint(equalTo: trackerLabel.bottomAnchor, constant: 7),
@@ -174,15 +175,16 @@ final class TrackersViewController: UIViewController {
                     trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
                     trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                     trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-                    trackersView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                    trackersView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
                     filtersButton.widthAnchor.constraint(equalToConstant: 114),
                     filtersButton.heightAnchor.constraint(equalToConstant: 50),
-                    filtersButton.centerXAnchor.constraint(equalTo: trackersView.centerXAnchor),
-                    filtersButton.bottomAnchor.constraint(equalTo: trackersView.bottomAnchor, constant: -16),
+                    filtersButton.centerXAnchor.constraint(equalTo: trackersView.safeAreaLayoutGuide.centerXAnchor),
+                    filtersButton.bottomAnchor
+                            .constraint(equalTo: trackersView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
                 ]
         )
     }
@@ -206,12 +208,10 @@ final class TrackersViewController: UIViewController {
         switch state {
         case .hide:
             trackersView.isHidden = false
-            filtersButton.isHidden = false
             emptyTrackersPlaceholderView.isHidden = true
         default:
             emptyTrackersPlaceholderView.configure(state: state)
             trackersView.isHidden = true
-            filtersButton.isHidden = true
             emptyTrackersPlaceholderView.isHidden = false
         }
     }
@@ -302,7 +302,8 @@ extension TrackersViewController: UICollectionViewDelegate {
         let actionSheet = UIAlertController(title: nil,
                                             message: L10n.Localizable.Trackers.deleteConfirm,
                                             preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.delete, style: .default) { [weak self] action in
+        actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.delete,
+                                            style: .default) { [weak self] action in
             self?.viewModel.deleteTracker(at: indexPath)
         })
         actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.deleteCancel, style: .cancel))
