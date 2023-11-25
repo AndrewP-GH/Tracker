@@ -277,7 +277,6 @@ extension TrackersViewController: UICollectionViewDelegate {
         let actionSheet = UIAlertController(title: nil,
                                             message: L10n.Localizable.Trackers.deleteConfirm,
                                             preferredStyle: .actionSheet)
-
         actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.delete, style: .default) { [weak self] action in
             self?.viewModel.deleteTracker(at: indexPath)
         })
