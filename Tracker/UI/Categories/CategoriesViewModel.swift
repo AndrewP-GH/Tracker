@@ -15,6 +15,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
 
     var selectedCategory: TrackerCategory?
     var categoriesChangedDelegate: (() -> Void)?
+    var categorySelectedDelegate: (() -> Void)?
 
     @Observable
     private(set) var placeholderState: PlaceholderState = .hide
@@ -56,7 +57,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
                 ? nil
                 : category
         delegate?.setCategory(category: selectedCategory)
-        categoriesChangedDelegate?()
+        categorySelectedDelegate?()
     }
 
     func viewDidLoad() {

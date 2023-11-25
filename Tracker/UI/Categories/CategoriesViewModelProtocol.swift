@@ -6,6 +6,7 @@ import Foundation
 
 protocol CategoriesViewModelProtocol {
     var categoriesChangedDelegate: (() -> Void)? { get set }
+    var categorySelectedDelegate: (() -> Void)? { get set }
     var selectedCategory: TrackerCategory? { get set }
 
     var placeholderStateObservable: Observable<PlaceholderState> { get }
