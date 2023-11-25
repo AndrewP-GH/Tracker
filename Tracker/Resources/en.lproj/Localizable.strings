@@ -14,3 +14,5 @@
 "trackers.unpin" = "Unpin";
 "trackers.edit" = "Edit";
 "trackers.delete" = "Delete";
+"trackers.deleteConfirm" = "Are you sure you want to delete this tracker?";
+"trackers.deleteCancel" = "Cancel";

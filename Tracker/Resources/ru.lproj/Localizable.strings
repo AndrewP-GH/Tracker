@@ -14,3 +14,5 @@
 "trackers.unpin" = "Открепить";
 "trackers.edit" = "Редактировать";
 "trackers.delete" = "Удалить";
+"trackers.deleteConfirm" = "Уверены, что хотите удалить трекер?";
+"trackers.deleteCancel" = "Отмена";
