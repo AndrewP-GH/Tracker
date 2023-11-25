@@ -534,6 +534,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1BAEE39129F43005001601F9 /* Build configuration list for PBXNativeTarget "Tracker" */;
 			buildPhases = (
+				1BC26F022B12582100A16837 /* Run swiftgen */,
 				DB8F63D6267697F4334362F1 /* [CP] Check Pods Manifest.lock */,
 				1BAEE36329F43004001601F9 /* Sources */,
 				1BAEE36429F43004001601F9 /* Frameworks */,
@@ -662,6 +663,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1BC26F022B12582100A16837 /* Run swiftgen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Tracker/swiftgen.yml",
+			);
+			name = "Run swiftgen";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" config run --config \"Tracker/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
+		};
 		220E12E24A3ADBAC30171FD2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
