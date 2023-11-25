@@ -52,6 +52,7 @@
 		AE09A86B070FC9EBF338515E /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */; };
 		AE09A87DC91F55E3C4E62255 /* PinAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AED575C2A37355ED8BDA /* PinAction.swift */; };
 		AE09A8B173D1F1052563800D /* CreateCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A15043B3AC503F3C42B8 /* CreateCategoryViewController.swift */; };
+		AE09A8E202E5B350EE2F9E71 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3525F95789E8E417421 /* Filter.swift */; };
 		AE09A8F06488F73EEFD096BD /* TrackersViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1C50B5A0DEB9FECCF19 /* TrackersViewDelegate.swift */; };
 		AE09A93E3F99B598852DC79A /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3E0D535505173B3B75A /* StatisticsViewController.swift */; };
 		AE09A948F1E74CA90461A78E /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1448859550489DD547D /* CategoriesViewController.swift */; };
@@ -69,6 +70,7 @@
 		AE09AC24DF527C312C39C669 /* GreyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A3AB89E946880D7DDD23 /* GreyTableViewCell.swift */; };
 		AE09AC3774617354CE255E9A /* DynamicCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A37F8929E021D401576E /* DynamicCollectionView.swift */; };
 		AE09AC3810838DD219ADE7C0 /* SelectableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A7C137E055DCE5CFC40F /* SelectableTableViewCell.swift */; };
+		AE09AC91BDBA2CBA10941D12 /* FiltersViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE34F3CCB76478255250 /* FiltersViewControllerDelegate.swift */; };
 		AE09ACBC4868354DC3E8573C /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */; };
 		AE09AD540346DCF203831AA7 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */; };
 		AE09AD890964CFFE7760C40D /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A95C5AA5E5C858512255 /* StoreError.swift */; };
@@ -143,6 +145,7 @@
 		AE09A317014C9DD701FEF33D /* WeekDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDay.swift; sourceTree = "<group>"; };
 		AE09A31F8F7741DFF3B65E8C /* UITableView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerCollectionViewCell.swift; sourceTree = "<group>"; };
+		AE09A3525F95789E8E417421 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		AE09A376BA261AA6768C2DD6 /* EditTrackerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTrackerDelegate.swift; sourceTree = "<group>"; };
 		AE09A37F8929E021D401576E /* DynamicCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicCollectionView.swift; sourceTree = "<group>"; };
 		AE09A39055A91E3E75860CE7 /* AddCategoryViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoryViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +187,7 @@
 		AE09ADFB92C6717A93504D24 /* ConfigurationMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationMode.swift; sourceTree = "<group>"; };
 		AE09AE20EA3EEA034F3BE653 /* HomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		AE09AE3444CC95921F5096C3 /* AddTrackerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTrackerViewController.swift; sourceTree = "<group>"; };
+		AE09AE34F3CCB76478255250 /* FiltersViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewControllerDelegate.swift; sourceTree = "<group>"; };
 		AE09AE485E386B82C577D3DD /* ScheduleMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleMarshalling.swift; sourceTree = "<group>"; };
 		AE09AE790F1FDA73E3AA7D97 /* CategoryHeaderReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryHeaderReusableView.swift; sourceTree = "<group>"; };
 		AE09AED575C2A37355ED8BDA /* PinAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAction.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				AE09A4A3CF2A054E6E0B7184 /* FiltersViewController.swift */,
+				AE09A3525F95789E8E417421 /* Filter.swift */,
+				AE09AE34F3CCB76478255250 /* FiltersViewControllerDelegate.swift */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -872,6 +878,8 @@
 				AE09AC24DF527C312C39C669 /* GreyTableViewCell.swift in Sources */,
 				AE09AC3810838DD219ADE7C0 /* SelectableTableViewCell.swift in Sources */,
 				AE09A052675B60C7CDBADC56 /* SelectableCellModel.swift in Sources */,
+				AE09A8E202E5B350EE2F9E71 /* Filter.swift in Sources */,
+				AE09AC91BDBA2CBA10941D12 /* FiltersViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

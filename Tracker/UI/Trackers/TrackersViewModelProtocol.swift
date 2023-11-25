@@ -4,11 +4,12 @@
 
 import Foundation
 
-protocol TrackersViewModelProtocol: TrackersViewDelegate {
+protocol TrackersViewModelProtocol: TrackersViewDelegate, FiltersViewControllerDelegate {
     var trackersDidChange: (() -> Void)? { get set }
 
     var currentDate: Date { get }
     var placeholderStateObservable: Observable<PlaceholderState> { get }
+    var currentFilter: Filter { get }
 
     func dateChanged(to date: Date)
     func searchTextChanged(to text: String?)

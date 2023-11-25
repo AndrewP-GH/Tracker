@@ -5,9 +5,14 @@
 import Foundation
 import UIKit
 
+typealias SelectableFilterTableViewCell = SelectableTableViewCell<Filter>
+
 final class FiltersViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
+
+    private weak var delegate: FiltersViewControllerDelegate?
+    private var selectedFilter: Filter
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -44,16 +49,26 @@ final class FiltersViewController: UIViewController {
         filtersTable.separatorStyle = .none
         filtersTable.showsVerticalScrollIndicator = false
         filtersTable.showsHorizontalScrollIndicator = false
-//        filtersTable.register(SelectableTableViewCell.self,
-//                                forCellReuseIdentifier: SelectableTableViewCell.identifier)
-//        filtersTable.delegate = self
-//        filtersTable.dataSource = self
+        filtersTable.register(SelectableFilterTableViewCell.self,
+                              forCellReuseIdentifier: SelectableFilterTableViewCell.identifier)
+        filtersTable.delegate = self
+        filtersTable.dataSource = self
         filtersTable.layer.cornerRadius = cornerRadius
         filtersTable.layer.masksToBounds = true
         filtersTable.isScrollEnabled = false
         filtersTable.rowHeight = cellHeight
         return filtersTable
     }()
+
+    init(selectedFilter: Filter, delegate: FiltersViewControllerDelegate?) {
+        self.selectedFilter = selectedFilter
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) is not implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,20 +102,71 @@ final class FiltersViewController: UIViewController {
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
-                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     titleLabel.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
 
-                    filtersTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
+                    filtersTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 38),
                     filtersTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     filtersTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
                     filtersTable.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
+                    filtersTable.heightAnchor.constraint(equalToConstant: CGFloat(Filter.allCases.count) * cellHeight),
                 ]
         )
     }
 }
 
-//extension
+extension FiltersViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        Filter.allCases.count
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+                withIdentifier: SelectableFilterTableViewCell.identifier,
+                for: indexPath) as? SelectableFilterTableViewCell ?? SelectableFilterTableViewCell()
+        let filter = Filter.allCases[indexPath.row]
+        cell.configure(
+                model: SelectableCellModel<Filter>(
+                        value: filter,
+                        isSelected: filter == selectedFilter,
+                        title: filterTitle(for: filter)
+                ) { [weak self] selectedFilter in
+                    guard let self else { return }
+                    self.delegate?.didSelect(filter: selectedFilter)
+                    self.dismiss(animated: true)
+                }
+        )
+        return cell
+    }
+
+    private func filterTitle(for filter: Filter) -> String {
+        switch filter {
+        case .all:
+            return "Все трекеры"
+        case .today:
+            return "Трекеры на сегодня"
+        case .finished:
+            return "Завершенные"
+        case .unfinished:
+            return "Не завершенные"
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        cellHeight
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? SelectableFilterTableViewCell {
+            cell.isLast = tableView.isLastCellInSection(at: indexPath)
+        }
+    }
+}

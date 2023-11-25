@@ -218,9 +218,8 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func filtersTapped() {
-//        let vc = FiltersViewController()
-//        vc.modalPresentationStyle = .overFullScreen
-//        present(vc, animated: true)
+        let vc = FiltersViewController(selectedFilter: viewModel.currentFilter, delegate: viewModel)
+        present(vc, animated: true)
     }
 }
 

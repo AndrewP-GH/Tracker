@@ -33,6 +33,12 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         }
     }
 
+    var currentFilter: Filter = .all {
+        didSet {
+            updateContent()
+        }
+    }
+
     @Observable
     private(set) var placeholderState: PlaceholderState = .hide
     var placeholderStateObservable: Observable<PlaceholderState> {
@@ -231,5 +237,11 @@ extension TrackersViewModel: TrackersViewDelegate {
             fatalError(error.localizedDescription)
         }
         updateContent()
+    }
+}
+
+extension TrackersViewModel: FiltersViewControllerDelegate {
+    func didSelect(filter: Filter) {
+        currentFilter = filter
     }
 }

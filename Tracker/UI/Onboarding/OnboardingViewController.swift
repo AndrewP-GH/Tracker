@@ -134,6 +134,6 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
         OnboardingDataStore.shared.setOnboardingWasShown()
         let viewController = HomePageViewController()
         viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
+        present(viewController, animated: true)
     }
 }
