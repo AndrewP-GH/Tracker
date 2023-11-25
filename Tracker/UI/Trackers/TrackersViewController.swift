@@ -105,6 +105,7 @@ final class TrackersViewController: UIViewController {
         let filtersButton = UIButton()
         filtersButton.translatesAutoresizingMaskIntoConstraints = false
         filtersButton.setTitle(L10n.Localizable.Trackers.filters, for: .normal)
+        filtersButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         filtersButton.backgroundColor = .ypBlue
         filtersButton.layer.cornerRadius = 16
         filtersButton.layer.masksToBounds = true
