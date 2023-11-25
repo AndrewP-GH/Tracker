@@ -1,4 +1,3 @@
-# Uncomment the next line to define a global platform for your project
 platform :ios, '13.4'
   post_install do |installer|
     installer.pods_project.targets.each do |target|
