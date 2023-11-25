@@ -9,8 +9,8 @@ struct AnalyticsService {
     private static var isActivated = false
 
     static func activate() {
-        let configuration = YMMYandexMetricaConfiguration.init(apiKey: "A3-LN993T-CXPGH6-MT734-XG9EV-VHPJ2-XK9L9")
-        YMMYandexMetrica.activate(with: configuration!)
+        guard let configuration = YMMYandexMetricaConfiguration(apiKey: "219114e7-45d6-43b9-a643-4a2e6707179a") else { return }
+        YMMYandexMetrica.activate(with: configuration)
         isActivated = true
     }
 
