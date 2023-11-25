@@ -60,7 +60,7 @@ final class FiltersViewController: UIViewController {
         return filtersTable
     }()
 
-    init(selectedFilter: Filter, delegate: FiltersViewControllerDelegate?) {
+    init(selectedFilter: Filter, delegate: FiltersViewControllerDelegate) {
         self.selectedFilter = selectedFilter
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
