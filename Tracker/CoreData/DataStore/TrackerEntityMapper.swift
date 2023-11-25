@@ -31,12 +31,11 @@ final class TrackerEntityMapper {
     }
 
     func map(from trackerEntity: TrackerEntity) throws -> Tracker {
-        guard
-                let id = trackerEntity.id,
-                let name = trackerEntity.name,
-                let hexColor = trackerEntity.hexColor,
-                let emoji = trackerEntity.emoji,
-                let createdAt = trackerEntity.createdAt
+        guard let id = trackerEntity.id,
+              let name = trackerEntity.name,
+              let hexColor = trackerEntity.hexColor,
+              let emoji = trackerEntity.emoji,
+              let createdAt = trackerEntity.createdAt
         else { throw StoreError.decodeError }
         let color = try colorMarshalling.color(from: hexColor)
         let schedule = scheduleMarshalling.toSchedule(from: trackerEntity.schedule)
