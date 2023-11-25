@@ -5,6 +5,8 @@
 import Foundation
 import UIKit
 
+typealias SelectableTrackerCategoryTableViewCell = SelectableTableViewCell<TrackerCategory>
+
 final class CategoriesViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
@@ -46,8 +48,8 @@ final class CategoriesViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(SelectableTableViewCell<TrackerCategory>.self,
-                                forCellReuseIdentifier: SelectableTableViewCell<TrackerCategory>.identifier)
+        configureTable.register(SelectableTrackerCategoryTableViewCell.self,
+                                forCellReuseIdentifier: SelectableTrackerCategoryTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = cornerRadius
@@ -195,9 +197,9 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectableTableViewCell<TrackerCategory>.identifier,
-                                                 for: indexPath) as? SelectableTableViewCell<TrackerCategory>
-                ?? SelectableTableViewCell<TrackerCategory>()
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectableTrackerCategoryTableViewCell.identifier,
+                                                 for: indexPath) as? SelectableTrackerCategoryTableViewCell
+                ?? SelectableTrackerCategoryTableViewCell()
         cell.configure(model: viewModel.categoryCellModel(at: indexPath.row))
         return cell
     }
@@ -207,7 +209,7 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? SelectableTableViewCell<TrackerCategory> {
+        if let cell = cell as? SelectableTrackerCategoryTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }
