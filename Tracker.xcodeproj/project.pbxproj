@@ -671,7 +671,6 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Tracker/swiftgen.yml",
 			);
 			name = "Run swiftgen";
 			outputFileListPaths = (
