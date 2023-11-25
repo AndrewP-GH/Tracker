@@ -40,10 +40,13 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
         }
     }
 
-    func categoryCellModel(at index: Int) -> CategoryCellModel {
+    func categoryCellModel(at index: Int) -> SelectableCellModel<TrackerCategory> {
         let categories = try! categoryStore.getAll()
         let category = categories[index]
-        return CategoryCellModel(category: category, isSelected: category == selectedCategory) { [weak self] category in
+        return SelectableCellModel(
+                value: category,
+                isSelected: category == selectedCategory,
+                title: category.header) { [weak self] category in
             self?.categorySelected(category)
         }
     }

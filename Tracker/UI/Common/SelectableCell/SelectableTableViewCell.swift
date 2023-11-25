@@ -5,11 +5,11 @@
 import Foundation
 import UIKit
 
-final class CategoriesTableViewCell: GreyTableViewCell {
-    static let identifier = "CategoriesTableViewCell"
+final class SelectableTableViewCell<T>: GreyTableViewCell {
+    static var identifier: String { "SelectableTableViewCell_\(T.self)" }
 
-    var category: TrackerCategory?
-    var delegate: ((TrackerCategory) -> Void)?
+    var value: T?
+    var delegate: ((T) -> Void)?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -24,7 +24,7 @@ final class CategoriesTableViewCell: GreyTableViewCell {
         let selectButton = UIButton()
         selectButton.translatesAutoresizingMaskIntoConstraints = false
         selectButton.backgroundColor = .clear
-        selectButton.setImage(UIImage(named: "CategorySelected"), for: .normal)
+        selectButton.setImage(UIImage(named: "CellSelected"), for: .normal)
         selectButton.addTarget(self, action: #selector(cellTapped), for: .touchUpInside)
         return selectButton
     }()
@@ -47,11 +47,11 @@ final class CategoriesTableViewCell: GreyTableViewCell {
         setupView()
     }
 
-    func configure(model: CategoryCellModel) {
-        category = model.category
-        titleLabel.text = model.category.header
+    func configure(model: SelectableCellModel<T>) {
+        value = model.value
+        titleLabel.text = model.title
         selectButton.isHidden = !model.isSelected
-        delegate = model.categorySelectedDelegate
+        delegate = model.valueSelectedDelegate
     }
 
     private func setupView() {
@@ -85,8 +85,7 @@ final class CategoriesTableViewCell: GreyTableViewCell {
     }
 
     @objc private func cellTapped() {
-        guard let category,
-              let delegate else { return }
-        delegate(category)
+        guard let value, let delegate else { return }
+        delegate(value)
     }
 }

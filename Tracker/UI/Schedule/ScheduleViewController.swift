@@ -99,8 +99,6 @@ final class ScheduleViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
-                    svContentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
-
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
@@ -114,6 +112,7 @@ final class ScheduleViewController: UIViewController {
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
                     configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
+                    configureTable.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
                     button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),

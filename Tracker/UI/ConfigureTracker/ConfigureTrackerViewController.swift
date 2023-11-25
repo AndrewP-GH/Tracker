@@ -260,7 +260,6 @@ final class ConfigureTrackerViewController: UIViewController {
         let sideInset: CGFloat = 16
         let safeG = view.safeAreaLayoutGuide
         let svContentG = scrollView.contentLayoutGuide
-
         NSLayoutConstraint.activate(
                 [
                     scrollView.topAnchor.constraint(equalTo: safeG.topAnchor),
@@ -271,9 +270,10 @@ final class ConfigureTrackerViewController: UIViewController {
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
-                    contentView.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
                     contentView.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor),
                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
+                    svContentG.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor, constant: sideInset),
