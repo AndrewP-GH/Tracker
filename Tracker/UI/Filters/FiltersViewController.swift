@@ -138,9 +138,9 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource {
                         value: filter,
                         isSelected: filter == selectedFilter,
                         title: filterTitle(for: filter)
-                ) { [weak self] selectedFilter in
+                ) { [weak self] selected in
                     guard let self else { return }
-                    self.delegate?.didSelect(filter: selectedFilter)
+                    self.delegate?.didSelect(filter: selected)
                     self.filtersTable.reloadData()
                     self.dismiss(animated: true)
                 }
