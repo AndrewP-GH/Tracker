@@ -9,6 +9,8 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     private let viewModel: TrackersViewModelProtocol
+    private let filtersButtonHeight: CGFloat = 50
+    private let filtersButtonVerticalOffset: CGFloat = 16
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
@@ -92,6 +94,11 @@ final class TrackersViewController: UIViewController {
         trackersView.delegate = self
         trackersView.showsVerticalScrollIndicator = false
         trackersView.showsHorizontalScrollIndicator = false
+        trackersView.alwaysBounceVertical = true
+        trackersView.contentInset = UIEdgeInsets(top: 10,
+                                                 left: 0,
+                                                 bottom: filtersButtonHeight + filtersButtonVerticalOffset,
+                                                 right: 0)
         return trackersView
     }()
 
@@ -173,7 +180,7 @@ final class TrackersViewController: UIViewController {
                     searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
-                    trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
+                    trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 0),
                     trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                     trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                     trackersView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
@@ -182,10 +189,10 @@ final class TrackersViewController: UIViewController {
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
                     filtersButton.widthAnchor.constraint(equalToConstant: 114),
-                    filtersButton.heightAnchor.constraint(equalToConstant: 50),
+                    filtersButton.heightAnchor.constraint(equalToConstant: filtersButtonHeight),
                     filtersButton.centerXAnchor.constraint(equalTo: trackersView.safeAreaLayoutGuide.centerXAnchor),
-                    filtersButton.bottomAnchor
-                            .constraint(equalTo: trackersView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+                    filtersButton.bottomAnchor.constraint(equalTo: trackersView.safeAreaLayoutGuide.bottomAnchor,
+                                                          constant: -filtersButtonVerticalOffset),
                 ]
         )
     }
