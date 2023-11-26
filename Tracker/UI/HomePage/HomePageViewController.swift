@@ -41,7 +41,7 @@ final class HomePageViewController: UITabBarController {
                 trackerRecordStore: TrackerRecordStore()
         )
         trackerStore.delegate = viewModel
-        let trackersViewController = TrackersViewController(viewModel: viewModel)
+        let trackersViewController = TrackersViewController(viewModel: viewModel, analyticsService: AnalyticsService())
         let navigationController = UINavigationController(rootViewController: trackersViewController)
         navigationController.tabBarItem = UITabBarItem(title: L10n.Localizable.Trackers.trackers,
                                                        image: UIImage(named: "Trackers"),
