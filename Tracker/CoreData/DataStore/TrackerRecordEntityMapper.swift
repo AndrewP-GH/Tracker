@@ -11,7 +11,7 @@ struct TrackerRecordEntityMapper {
     func map(from record: TrackerRecord, context: NSManagedObjectContext) -> TrackerRecordEntity {
         let recordEntity = TrackerRecordEntity(context: context)
         recordEntity.trackerId = record.trackerId
-        recordEntity.date = dateMarshalling.toString(from: record.date)
+        recordEntity.date = map(from: record.date)
         return recordEntity
     }
 
