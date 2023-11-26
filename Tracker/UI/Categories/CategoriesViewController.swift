@@ -98,6 +98,7 @@ final class CategoriesViewController: UIViewController {
             self?.categoriesTable.reloadData()
         }
         viewModel.categorySelectedDelegate = { [weak self] in
+            self?.categoriesTable.reloadData()
             self?.dismiss(animated: true)
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in

@@ -141,6 +141,7 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource {
                 ) { [weak self] selectedFilter in
                     guard let self else { return }
                     self.delegate?.didSelect(filter: selectedFilter)
+                    self.filtersTable.reloadData()
                     self.dismiss(animated: true)
                 }
         )
