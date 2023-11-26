@@ -95,7 +95,7 @@ final class TrackersViewController: UIViewController {
         trackersView.showsVerticalScrollIndicator = false
         trackersView.showsHorizontalScrollIndicator = false
         trackersView.alwaysBounceVertical = true
-        trackersView.contentInset = UIEdgeInsets(top: 10,
+        trackersView.contentInset = UIEdgeInsets(top: 0,
                                                  left: 0,
                                                  bottom: filtersButtonHeight + filtersButtonVerticalOffset,
                                                  right: 0)
@@ -180,7 +180,7 @@ final class TrackersViewController: UIViewController {
                     searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
-                    trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 0),
+                    trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
                     trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
                     trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
                     trackersView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
