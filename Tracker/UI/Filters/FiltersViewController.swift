@@ -129,9 +129,9 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-                withIdentifier: SelectableFilterTableViewCell.identifier,
-                for: indexPath) as? SelectableFilterTableViewCell ?? SelectableFilterTableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectableFilterTableViewCell.identifier,
+                                                 for: indexPath) as? SelectableFilterTableViewCell
+                ?? SelectableFilterTableViewCell()
         let filter = Filter.allCases[indexPath.row]
         cell.configure(
                 model: SelectableCellModel<Filter>(
