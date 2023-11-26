@@ -17,6 +17,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     private let trackerRecordStore: TrackerRecordStoreProtocol
     private let trackerStore: TrackersStoreProtocol
     private let analyticsService = AnalyticsService()
+    private let filterStore = FilterStore.shared
 
     private var visibleTrackers: [Category] = []
 
@@ -45,6 +46,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
     var currentFilter: Filter = .all {
         didSet {
+            filterStore.setSelectedFilter(currentFilter)
             let today = Date()
             if currentFilter == .today && currentDate != today {
                 currentDate = today
@@ -77,7 +79,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func viewDidLoad() {
-        updateContent()
+        currentFilter = filterStore.getSelectedFilter()
     }
 
     private func updateContent() {
