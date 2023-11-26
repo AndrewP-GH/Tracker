@@ -4,12 +4,6 @@
 
 import Foundation
 
-enum PlaceholderState {
-    case hide
-    case empty
-    case noResults
-}
-
 typealias Category = (category: String, trackers: [Tracker])
 
 final class TrackersViewModel: TrackersViewModelProtocol {

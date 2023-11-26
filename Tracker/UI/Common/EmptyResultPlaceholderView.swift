@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class EmptyTrackersPlaceholderView: UIView {
+final class EmptyResultPlaceholderView: UIView {
     private let emptyStateText: String
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -68,6 +68,9 @@ final class EmptyTrackersPlaceholderView: UIView {
         case .noResults:
             titleLabel.text = "Ничего не найдено"
             imageView.image = UIImage(named: "NoResults")
+        case .noStatistics:
+            titleLabel.text = "Анализировать пока нечего"
+            imageView.image = UIImage(named: "NoAnalyze")
         }
     }
 

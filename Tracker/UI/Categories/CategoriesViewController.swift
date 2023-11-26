@@ -72,8 +72,8 @@ final class CategoriesViewController: UIViewController {
         return button
     }()
 
-    private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(
+    private lazy var emptyTrackersPlaceholderView: EmptyResultPlaceholderView = {
+        let emptyTrackersPlaceholderView = EmptyResultPlaceholderView(
                 emptyStateText: """
                                 Привычки и события можно
                                 объединить по смыслу

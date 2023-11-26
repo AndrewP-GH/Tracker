@@ -101,8 +101,8 @@ final class TrackersViewController: UIViewController {
         return trackersView
     }()
 
-    private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(emptyStateText: "Что будем отслеживать?")
+    private lazy var emptyTrackersPlaceholderView: EmptyResultPlaceholderView = {
+        let emptyTrackersPlaceholderView = EmptyResultPlaceholderView(emptyStateText: "Что будем отслеживать?")
         emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         return emptyTrackersPlaceholderView
     }()
