@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Tracker
 
 final class TrackerTests: XCTestCase {
@@ -18,19 +19,100 @@ final class TrackerTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testEmptyTrackersList() throws {
+        let trackersViewModel = FakeTrackersViewModel()
+        let trackersViewController = TrackersViewController(viewModel: trackersViewModel)
+
+        assertSnapshot(matching: trackersViewController, as: .image)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    final class FakeTrackersViewModel: TrackersViewModelProtocol {
+        var trackersDidChange: (() -> Void)?
+
+        private(set) var currentDateObservable: Observable<Date> = .init(wrappedValue: Date())
+        private(set) var currentFilter: Filter = .all
+
+        var placeholderStateObservable: Observable<PlaceholderState> = .init(wrappedValue: .noResults)
+        
+        init(){
+        }
+
+        func dateChanged(to date: Date) {
+        }
+
+        func searchTextChanged(to text: String?) {
+        }
+
+        func viewDidLoad() {
+        }
+
+        func numberOfSections() -> Int {
+           0
+        }
+
+        func numberOfItems(in section: Int) -> Int {
+           0
+        }
+
+        func categoryName(at: Int) -> String {
+           "TestCategory"
+        }
+
+        func cellModel(at indexPath: IndexPath) -> CellModel {
+            CellModel(tracker: Tracker(id: UUID(),
+                                       name: "TestTracker",
+                                       color: .red,
+                                       emoji: "e",
+                                       schedule: nil,
+                                       createdAt: Date(),
+                                       isPinned: false), completedDays: 0, isDone: false, canBeDone: true)
+        }
+
+        func getPinAction(at: IndexPath) -> PinAction {
+            .pin
+        }
+
+        func pinTracker(at indexPath: IndexPath) {
+        }
+
+        func unpinTracker(at: IndexPath) {
+        }
+
+        func trackerType(at: IndexPath) -> TrackerType {
+            .irregularEvent
+        }
+
+        func getEditState(at: IndexPath) -> EditState {
+            let tracker = Tracker(id: UUID(),
+                                  name: "TestTracker",
+                                  color: .red,
+                                  emoji: "e",
+                                  schedule: nil,
+                                  createdAt: Date(),
+                                  isPinned: false)
+            return EditState(cell: CellModel(tracker: tracker, completedDays: 0, isDone: false, canBeDone: true),
+                      category: TrackerCategory(id: UUID(), header: "TestCategory"))
+        }
+
+        func editTracker(result: EditTrackerResult) {
+        }
+
+        func deleteTracker(at indexPath: IndexPath) {
+        }
+
+        func didCompleteTracker(id: UUID) {
+        }
+
+        func didUncompleteTracker(id: UUID) {
+        }
+
+        func addTrackerToCategory(category: TrackerCategory, tracker: Tracker) {
+        }
+
+        func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
+        }
+
+        func didSelect(filter: Filter) {
         }
     }
-
 }
