@@ -55,7 +55,6 @@ final class CategoriesViewController: UIViewController {
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
-        configureTable.rowHeight = cellHeight
         return configureTable
     }()
 

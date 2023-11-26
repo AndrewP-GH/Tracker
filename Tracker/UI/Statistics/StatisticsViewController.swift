@@ -30,7 +30,6 @@ final class StatisticsViewController: UIViewController {
         statisticsTable.layer.cornerRadius = cornerRadius
         statisticsTable.layer.masksToBounds = true
         statisticsTable.isScrollEnabled = false
-        statisticsTable.rowHeight = cellHeight
         return statisticsTable
     }()
 

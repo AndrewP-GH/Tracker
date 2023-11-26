@@ -56,7 +56,6 @@ final class FiltersViewController: UIViewController {
         filtersTable.layer.cornerRadius = cornerRadius
         filtersTable.layer.masksToBounds = true
         filtersTable.isScrollEnabled = false
-        filtersTable.rowHeight = cellHeight
         return filtersTable
     }()
 
