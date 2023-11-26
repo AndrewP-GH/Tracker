@@ -13,14 +13,22 @@ final class TrackerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testEmptyTrackersList() throws {
-        let trackersViewModel = FakeTrackersViewModel()
+    func testEmptyTrackersVC() throws {
+        let trackersViewModel = FakeTrackersViewModel(isEmpty: true)
+        let trackersViewController = TrackersViewController(viewModel: trackersViewModel)
+
+        assertSnapshot(matching: trackersViewController, as: .image)
+    }
+
+    func testOneItemTrackersVC() throws {
+        let trackersViewModel = FakeTrackersViewModel(isEmpty: false)
         let trackersViewController = TrackersViewController(viewModel: trackersViewModel)
 
         assertSnapshot(matching: trackersViewController, as: .image)
@@ -32,9 +40,11 @@ final class TrackerTests: XCTestCase {
         private(set) var currentDateObservable: Observable<Date> = .init(wrappedValue: Date())
         private(set) var currentFilter: Filter = .all
 
-        var placeholderStateObservable: Observable<PlaceholderState> = .init(wrappedValue: .noResults)
-        
-        init(){
+        var placeholderStateObservable: Observable<PlaceholderState> = .init(wrappedValue: .empty)
+        private let isEmpty: Bool
+
+        init(isEmpty: Bool){
+            self.isEmpty = isEmpty
         }
 
         func dateChanged(to date: Date) {
@@ -47,11 +57,11 @@ final class TrackerTests: XCTestCase {
         }
 
         func numberOfSections() -> Int {
-           0
+            isEmpty ? 0 : 1
         }
 
         func numberOfItems(in section: Int) -> Int {
-           0
+           isEmpty ? 0 : 1
         }
 
         func categoryName(at: Int) -> String {
