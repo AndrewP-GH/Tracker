@@ -14,4 +14,8 @@ extension Date {
         }
         return wd
     }
+
+    func isDateEqual(to date: Date) -> Bool {
+        Calendar.current.isDate(self, inSameDayAs: date)
+    }
 }

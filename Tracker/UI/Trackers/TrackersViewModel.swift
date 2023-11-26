@@ -26,7 +26,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     private(set) var currentDate: Date = Date() {
         didSet {
             let today = Date()
-            if currentFilter == .today && currentDate != today {
+            if currentFilter == .today && !currentDate.isDateEqual(to: today) {
                 currentFilter = .all
             } else {
                 updateContent()
@@ -47,7 +47,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         didSet {
             filterStore.setSelectedFilter(currentFilter)
             let today = Date()
-            if currentFilter == .today && currentDate != today {
+            if currentFilter == .today && !currentDate.isDateEqual(to: today) {
                 currentDate = today
             } else {
                 updateContent()
