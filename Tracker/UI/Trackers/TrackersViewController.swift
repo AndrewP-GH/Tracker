@@ -15,8 +15,7 @@ final class TrackersViewController: UIViewController {
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
         plusImage.translatesAutoresizingMaskIntoConstraints = false
-        plusImage.setImage(UIImage(named: "AddTracker"), for: .normal)
-        plusImage.tintColor = .ypBlack
+        plusImage.setImage(UIImage(named: "AddTracker")?.withTintColor(.ypBlack), for: .normal)
         plusImage.contentMode = .scaleAspectFit
         plusImage.backgroundColor = .clear
         plusImage.addTarget(self, action: #selector(addTracker), for: .touchUpInside)
