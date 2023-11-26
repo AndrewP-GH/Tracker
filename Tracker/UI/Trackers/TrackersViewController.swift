@@ -9,6 +9,7 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     private let viewModel: TrackersViewModelProtocol
+    private let analyticsService: AnalyticsService?
     private let filtersButtonHeight: CGFloat = 50
     private let filtersButtonVerticalOffset: CGFloat = 16
 
@@ -118,8 +119,9 @@ final class TrackersViewController: UIViewController {
         return filtersButton
     }()
 
-    init(viewModel: TrackersViewModelProtocol) {
+    init(viewModel: TrackersViewModelProtocol, analyticsService: AnalyticsService? = nil) {
         self.viewModel = viewModel
+        self.analyticsService = analyticsService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -129,6 +131,10 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        analyticsService?.report(event: "viewDidLoad", params: [
+            "event": "open",
+            "screen": "Main"
+        ])
         viewModel.currentDateObservable.bind { [weak self] date in
             self?.datePicker.date = date
         }
@@ -140,6 +146,14 @@ final class TrackersViewController: UIViewController {
         }
         setupView()
         viewModel.viewDidLoad()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService?.report(event: "viewDidDisappear", params: [
+            "event": "close",
+            "screen": "Main"
+        ])
     }
 
     private func setupView() {
@@ -199,6 +213,11 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func addTracker() {
+        analyticsService?.report(event: "addTracker", params: [
+            "event": "click",
+            "screen": "Main",
+            "item": "addTracker"
+        ])
         let addTrackerViewController = AddTrackerViewController()
         addTrackerViewController.delegate = viewModel
         present(addTrackerViewController, animated: true)
@@ -226,6 +245,11 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func filtersTapped() {
+        analyticsService?.report(event: "filtersTapped", params: [
+            "event": "click",
+            "screen": "Main",
+            "item": "filter"
+        ])
         let vc = FiltersViewController(selectedFilter: viewModel.currentFilter, delegate: viewModel)
         present(vc, animated: true)
     }
@@ -251,7 +275,9 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
-        cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
+        cell.configure(with: viewModel.cellModel(at: indexPath),
+                       delegate: viewModel,
+                       analyticsService: analyticsService);
         return cell
     }
 }
@@ -299,6 +325,11 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
 
     private func editTracker(at indexPath: IndexPath) {
+        analyticsService?.report(event: "editTracker", params: [
+            "event": "click",
+            "screen": "Main",
+            "item": "edit"
+        ])
         let trackerType = viewModel.trackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = self
@@ -307,6 +338,11 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
 
     private func deleteTracker(at indexPath: IndexPath) {
+        analyticsService?.report(event: "deleteTracker", params: [
+            "event": "click",
+            "screen": "Main",
+            "item": "delete"
+        ])
         let actionSheet = UIAlertController(title: nil,
                                             message: L10n.Localizable.Trackers.deleteConfirm,
                                             preferredStyle: .actionSheet)

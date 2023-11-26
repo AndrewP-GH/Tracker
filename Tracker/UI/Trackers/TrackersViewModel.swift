@@ -16,7 +16,6 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     private let categoryStore: TrackerCategoryStoreProtocol
     private let trackerRecordStore: TrackerRecordStoreProtocol
     private let trackerStore: TrackersStoreProtocol
-    private let analyticsService = AnalyticsService()
     private let filterStore = FilterStore.shared
 
     private var visibleTrackers: [Category] = []

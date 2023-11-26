@@ -13,6 +13,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
 
     private var tracker: Tracker?
     private weak var delegate: TrackersViewDelegate?
+    private var analyticsService: AnalyticsService?
 
     private var completedDays = 0 {
         didSet {
@@ -128,12 +129,13 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with model: CellModel, delegate: TrackersViewDelegate) {
+    func configure(with model: CellModel, delegate: TrackersViewDelegate, analyticsService: AnalyticsService?) {
         tracker = model.tracker
         self.delegate = delegate
         completedDays = model.completedDays
         isDone = model.isDone
         canBeDone = model.canBeDone
+        self.analyticsService = analyticsService
         updateContentView()
     }
 
@@ -225,6 +227,11 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func buttonTapped() {
+        analyticsService?.report(event: "buttonTapped", params: [
+            "event": "click",
+            "screen": "Main",
+            "item": "track"
+        ])
         isDone.toggle()
         if let tracker, let delegate {
             if isDone {

@@ -5,7 +5,7 @@
 import Foundation
 import YandexMobileMetrica
 
-struct AnalyticsService {
+final class AnalyticsService {
     private static var isActivated = false
 
     static func activate() {
