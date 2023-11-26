@@ -9,4 +9,5 @@ protocol TrackerRecordStoreProtocol {
     func delete(_ trackerRecord: TrackerRecord) throws
     func count(for trackerId: UUID) -> Int
     func exists(_ trackerRecord: TrackerRecord) -> Bool
+    func get(for: Date) throws -> [TrackerRecord]
 }

@@ -7,6 +7,7 @@ import UIKit
 import CoreData
 
 final class TrackerRecordStore: TrackerRecordStoreProtocol {
+    private let mapper = TrackerRecordEntityMapper()
     private let context: NSManagedObjectContext
 
     init() {
@@ -21,9 +22,7 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
     }
 
     func add(_ record: TrackerRecord) throws {
-        let trackerRecordEntity = TrackerRecordEntity(context: context)
-        trackerRecordEntity.date = record.date
-        trackerRecordEntity.trackerId = record.trackerId
+        let _ = mapper.map(from: record, context: context)
         try context.save()
     }
 
@@ -33,7 +32,7 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
                                              #keyPath(TrackerRecordEntity.trackerId),
                                              record.trackerId as CVarArg,
                                              #keyPath(TrackerRecordEntity.date),
-                                             record.date)
+                                             mapper.map(from: record.date))
         let trackerRecordEntities = try context.fetch(fetchRequest)
         guard let trackerRecordEntity = trackerRecordEntities.first else { return }
         context.delete(trackerRecordEntity)
@@ -55,8 +54,17 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
                                              #keyPath(TrackerRecordEntity.trackerId),
                                              record.trackerId as CVarArg,
                                              #keyPath(TrackerRecordEntity.date),
-                                             record.date)
+                                             mapper.map(from: record.date))
         let trackerRecordEntities = try? context.fetch(fetchRequest)
         return trackerRecordEntities?.count ?? 0 > 0
+    }
+
+    func get(for date: Date) throws -> [TrackerRecord] {
+        let fetchRequest = TrackerRecordEntity.fetchRequest() as NSFetchRequest<TrackerRecordEntity>
+        fetchRequest.predicate = NSPredicate(format: "%K == %@",
+                                             #keyPath(TrackerRecordEntity.date),
+                                             mapper.map(from: date))
+        let trackerRecordEntities = try context.fetch(fetchRequest)
+        return try trackerRecordEntities.map { try mapper.map(from: $0) }
     }
 }

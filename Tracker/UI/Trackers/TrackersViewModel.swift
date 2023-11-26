@@ -22,11 +22,21 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
     var trackersDidChange: (() -> Void)?
 
+    @Observable
     private(set) var currentDate: Date = Date() {
         didSet {
-            updateContent()
+            let today = Date()
+            if currentFilter == .today && currentDate != today {
+                currentFilter = .all
+            } else {
+                updateContent()
+            }
         }
     }
+    var currentDateObservable: Observable<Date> {
+        $currentDate
+    }
+
     private(set) var searchQuery: String? {
         didSet {
             updateContent()
@@ -35,7 +45,12 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
     var currentFilter: Filter = .all {
         didSet {
-            updateContent()
+            let today = Date()
+            if currentFilter == .today && currentDate != today {
+                currentDate = today
+            } else {
+                updateContent()
+            }
         }
     }
 
@@ -97,7 +112,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     func cellModel(at indexPath: IndexPath) -> CellModel {
         let tracker = visibleTrackers[indexPath.section].trackers[indexPath.row]
         let completedDays = trackerRecordStore.count(for: tracker.id)
-        let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate.dateOnly()))
+        let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate))
         let isButtonEnabled = currentDate <= Date()
         return CellModel(tracker: tracker,
                          completedDays: completedDays,
@@ -140,21 +155,23 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
 extension TrackersViewModel: TrackersViewDelegate {
     func didCompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
         do {
             try trackerRecordStore.add(trackerRecord)
         } catch {
             fatalError(error.localizedDescription)
         }
+        updateContent()
     }
 
     func didUncompleteTracker(id: UUID) {
-        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate.dateOnly())
+        let trackerRecord = TrackerRecord(trackerId: id, date: currentDate)
         do {
             try trackerRecordStore.delete(trackerRecord)
         } catch {
             fatalError(error.localizedDescription)
         }
+        updateContent()
     }
 
     func addTrackerToCategory(category: TrackerCategory, tracker: Tracker) {
@@ -168,16 +185,31 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
     func fetchedObjects(trackersByCategory: [String: [Tracker]]) {
-        self.visibleTrackers = aggregateResult(trackersByCategory)
+        visibleTrackers = aggregateResult(trackersByCategory)
         trackersDidChange?()
     }
 
     private func aggregateResult(_ trackersByCategory: [String: [Tracker]]) -> [Category] {
         var filteredResult = [Category]()
         var pinned = [Tracker]()
-        for (category, trackers) in trackersByCategory {
+        let finished: [UUID]
+        switch currentFilter {
+        case .finished, .unfinished:
+            finished = getFinished(for: currentDate)
+        default:
+            finished = []
+        }
+        for (category, var trackers) in trackersByCategory {
             if category.isEmpty || trackers.isEmpty {
                 continue
+            }
+            switch currentFilter {
+            case .finished:
+                trackers = trackers.filter({ finished.contains($0.id) })
+            case .unfinished:
+                trackers = trackers.filter({ !finished.contains($0.id) })
+            default:
+                break
             }
             let inCategory = trackers.reduce(into: [Tracker]()) { (result, tracker) in
                 tracker.isPinned
@@ -194,6 +226,16 @@ extension TrackersViewModel: TrackersViewDelegate {
         }
         return [(category: L10n.Localizable.Trackers.pinned, trackers: pinned.sorted(by: trackersSortOrder))]
                 + filteredResult
+    }
+
+
+    private func getFinished(for date: Date) -> [UUID] {
+        do {
+            return try trackerRecordStore.get(for: date)
+                    .map({ $0.trackerId })
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
 
     private func trackersSortOrder(_ lhs: Tracker, _ rhs: Tracker) -> Bool {

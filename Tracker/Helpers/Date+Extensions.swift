@@ -5,14 +5,6 @@
 import Foundation
 
 extension Date {
-    private final class Formatters {
-        static let timeTruncatedFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            return formatter
-        }()
-    }
-
     func dayOfWeek() -> WeekDay {
         let current = Calendar.current.component(.weekday, from: self)
         let first = Calendar.current.firstWeekday
@@ -21,9 +13,5 @@ extension Date {
             fatalError("WeekDay is nil")
         }
         return wd
-    }
-
-    func dateOnly() -> String {
-        Formatters.timeTruncatedFormatter.string(from: self)
     }
 }

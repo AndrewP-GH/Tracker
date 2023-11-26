@@ -48,7 +48,6 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
-        datePicker.date = viewModel.currentDate
         return datePicker
     }()
 
@@ -131,6 +130,9 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.currentDateObservable.bind { [weak self] date in
+            self?.datePicker.date = date
+        }
         viewModel.trackersDidChange = { [weak self] in
             self?.trackersView.reloadData()
         }

@@ -7,7 +7,7 @@ import Foundation
 protocol TrackersViewModelProtocol: TrackersViewDelegate, FiltersViewControllerDelegate {
     var trackersDidChange: (() -> Void)? { get set }
 
-    var currentDate: Date { get }
+    var currentDateObservable: Observable<Date> { get }
     var placeholderStateObservable: Observable<PlaceholderState> { get }
     var currentFilter: Filter { get }
 

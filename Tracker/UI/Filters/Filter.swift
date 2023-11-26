@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum Filter: CaseIterable {
+enum Filter: Int, CaseIterable {
     case all
     case today
     case finished

@@ -128,8 +128,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with model: CellModel,
-                   delegate: TrackersViewDelegate) {
+    func configure(with model: CellModel, delegate: TrackersViewDelegate) {
         tracker = model.tracker
         self.delegate = delegate
         completedDays = model.completedDays
@@ -229,10 +228,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         isDone.toggle()
         if let tracker, let delegate {
             if isDone {
-                completedDays += 1
                 delegate.didCompleteTracker(id: tracker.id)
             } else {
-                completedDays -= 1
                 delegate.didUncompleteTracker(id: tracker.id)
             }
         }
