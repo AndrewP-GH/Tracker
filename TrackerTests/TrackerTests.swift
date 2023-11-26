@@ -20,18 +20,40 @@ final class TrackerTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testEmptyTrackersVC() throws {
+    func testEmptyTrackersVCLight() throws {
         let trackersViewModel = FakeTrackersViewModel(isEmpty: true)
-        let trackersViewController = TrackersViewController(viewModel: trackersViewModel)
+        let vc = TrackersViewController(viewModel: trackersViewModel)
 
-        assertSnapshot(matching: trackersViewController, as: .image)
+        let traits = UITraitCollection.init(userInterfaceStyle: .light)
+        assertSnapshot(matching: vc, as: .image(traits: traits))
+        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
 
-    func testOneItemTrackersVC() throws {
+    func testOneItemTrackersVCLight() throws {
         let trackersViewModel = FakeTrackersViewModel(isEmpty: false)
-        let trackersViewController = TrackersViewController(viewModel: trackersViewModel)
+        let vc = TrackersViewController(viewModel: trackersViewModel)
 
-        assertSnapshot(matching: trackersViewController, as: .image)
+        let traits = UITraitCollection.init(userInterfaceStyle: .light)
+        assertSnapshot(matching: vc, as: .image(traits: traits))
+        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
+    }
+    
+    func testEmptyTrackersVCDark() throws {
+        let trackersViewModel = FakeTrackersViewModel(isEmpty: true)
+        let vc = TrackersViewController(viewModel: trackersViewModel)
+
+        let traits = UITraitCollection.init(userInterfaceStyle: .dark)
+        assertSnapshot(matching: vc, as: .image(traits: traits))
+        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
+    }
+
+    func testOneItemTrackersVCDark() throws {
+        let trackersViewModel = FakeTrackersViewModel(isEmpty: false)
+        let vc = TrackersViewController(viewModel: trackersViewModel)
+
+        let traits = UITraitCollection.init(userInterfaceStyle: .dark)
+        assertSnapshot(matching: vc, as: .image(traits: traits))
+        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
 
     final class FakeTrackersViewModel: TrackersViewModelProtocol {
@@ -72,7 +94,7 @@ final class TrackerTests: XCTestCase {
             CellModel(tracker: Tracker(id: UUID(),
                                        name: "TestTracker",
                                        color: .red,
-                                       emoji: "e",
+                                       emoji: "🍔",
                                        schedule: nil,
                                        createdAt: Date(),
                                        isPinned: false), completedDays: 0, isDone: false, canBeDone: true)
@@ -96,7 +118,7 @@ final class TrackerTests: XCTestCase {
             let tracker = Tracker(id: UUID(),
                                   name: "TestTracker",
                                   color: .red,
-                                  emoji: "e",
+                                  emoji: "🍔",
                                   schedule: nil,
                                   createdAt: Date(),
                                   isPinned: false)

@@ -1,0 +1,15 @@
+<UIView; frame = (0 0; 430 932); autoresize = W+H; backgroundColor = <UIDynamicCatalogColor; name = YP White>; layer = <CALayer>>
+   | <UILabel; frame = (16 55; 145 40.6667); text = 'Трекеры'; userInteractionEnabled = NO; backgroundColor = UIExtendedGrayColorSpace 0 0; layer = <_UILabelLayer>>
+   | <UITextField; frame = (16 102.667; 398 36); clipsToBounds = YES; opaque = NO; gestureRecognizers = <NSArray>; backgroundColor = <UIDynamicCatalogColor; name = YP Background>; placeholder = Поиск; borderStyle = None; background = <_UITextFieldNoBackgroundProvider: textfield=<UITextField>>; layer = <CALayer>>
+   |    | <_UITouchPassthroughView; frame = (0 0; 368 36); layer = <CALayer>>
+   |    | <UIView; frame = (0 10; 30 16); layer = <CALayer>>
+   |    |    | <UIImageView; frame = (8 0; 16 16); opaque = NO; userInteractionEnabled = NO; image = <UIImage symbol "magnifyingglass"; (20 19)@3{2}>; layer = <CALayer>>
+   |    | <UITextFieldLabel; frame = (30 8; 368 20.3333); text = 'Поиск'; opaque = NO; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   |    | <_UITextLayoutCanvasView; frame = (30 0; 368 36); layer = <CALayer>>
+   |    |    | <_UITextLayoutFragmentView; frame = (0 8; 0 21); opaque = NO; layer = <CALayer>>
+   | <UICollectionView; frame = (10 148.667; 410 783.333); clipsToBounds = YES; gestureRecognizers = <NSArray>; backgroundColor = UIExtendedGrayColorSpace 0 0; layer = <CALayer>; contentOffset: {0, 0}; contentSize: {410, 0}; adjustedContentInset: {0, 0, 66, 0}; layout: <UICollectionViewFlowLayout>; dataSource: <Tracker.TrackersViewController>>
+   |    | <UIButton; frame = (148 717.333; 114 50); clipsToBounds = YES; opaque = NO; gestureRecognizers = <NSArray>; backgroundColor = <UIDynamicCatalogColor; name = YP Blue>; layer = <CALayer>>
+   |    |    | <UIButtonLabel; frame = (21.6667 14.6667; 71 21); text = 'Фильтры'; opaque = NO; userInteractionEnabled = NO; layer = <_UILabelLayer>>
+   | <Tracker.EmptyTrackersPlaceholderView; frame = (215 466; 0 0); backgroundColor = UIExtendedGrayColorSpace 0 0; layer = <CALayer>>
+   |    | <UIImageView; frame = (-40 0; 80 80); userInteractionEnabled = NO; backgroundColor = UIExtendedGrayColorSpace 0 0; image = <(null) (null) anonymous; (0 0)@0>; layer = <CALayer>>
+   |    | <UILabel; frame = (0 88; 0 0); userInteractionEnabled = NO; backgroundColor = UIExtendedGrayColorSpace 0 0; layer = <_UILabelLayer>>
