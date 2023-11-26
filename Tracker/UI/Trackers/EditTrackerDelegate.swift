@@ -5,5 +5,5 @@
 import Foundation
 
 protocol EditTrackerDelegate: AnyObject {
-    func invoke(result: EditTrackerResult)
+    func editTracker(result: EditTrackerResult)
 }

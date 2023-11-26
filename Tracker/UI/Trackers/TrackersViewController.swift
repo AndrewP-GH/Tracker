@@ -409,7 +409,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension TrackersViewController: EditTrackerDelegate {
-    func invoke(result: EditTrackerResult) {
+    func editTracker(result: EditTrackerResult) {
         viewModel.editTracker(result: result)
         dismiss(animated: true)
     }

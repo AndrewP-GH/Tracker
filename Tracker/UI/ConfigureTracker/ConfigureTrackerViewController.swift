@@ -348,7 +348,7 @@ final class ConfigureTrackerViewController: UIViewController {
                 : Schedule(days: Set(selectedDays))
         switch mode {
         case .create:
-            addTrackerDelegate?.invoke(
+            addTrackerDelegate?.addTracker(
                     tracker: Tracker(
                             id: UUID(),
                             name: name,
@@ -357,7 +357,7 @@ final class ConfigureTrackerViewController: UIViewController {
                             schedule: schedule,
                             createdAt: Date(),
                             isPinned: false),
-                    category: selectedCategory
+                    to: selectedCategory
             )
         case .edit:
             guard let initTracker,
@@ -373,7 +373,7 @@ final class ConfigureTrackerViewController: UIViewController {
             let result = initCategory == selectedCategory
                     ? EditTrackerResult.edit(tracker: tracker)
                     : EditTrackerResult.editAndMove(tracker: tracker, to: selectedCategory, from: initCategory)
-            editTrackerDelegate?.invoke(result: result)
+            editTrackerDelegate?.editTracker(result: result)
         }
     }
 

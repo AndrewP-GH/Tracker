@@ -5,5 +5,5 @@
 import Foundation
 
 protocol AddTrackerDelegate: AnyObject {
-    func invoke(tracker: Tracker, category: TrackerCategory)
+    func addTracker(tracker: Tracker, to category: TrackerCategory)
 }
