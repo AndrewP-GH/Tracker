@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 20.11.2023.
 //
 
-import Foundation
 import UIKit
 
 final class CreateCategoryViewController: UIViewController {

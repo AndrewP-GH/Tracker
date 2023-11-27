@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 23.09.2023.
 //
 
-import Foundation
 import UIKit
 
 struct Tracker {

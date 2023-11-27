@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 13.10.2023.
 //
 
-import Foundation
 import UIKit
 
 final class DynamicCollectionView: UICollectionView {

@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 25.09.2023.
 //
 
-import Foundation
 import UIKit
 
 final class ConfigureTrackerViewController: UIViewController {

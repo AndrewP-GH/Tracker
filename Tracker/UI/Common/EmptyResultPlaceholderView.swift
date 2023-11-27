@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 20.08.2023.
 //
 
-import Foundation
 import UIKit
 
 final class EmptyResultPlaceholderView: UIView {

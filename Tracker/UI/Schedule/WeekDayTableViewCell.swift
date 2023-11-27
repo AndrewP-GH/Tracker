@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 28.09.2023.
 //
 
-import Foundation
 import UIKit
 
 final class WeekDayTableViewCell: GreyTableViewCell {

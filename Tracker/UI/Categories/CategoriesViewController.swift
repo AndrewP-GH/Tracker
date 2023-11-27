@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 28.09.2023.
 //
 
-import Foundation
 import UIKit
 
 typealias SelectableTrackerCategoryTableViewCell = SelectableTableViewCell<TrackerCategory>

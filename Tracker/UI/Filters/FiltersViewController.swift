@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 25.11.2023.
 //
 
-import Foundation
 import UIKit
 
 typealias SelectableFilterTableViewCell = SelectableTableViewCell<Filter>
