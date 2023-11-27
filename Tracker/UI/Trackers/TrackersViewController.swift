@@ -126,8 +126,7 @@ final class TrackersViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        print("init(coder:) has not been implemented")
-        return nil
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -334,8 +333,7 @@ extension TrackersViewController: UICollectionViewDelegate {
         let trackerType = viewModel.trackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = self
-        guard let state = viewModel.getEditState(at: indexPath) else { return }
-        vc.setState(state)
+        vc.setState(viewModel.getEditState(at: indexPath))
         present(vc, animated: true)
     }
 

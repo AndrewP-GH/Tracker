@@ -46,8 +46,7 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
     }
 
     required init?(coder: NSCoder) {
-        print("init(coder:) has not been implemented")
-        return nil
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
