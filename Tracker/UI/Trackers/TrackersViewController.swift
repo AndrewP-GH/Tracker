@@ -333,7 +333,8 @@ extension TrackersViewController: UICollectionViewDelegate {
         let trackerType = viewModel.trackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = self
-        vc.setState(viewModel.getEditState(at: indexPath))
+        guard let editState = viewModel.getEditState(at: indexPath) else { return }
+        vc.setState(editState)
         present(vc, animated: true)
     }
 

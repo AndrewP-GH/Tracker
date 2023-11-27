@@ -22,7 +22,7 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate, FiltersViewControllerD
     func pinTracker(at indexPath: IndexPath)
     func unpinTracker(at: IndexPath)
     func trackerType(at: IndexPath) -> TrackerType
-    func getEditState(at: IndexPath) -> EditState
+    func getEditState(at: IndexPath) -> EditState?
     func editTracker(result: EditTrackerResult)
     func deleteTracker(at indexPath: IndexPath)
 }

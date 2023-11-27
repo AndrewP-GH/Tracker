@@ -137,7 +137,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         do {
             try trackerStore.update(tracker: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
     }
 
@@ -154,7 +154,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerRecordStore.add(trackerRecord)
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
         updateContent()
     }
@@ -164,7 +164,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerRecordStore.delete(trackerRecord)
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
         updateContent()
     }
@@ -174,7 +174,7 @@ extension TrackersViewModel: TrackersViewDelegate {
             try categoryStore.addTracker(to: category, tracker: tracker)
             trackerStore.performFetch()
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
         updateContent()
     }
@@ -229,7 +229,8 @@ extension TrackersViewModel: TrackersViewDelegate {
             return try trackerRecordStore.get(for: date)
                     .map({ $0.trackerId })
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
+            return []
         }
     }
 
@@ -237,17 +238,18 @@ extension TrackersViewModel: TrackersViewDelegate {
         lhs.name < rhs.name
     }
 
-    func category(for tracker: Tracker) -> TrackerCategory {
+    func category(for tracker: Tracker) -> TrackerCategory? {
         do {
             return try trackerStore.category(for: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
+            return nil
         }
     }
 
-    func getEditState(at: IndexPath) -> EditState {
+    func getEditState(at: IndexPath) -> EditState? {
         let cellModel = cellModel(at: at)
-        let category = category(for: cellModel.tracker)
+        guard let category = category(for: cellModel.tracker) else { return nil }
         return EditState(cell: cellModel, category: category)
     }
 
@@ -261,7 +263,7 @@ extension TrackersViewModel: TrackersViewDelegate {
                 try categoryStore.moveTracker(from: from, to: to, tracker: tracker)
             }
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
         updateContent()
     }
@@ -271,7 +273,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerStore.delete(tracker: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
         updateContent()
     }
