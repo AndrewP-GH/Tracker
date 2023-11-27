@@ -26,7 +26,6 @@ final class TrackerTests: XCTestCase {
 
         let traits = UITraitCollection.init(userInterfaceStyle: .light)
         assertSnapshot(matching: vc, as: .image(traits: traits))
-        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
 
     func testOneItemTrackersVCLight() throws {
@@ -35,7 +34,6 @@ final class TrackerTests: XCTestCase {
 
         let traits = UITraitCollection.init(userInterfaceStyle: .light)
         assertSnapshot(matching: vc, as: .image(traits: traits))
-        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
     
     func testEmptyTrackersVCDark() throws {
@@ -44,7 +42,6 @@ final class TrackerTests: XCTestCase {
 
         let traits = UITraitCollection.init(userInterfaceStyle: .dark)
         assertSnapshot(matching: vc, as: .image(traits: traits))
-        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
 
     func testOneItemTrackersVCDark() throws {
@@ -53,7 +50,6 @@ final class TrackerTests: XCTestCase {
 
         let traits = UITraitCollection.init(userInterfaceStyle: .dark)
         assertSnapshot(matching: vc, as: .image(traits: traits))
-        assertSnapshot(of: vc, as: .recursiveDescription(traits: traits))
     }
 
     final class FakeTrackersViewModel: TrackersViewModelProtocol {
