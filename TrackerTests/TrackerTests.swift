@@ -114,7 +114,7 @@ final class TrackerTests: XCTestCase {
             .irregularEvent
         }
 
-        func getEditState(at: IndexPath) -> EditState {
+        func getEditState(at: IndexPath) -> EditState? {
             let tracker = Tracker(id: UUID(),
                                   name: "TestTracker",
                                   color: .red,
