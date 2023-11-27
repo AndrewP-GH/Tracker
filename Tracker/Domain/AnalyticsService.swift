@@ -14,11 +14,37 @@ final class AnalyticsService {
         isActivated = true
     }
 
-    func report(event: String, params: [AnyHashable: Any]) {
+    func report(name: String, event: Event, screen: Screen, item: Item?) {
         if !AnalyticsService.isActivated { return }
-        YMMYandexMetrica.reportEvent(event, parameters: params, onFailure: { (error) in
-            print("DID FAIL REPORT EVENT: %@", event)
+        var params: [String: Any] = [
+            "event": event.rawValue,
+            "screen": screen.rawValue
+        ]
+        if let item {
+            params["item"] = item.rawValue
+        }
+        YMMYandexMetrica.reportEvent(name, parameters: params, onFailure: { (error) in
+            print("DID FAIL REPORT EVENT: %@", name)
             print("REPORT ERROR: %@", error.localizedDescription)
         })
     }
+}
+
+
+enum Event: String {
+    case open = "open"
+    case close = "close"
+    case click = "click"
+}
+
+enum Screen: String {
+    case main = "main"
+}
+
+enum Item: String {
+    case addTrack = "add_track"
+    case track = "track"
+    case filter = "filter"
+    case edit = "edit"
+    case delete = "delete"
 }

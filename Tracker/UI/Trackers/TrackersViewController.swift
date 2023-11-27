@@ -132,10 +132,7 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        analyticsService?.report(event: "viewDidLoad", params: [
-            "event": "open",
-            "screen": "Main"
-        ])
+        analyticsService?.report(name: "viewDidLoad", event: .open, screen: .main, item: nil)
         viewModel.currentDateObservable.bind { [weak self] date in
             self?.datePicker.date = date
         }
@@ -151,10 +148,7 @@ final class TrackersViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        analyticsService?.report(event: "viewDidDisappear", params: [
-            "event": "close",
-            "screen": "Main"
-        ])
+        analyticsService?.report(name: "viewDidDisappear", event: .close, screen: .main, item: nil)
     }
 
     private func setupView() {
@@ -219,11 +213,7 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func addTracker() {
-        analyticsService?.report(event: "addTracker", params: [
-            "event": "click",
-            "screen": "Main",
-            "item": "addTracker"
-        ])
+        analyticsService?.report(name: "addTracker", event: .click, screen: .main, item: .addTrack)
         let addTrackerViewController = AddTrackerViewController()
         addTrackerViewController.delegate = viewModel
         present(addTrackerViewController, animated: true)
@@ -251,11 +241,7 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func filtersTapped() {
-        analyticsService?.report(event: "filtersTapped", params: [
-            "event": "click",
-            "screen": "Main",
-            "item": "filter"
-        ])
+        analyticsService?.report(name: "filtersTapped", event: .click, screen: .main, item: .filter)
         let vc = FiltersViewController(selectedFilter: viewModel.currentFilter, delegate: viewModel)
         present(vc, animated: true)
     }
@@ -338,11 +324,7 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
 
     private func editTracker(at indexPath: IndexPath) {
-        analyticsService?.report(event: "editTracker", params: [
-            "event": "click",
-            "screen": "Main",
-            "item": "edit"
-        ])
+        analyticsService?.report(name: "editTracker", event: .click, screen: .main, item: .edit)
         let trackerType = viewModel.trackerType(at: indexPath)
         let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
         vc.editTrackerDelegate = self
@@ -352,11 +334,7 @@ extension TrackersViewController: UICollectionViewDelegate {
     }
 
     private func deleteTracker(at indexPath: IndexPath) {
-        analyticsService?.report(event: "deleteTracker", params: [
-            "event": "click",
-            "screen": "Main",
-            "item": "delete"
-        ])
+        analyticsService?.report(name: "deleteTracker", event: .click, screen: .main, item: .delete)
         let actionSheet = UIAlertController(title: nil,
                                             message: L10n.Localizable.Trackers.deleteConfirm,
                                             preferredStyle: .actionSheet)

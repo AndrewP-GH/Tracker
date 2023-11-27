@@ -226,11 +226,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func buttonTapped() {
-        analyticsService?.report(event: "buttonTapped", params: [
-            "event": "click",
-            "screen": "Main",
-            "item": "track"
-        ])
+        analyticsService?.report(name: "buttonTapped", event: .click, screen: .main, item: .track)
         isDone.toggle()
         if let tracker, let delegate {
             if isDone {
