@@ -717,7 +717,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/newOutputFile",
+				"$(DERIVED_FILE_DIR)/Tracker/Generated/L10n-Constants.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
