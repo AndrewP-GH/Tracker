@@ -189,16 +189,21 @@ final class TrackersViewController: UIViewController {
                     plusImageButton.heightAnchor.constraint(equalToConstant: 42),
 
                     trackerLabel.topAnchor.constraint(equalTo: safeG.topAnchor, constant: 1),
-                    trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    trackerLabel.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.defaultLeadingOffset),
 
                     searchTextField.topAnchor.constraint(equalTo: trackerLabel.bottomAnchor, constant: 7),
-                    searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                    searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    searchTextField.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.defaultLeadingOffset),
+                    searchTextField.trailingAnchor
+                            .constraint(equalTo: view.trailingAnchor, constant: -Constants.defaultLeadingOffset),
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
                     trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
-                    trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-                    trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+                    trackersView.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.trackersViewSideOffset),
+                    trackersView.trailingAnchor
+                            .constraint(equalTo: view.trailingAnchor, constant: -Constants.trackersViewSideOffset),
                     trackersView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -253,6 +258,13 @@ final class TrackersViewController: UIViewController {
         ])
         let vc = FiltersViewController(selectedFilter: viewModel.currentFilter, delegate: viewModel)
         present(vc, animated: true)
+    }
+}
+
+extension TrackersViewController {
+    private enum Constants {
+        static let defaultLeadingOffset: CGFloat = 16
+        static let trackersViewSideOffset: CGFloat = 10
     }
 }
 
