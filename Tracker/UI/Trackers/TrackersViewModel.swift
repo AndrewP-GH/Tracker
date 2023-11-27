@@ -76,7 +76,10 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     private func updateContent() {
-        let dayOfWeek = currentDate.dayOfWeek()
+        guard let dayOfWeek = currentDate.dayOfWeek() else {
+            print("Day of week is nil")
+            return
+        }
         let searchText = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
         placeholderState = getPlaceholderState()
@@ -137,7 +140,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         do {
             try trackerStore.update(tracker: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
 
@@ -154,7 +157,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerRecordStore.add(trackerRecord)
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
         updateContent()
     }
@@ -164,7 +167,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerRecordStore.delete(trackerRecord)
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
         updateContent()
     }
@@ -174,7 +177,7 @@ extension TrackersViewModel: TrackersViewDelegate {
             try categoryStore.addTracker(to: category, tracker: tracker)
             trackerStore.performFetch()
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
         updateContent()
     }
@@ -229,7 +232,8 @@ extension TrackersViewModel: TrackersViewDelegate {
             return try trackerRecordStore.get(for: date)
                     .map({ $0.trackerId })
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
+            return []
         }
     }
 
@@ -237,17 +241,18 @@ extension TrackersViewModel: TrackersViewDelegate {
         lhs.name < rhs.name
     }
 
-    func category(for tracker: Tracker) -> TrackerCategory {
+    func category(for tracker: Tracker) -> TrackerCategory? {
         do {
             return try trackerStore.category(for: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
+            return nil
         }
     }
 
-    func getEditState(at: IndexPath) -> EditState {
+    func getEditState(at: IndexPath) -> EditState? {
         let cellModel = cellModel(at: at)
-        let category = category(for: cellModel.tracker)
+        guard let category = category(for: cellModel.tracker) else { return nil };
         return EditState(cell: cellModel, category: category)
     }
 
@@ -261,7 +266,7 @@ extension TrackersViewModel: TrackersViewDelegate {
                 try categoryStore.moveTracker(from: from, to: to, tracker: tracker)
             }
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
         updateContent()
     }
@@ -271,7 +276,7 @@ extension TrackersViewModel: TrackersViewDelegate {
         do {
             try trackerStore.delete(tracker: tracker)
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
         updateContent()
     }

@@ -37,7 +37,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
             setPlaceholderState()
             categoriesChangedDelegate?()
         } catch {
-            fatalError(error.localizedDescription)
+            print(error.localizedDescription)
         }
     }
 

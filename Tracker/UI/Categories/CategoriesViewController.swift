@@ -87,7 +87,8 @@ final class CategoriesViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not implemented")
+        print("init(coder:) is not implemented")
+        return nil
     }
 
     override func viewDidLoad() {
