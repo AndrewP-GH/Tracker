@@ -65,7 +65,8 @@ final class FiltersViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not implemented")
+        assertionFailure("init(coder:) is not implemented")
+        return nil
     }
 
     override func viewDidLoad() {

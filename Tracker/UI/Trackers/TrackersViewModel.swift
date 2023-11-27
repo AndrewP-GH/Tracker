@@ -76,8 +76,8 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     private func updateContent() {
-        let dayOfWeek = currentDate.dayOfWeek()
         let searchText = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let dayOfWeek = currentDate.dayOfWeek() else { return }
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
         placeholderState = getPlaceholderState()
     }
