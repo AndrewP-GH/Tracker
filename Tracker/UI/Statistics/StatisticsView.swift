@@ -37,7 +37,7 @@ final class StatisticsView: UIView {
 
     func configure(with model: StatisticsCellModel) {
         titleLabel.text = model.title
-        valueLabel.text = model.value
+        valueLabel.text = String(model.value)
     }
 
     private func setupView() {

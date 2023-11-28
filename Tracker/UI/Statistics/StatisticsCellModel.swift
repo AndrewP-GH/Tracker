@@ -6,5 +6,5 @@ import Foundation
 
 struct StatisticsCellModel {
     let title: String
-    let value: String
+    let value: UInt
 }

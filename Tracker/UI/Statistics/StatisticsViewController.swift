@@ -33,24 +33,40 @@ final class StatisticsViewController: UIViewController {
         }
     }()
 
+    private var bestPeriodView: StatisticsView {
+        statistics[0]
+    }
+
+    private var idealDaysView: StatisticsView {
+        statistics[1]
+    }
+
+    private var trackersFinishedView: StatisticsView {
+        statistics[2]
+    }
+
+    private var averagePerDayView: StatisticsView {
+        statistics[3]
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        //TODO: update state
+        super.viewWillAppear(animated)
+
+        bestPeriodView.configure(with: StatisticsCellModel(title: "Лучший период", value: 0))
+        idealDaysView.configure(with: StatisticsCellModel(title: "Идеальные дни", value: 0))
+        trackersFinishedView.configure(with: StatisticsCellModel(title: "Трекеров завершено", value: 0))
+        averagePerDayView.configure(with: StatisticsCellModel(title: "Среднее значение", value: 0))
     }
 
     private func setupView() {
         view.backgroundColor = .ypBackground
         addSubviews()
         setupConstraints()
-
-        statistics[0].configure(with: StatisticsCellModel(title: "Среднее время сна", value: "8 часов"))
-        statistics[1].configure(with: StatisticsCellModel(title: "Среднее время сна", value: "8 часов"))
-        statistics[2].configure(with: StatisticsCellModel(title: "Среднее время сна", value: "8 часов"))
-        statistics[3].configure(with: StatisticsCellModel(title: "Среднее время сна", value: "8 часов"))
     }
 
     private func addSubviews() {
@@ -72,9 +88,15 @@ final class StatisticsViewController: UIViewController {
                     noStatisticsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
                     statistics[0].topAnchor.constraint(equalTo: label.bottomAnchor, constant: 77),
-                    statistics[1].topAnchor.constraint(equalTo: statistics[0].bottomAnchor, constant: Constants.spaceBetweenCells),
-                    statistics[2].topAnchor.constraint(equalTo: statistics[1].bottomAnchor, constant: Constants.spaceBetweenCells),
-                    statistics[3].topAnchor.constraint(equalTo: statistics[2].bottomAnchor, constant: Constants.spaceBetweenCells),
+                    statistics[1].topAnchor
+                                 .constraint(equalTo: statistics[0].bottomAnchor,
+                                             constant: Constants.spaceBetweenCells),
+                    statistics[2].topAnchor
+                                 .constraint(equalTo: statistics[1].bottomAnchor,
+                                             constant: Constants.spaceBetweenCells),
+                    statistics[3].topAnchor
+                                 .constraint(equalTo: statistics[2].bottomAnchor,
+                                             constant: Constants.spaceBetweenCells),
                 ] + statistics.map {
                                   [
                                       $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
