@@ -152,6 +152,7 @@ final class ConfigureTrackerViewController: UIViewController {
         configureTable.layer.cornerRadius = 16
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
+        configureTable.rowHeight = tableCellHeight
         return configureTable
     }()
 
@@ -444,10 +445,6 @@ extension ConfigureTrackerViewController: UITableViewDataSource {
             break
         }
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableCellHeight
     }
 }
 

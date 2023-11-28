@@ -52,6 +52,7 @@ final class ScheduleViewController: UIViewController {
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
+        configureTable.rowHeight = cellHeight
         return configureTable
     }()
 
@@ -154,10 +155,6 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let weekDay = WeekDay.allCases[indexPath.row]
         cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

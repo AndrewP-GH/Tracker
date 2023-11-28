@@ -55,6 +55,7 @@ final class FiltersViewController: UIViewController {
         filtersTable.layer.cornerRadius = cornerRadius
         filtersTable.layer.masksToBounds = true
         filtersTable.isScrollEnabled = false
+        filtersTable.rowHeight = cellHeight
         return filtersTable
     }()
 
@@ -158,10 +159,6 @@ extension FiltersViewController: UITableViewDelegate, UITableViewDataSource {
         case .unfinished:
             return "Не завершенные"
         }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
