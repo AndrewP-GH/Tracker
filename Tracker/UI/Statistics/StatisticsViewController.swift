@@ -88,15 +88,12 @@ final class StatisticsViewController: UIViewController {
                     noStatisticsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
 
                     statistics[0].topAnchor.constraint(equalTo: label.bottomAnchor, constant: 77),
-                    statistics[1].topAnchor
-                                 .constraint(equalTo: statistics[0].bottomAnchor,
-                                             constant: Constants.spaceBetweenCells),
-                    statistics[2].topAnchor
-                                 .constraint(equalTo: statistics[1].bottomAnchor,
-                                             constant: Constants.spaceBetweenCells),
-                    statistics[3].topAnchor
-                                 .constraint(equalTo: statistics[2].bottomAnchor,
-                                             constant: Constants.spaceBetweenCells),
+                    statistics[1].topAnchor.constraint(equalTo: statistics[0].bottomAnchor,
+                                                       constant: Constants.spaceBetweenCells),
+                    statistics[2].topAnchor.constraint(equalTo: statistics[1].bottomAnchor,
+                                                       constant: Constants.spaceBetweenCells),
+                    statistics[3].topAnchor.constraint(equalTo: statistics[2].bottomAnchor,
+                                                       constant: Constants.spaceBetweenCells),
                 ] + statistics.map {
                                   [
                                       $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
