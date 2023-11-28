@@ -33,6 +33,15 @@ final class StatisticsView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        gradientBorder(width: 1,
+                       colors: [
+                           UIColor.init(r: 253, g: 76, b: 73),
+                           UIColor.init(r: 70, g: 230, b: 157),
+                           UIColor.init(r: 0, g: 123, b: 250),
+                       ],
+                       startPoint: CGPoint(x: 0, y: 0.5),
+                       endPoint: CGPoint(x: 1, y: 0.5),
+                       cornerRadius: Constants.cornerRadius)
     }
 
     func configure(with model: StatisticsCellModel) {
@@ -42,7 +51,7 @@ final class StatisticsView: UIView {
 
     private func setupView() {
         backgroundColor = .clear
-        layer.cornerRadius = 16
+        layer.cornerRadius = Constants.cornerRadius
         layer.masksToBounds = true
 
         addSubviews()
@@ -74,5 +83,53 @@ final class StatisticsView: UIView {
 extension StatisticsView {
     private enum Constants {
         static let defaultOffset: CGFloat = 12
+        static let cornerRadius: CGFloat = 16
+    }
+}
+
+public extension UIView {
+    private static let kGradientBorderLayerName = "GradientBorderLayer"
+
+    func gradientBorder(
+            width: CGFloat,
+            colors: [UIColor],
+            startPoint: CGPoint = .init(x: 0.0, y: 0.0),
+            endPoint: CGPoint = .init(x: 1.0, y: 1.0),
+            cornerRadius: CGFloat = 0
+    ) {
+        if gradientBorderLayer() != nil {
+            return
+        }
+        let border = CAGradientLayer()
+        border.frame = self.bounds
+        border.colors = colors.map(\.cgColor)
+        border.startPoint = startPoint
+        border.endPoint = endPoint
+
+        let mask = CAShapeLayer()
+        let maskRect = CGRect(
+                x: bounds.origin.x + width / 2, // cause half of the border applied to each side
+                y: bounds.origin.y + width / 2,
+                width: bounds.size.width - width,
+                height: bounds.size.height - width
+        )
+        mask.path = UIBezierPath(roundedRect: maskRect, cornerRadius: cornerRadius).cgPath
+        mask.fillColor = UIColor.clear.cgColor
+        mask.strokeColor = UIColor.ypBackground.cgColor
+        mask.lineWidth = width
+
+        border.mask = mask
+        layer.addSublayer(border)
+    }
+
+    private func gradientBorderLayer() -> CAGradientLayer? {
+        let borderLayers = layer.sublayers?.filter {
+            $0.name == UIView.kGradientBorderLayerName
+        }
+        if borderLayers?.count ?? 0 > 1 {
+            assertionFailure("There should be at most 1 gradient border layer")
+            return nil
+        }
+        return borderLayers?.first as? CAGradientLayer
     }
 }
