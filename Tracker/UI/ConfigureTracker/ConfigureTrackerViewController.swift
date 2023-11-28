@@ -419,9 +419,9 @@ extension ConfigureTrackerViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-                withIdentifier: ConfigureTrackerTableViewCell.identifier,
-                for: indexPath) as? ConfigureTrackerTableViewCell ?? ConfigureTrackerTableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: ConfigureTrackerTableViewCell.identifier,
+                                                 for: indexPath) as? ConfigureTrackerTableViewCell
+                ?? ConfigureTrackerTableViewCell()
         switch indexPath.row {
         case 0:
             let categoryTitle = "Категория"
