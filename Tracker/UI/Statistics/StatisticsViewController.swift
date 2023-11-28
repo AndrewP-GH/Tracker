@@ -77,34 +77,32 @@ final class StatisticsViewController: UIViewController {
 
     private func setupConstraints() {
         let sideInset: CGFloat = 16
-        NSLayoutConstraint.activate(
-                [
-                    label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
-                    label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideInset),
-                    label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideInset),
-                    label.heightAnchor.constraint(equalToConstant: 41),
+        let views = [
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideInset),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideInset),
+            label.heightAnchor.constraint(equalToConstant: 41),
 
-                    noStatisticsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    noStatisticsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
-                    statistics[0].topAnchor.constraint(equalTo: label.bottomAnchor, constant: 77),
-                    statistics[1].topAnchor.constraint(equalTo: statistics[0].bottomAnchor,
-                                                       constant: Constants.spaceBetweenCells),
-                    statistics[2].topAnchor.constraint(equalTo: statistics[1].bottomAnchor,
-                                                       constant: Constants.spaceBetweenCells),
-                    statistics[3].topAnchor.constraint(equalTo: statistics[2].bottomAnchor,
-                                                       constant: Constants.spaceBetweenCells),
-                ] + statistics.map {
-                                  [
-                                      $0.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                                                                  constant: sideInset),
-                                      $0.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                                   constant: -sideInset),
-                                      $0.heightAnchor.constraint(equalToConstant: Constants.cellHeight)
-                                  ]
-                              }
-                              .flatMap({ $0 })
-        )
+            noStatisticsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noStatisticsView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ]
+        let statisticsTop = [statistics[0].topAnchor.constraint(equalTo: label.bottomAnchor, constant: 77)]
+                + statistics.enumerated()
+                            .dropFirst()
+                            .map { index, view in
+                                view.topAnchor.constraint(equalTo: statistics[index - 1].bottomAnchor,
+                                                          constant: Constants.spaceBetweenCells)
+                            }
+        let statisticsOther = statistics
+                .map {
+                    [
+                        $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: sideInset),
+                        $0.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -sideInset),
+                        $0.heightAnchor.constraint(equalToConstant: Constants.cellHeight)
+                    ]
+                }
+                .flatMap({ $0 })
+        NSLayoutConstraint.activate(views + statisticsTop + statisticsOther)
     }
 }
 
