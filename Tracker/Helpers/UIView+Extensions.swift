@@ -5,6 +5,8 @@
 import UIKit
 
 public extension UIView {
+    // https://stackoverflow.com/a/62091073
+    // I was inspired by this answer but it had several bugs so the final implementation is a bit different
     private static let GradientBorderLayerName = "GradientBorderLayer"
 
     func gradientBorder(
