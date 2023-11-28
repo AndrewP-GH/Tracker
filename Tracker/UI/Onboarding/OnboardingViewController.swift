@@ -23,6 +23,7 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = .ypBlack.withAlphaComponent(0.3)
         pageControl.currentPageIndicatorTintColor = .ypBlack
+        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .touchUpInside)
         return pageControl
     }()
 
@@ -135,5 +136,16 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
         let viewController = HomePageViewController()
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
+    }
+
+    @objc
+    private func pageControlTapped(_ sender: Any) {
+        guard let pageControl = sender as? UIPageControl else { return }
+        let selectedPage = pageControl.currentPage
+        if selectedPage == 0 {
+            setViewControllers([pages[selectedPage + 1]], direction: .forward, animated: true, completion: nil)
+        } else {
+            setViewControllers([pages[selectedPage - 1]], direction: .reverse, animated: true, completion: nil)
+        }
     }
 }
