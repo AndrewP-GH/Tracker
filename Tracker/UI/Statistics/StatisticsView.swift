@@ -108,7 +108,7 @@ public extension UIView {
 
         let mask = CAShapeLayer()
         let maskRect = CGRect(
-                x: bounds.origin.x + width / 2, // cause half of the border applied to each side
+                x: bounds.origin.x + width / 2, // cause width/2 is applied on both sides of the mask rect
                 y: bounds.origin.y + width / 2,
                 width: bounds.size.width - width,
                 height: bounds.size.height - width
