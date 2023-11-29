@@ -362,7 +362,7 @@ extension TrackersViewController: UICollectionViewDelegate {
 
     private func getCellPreview(for indexPath: IndexPath) -> UITargetedPreview? {
         guard let cell = trackersView.cellForItem(at: indexPath) as? TrackerCollectionViewCell,
-              let cellPreview = cell.previousiewView else { return nil }
+              let cellPreview = cell.previewView else { return nil }
         let targetedPreview = UITargetedPreview(view: cellPreview)
         targetedPreview.parameters.backgroundColor = .clear
         return targetedPreview
