@@ -10,4 +10,5 @@ protocol TrackerRecordStoreProtocol {
     func count(for trackerId: UUID) -> Int
     func exists(_ trackerRecord: TrackerRecord) -> Bool
     func get(for: Date) throws -> [TrackerRecord]
+    func getAll() throws -> [TrackerRecord]
 }

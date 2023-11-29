@@ -12,4 +12,14 @@ struct Tracker {
     let schedule: Schedule?
     let createdAt: Date
     var isPinned: Bool
+
+    init(id: UUID, name: String, color: UIColor, emoji: String, schedule: Schedule?, createdAt: Date, isPinned: Bool) {
+        self.id = id
+        self.name = name
+        self.color = color
+        self.emoji = emoji
+        self.schedule = schedule
+        self.createdAt = createdAt.stripTime()
+        self.isPinned = isPinned
+    }
 }

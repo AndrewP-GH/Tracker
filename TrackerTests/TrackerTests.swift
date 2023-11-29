@@ -65,7 +65,7 @@ final class TrackerTests: XCTestCase {
             self.isEmpty = isEmpty
         }
 
-        func dateChanged(to date: Date) {
+        func setCurrentDate(to date: Date) {
         }
 
         func searchTextChanged(to text: String?) {

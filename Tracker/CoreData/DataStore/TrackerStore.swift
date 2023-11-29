@@ -42,18 +42,12 @@ extension TrackerStore: NSFetchedResultsControllerDelegate {
 
 extension TrackerStore: TrackersStoreProtocol {
     func filter(prefix: String?, weekDay: WeekDay) {
-        let noSchedulePredicate = NSPredicate(format: "%K == nil", #keyPath(TrackerEntity.schedule))
-        let byDayPredicate = NSPredicate(format: "%K CONTAINS %@",
-                                         #keyPath(TrackerEntity.schedule),
-                                         mapper.map(from: weekDay))
-        var predicates: [NSPredicate] = [
-            NSCompoundPredicate(orPredicateWithSubpredicates: [noSchedulePredicate, byDayPredicate])
-        ]
+        var predicates = [withoutScheduleOrByWeekDayPredicate(weekDay)]
         if let prefix, !prefix.isEmpty {
             predicates.append(NSPredicate(format: "%K BEGINSWITH[c] %@", #keyPath(TrackerEntity.name), prefix))
         }
-        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-        fetchedResultsController.fetchRequest.predicate = predicate
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        fetchedResultsController.fetchRequest.predicate = compoundPredicate
         performFetch()
         sendResult()
     }
@@ -92,8 +86,27 @@ extension TrackerStore: TrackersStoreProtocol {
 
     func delete(tracker: Tracker) throws {
         guard let entity = fetchedResultsController.fetchedObjects?
-                .first(where: { $0.id == tracker.id }) else { return }
+                                                   .first(where: { $0.id == tracker.id }) else { return }
         context.delete(entity)
         try context.save()
+    }
+
+    private func withoutScheduleOrByWeekDayPredicate(_ weekDay: WeekDay) -> NSPredicate {
+        let noSchedulePredicate = NSPredicate(format: "%K == nil", #keyPath(TrackerEntity.schedule))
+        let byDayPredicate = NSPredicate(format: "%K CONTAINS %@",
+                                         #keyPath(TrackerEntity.schedule),
+                                         mapper.map(from: weekDay))
+        return NSCompoundPredicate(orPredicateWithSubpredicates: [noSchedulePredicate, byDayPredicate])
+    }
+
+    func countBy(date: Date) throws -> Int {
+        guard let weekDay = date.dayOfWeek() else { throw StoreError.encodeError }
+        let schedulePredicate = withoutScheduleOrByWeekDayPredicate(weekDay)
+//        I think we should filter by 'createdAt' property, but if we show this trackers in the list, let's count them
+//        let createdAtPredicate = NSPredicate(format: "%K <= %@", #keyPath(TrackerEntity.createdAt), date as NSDate)
+//        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [schedulePredicate, createdAtPredicate])
+        let fetchRequest = TrackerEntity.fetchRequest()
+        fetchRequest.predicate = schedulePredicate
+        return try context.count(for: fetchRequest)
     }
 }

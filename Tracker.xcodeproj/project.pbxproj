@@ -30,6 +30,7 @@
 		AE09A1725D4A7E6144F451A5 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9FA7387827FD85BBC12 /* CategoriesViewModel.swift */; };
 		AE09A22C76BBB660E718A957 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A4A3CF2A054E6E0B7184 /* FiltersViewController.swift */; };
 		AE09A233F225D016B8EE5166 /* TrackerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A1A06DB1D191730F8EF1 /* TrackerStore.swift */; };
+		AE09A26FD6DC67CD1D08611D /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09AAFC3323255F83CE78AF /* Statistics.swift */; };
 		AE09A28D851161B98792AECB /* ConfigureTrackerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A9AB8EA69C921B9CC360 /* ConfigureTrackerViewController.swift */; };
 		AE09A2B9131837B8AE4238E0 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A0688278CC9EA7AA5C83 /* AnalyticsService.swift */; };
 		AE09A3842BE8A9E88D0D73D9 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A798E380293B0D4BFCED /* OnboardingPageViewController.swift */; };
@@ -85,6 +86,7 @@
 		AE09AD540346DCF203831AA7 /* TrackerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A33C37273CCE71DDB05F /* TrackerCollectionViewCell.swift */; };
 		AE09AD890964CFFE7760C40D /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A95C5AA5E5C858512255 /* StoreError.swift */; };
 		AE09ADC24BA9717F67E45B09 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A029231B86A0B34058A9 /* String+Extensions.swift */; };
+		AE09ADC2F2ACF947D2021A0F /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A78ADEF6466E3EB9C19E /* StatisticsService.swift */; };
 		AE09AE0B1B03BFD86D2054DF /* EditTrackerResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A97D597CBAC53047DC0F /* EditTrackerResult.swift */; };
 		AE09AE16D898CA34FD1FAE2D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09ADC73AFE7BDC0910EE1B /* Observable.swift */; };
 		AE09AE22A965CF8EDDA74C33 /* TrackerEntityMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE09A03B3C9371DFD69049CD /* TrackerEntityMapper.swift */; };
@@ -174,6 +176,7 @@
 		AE09A6D3BF75AA220597A2C2 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		AE09A70E64124EAB017134B9 /* TrackersViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewModelProtocol.swift; sourceTree = "<group>"; };
 		AE09A72946840C0DA4E9ED90 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		AE09A78ADEF6466E3EB9C19E /* StatisticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
 		AE09A798E380293B0D4BFCED /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		AE09A7C137E055DCE5CFC40F /* SelectableTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableTableViewCell.swift; sourceTree = "<group>"; };
 		AE09A8518E3315D89AEE6CF9 /* FilterStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStore.swift; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 		AE09AAAA4A1C36F31B9C0759 /* OnboardingDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingDataStore.swift; sourceTree = "<group>"; };
 		AE09AACB21DDA0DCD777315A /* TrackersViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackersViewModel.swift; sourceTree = "<group>"; };
 		AE09AAF5F1DF272B85D8F028 /* EditState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditState.swift; sourceTree = "<group>"; };
+		AE09AAFC3323255F83CE78AF /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		AE09AB4275607F87ED4373BF /* Schedule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		AE09AB9BFDA240F6007BE259 /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
 		AE09AC18D42ABDF84B950D9E /* DateMarshalling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateMarshalling.swift; sourceTree = "<group>"; };
@@ -372,6 +376,7 @@
 				AE09AAAA4A1C36F31B9C0759 /* OnboardingDataStore.swift */,
 				AE09A0688278CC9EA7AA5C83 /* AnalyticsService.swift */,
 				AE09A8518E3315D89AEE6CF9 /* FilterStore.swift */,
+				AE09A78ADEF6466E3EB9C19E /* StatisticsService.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -539,6 +544,7 @@
 				AE09ADCBF514FA98879BFDA4 /* TrackerRecord.swift */,
 				AE09AB4275607F87ED4373BF /* Schedule.swift */,
 				AE09A317014C9DD701FEF33D /* WeekDay.swift */,
+				AE09AAFC3323255F83CE78AF /* Statistics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -928,6 +934,8 @@
 				AE09AB16B9F73DC6F2594D02 /* StatisticsCellModel.swift in Sources */,
 				AE09A620B3B37D1BA144BE4C /* UIView+Extensions.swift in Sources */,
 				AE09A4FA9EA06F3579B6D7C9 /* CGPoint+Extensions.swift in Sources */,
+				AE09ADC2F2ACF947D2021A0F /* StatisticsService.swift in Sources */,
+				AE09A26FD6DC67CD1D08611D /* Statistics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

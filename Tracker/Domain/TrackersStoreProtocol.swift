@@ -10,6 +10,7 @@ protocol TrackersStoreProtocol {
     func update(tracker: Tracker) throws
     func category(for tracker: Tracker) throws -> TrackerCategory
     func delete(tracker: Tracker) throws
+    func countBy(date: Date) throws -> Int
 
     var delegate: TrackersViewDelegate? { get set }
 }

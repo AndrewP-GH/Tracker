@@ -5,6 +5,9 @@
 import UIKit
 
 final class StatisticsViewController: UIViewController {
+    private let recordsStore: TrackerRecordStoreProtocol
+    private let trackersStore: TrackersStoreProtocol
+
     private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -43,9 +46,19 @@ final class StatisticsViewController: UIViewController {
     private var trackersFinishedView: StatisticsView {
         statistics[2]
     }
-
     private var averagePerDayView: StatisticsView {
         statistics[3]
+    }
+
+    init(recordsStore: TrackerRecordStoreProtocol, trackersStore: TrackersStoreProtocol) {
+        self.recordsStore = recordsStore
+        self.trackersStore = trackersStore
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
     }
 
     override func viewDidLoad() {
@@ -55,11 +68,25 @@ final class StatisticsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateContent()
+    }
 
-        bestPeriodView.configure(with: StatisticsCellModel(title: "Лучший период", value: 0))
-        idealDaysView.configure(with: StatisticsCellModel(title: "Идеальные дни", value: 0))
-        trackersFinishedView.configure(with: StatisticsCellModel(title: "Трекеров завершено", value: 0))
-        averagePerDayView.configure(with: StatisticsCellModel(title: "Среднее значение", value: 0))
+    private func updateContent() {
+        let statisticsService = StatisticsService(recordsStore: recordsStore, trackersStore: trackersStore)
+        let model = statisticsService.getStatistics()
+        if model.trackersFinished > 0 {
+            noStatisticsView.isHidden = true
+            statistics.forEach { $0.isHidden = false }
+            bestPeriodView.configure(with: StatisticsCellModel(title: "Лучший период", value: model.bestPeriod))
+            idealDaysView.configure(with: StatisticsCellModel(title: "Идеальные дни", value: model.idealDays))
+            trackersFinishedView.configure(with: StatisticsCellModel(title: "Трекеров завершено",
+                                                                     value: model.trackersFinished))
+            averagePerDayView.configure(with: StatisticsCellModel(title: "Среднее значение",
+                                                                  value: model.averagePerDay))
+        } else {
+            noStatisticsView.isHidden = false
+            statistics.forEach { $0.isHidden = true }
+        }
     }
 
     private func setupView() {

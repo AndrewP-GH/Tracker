@@ -66,4 +66,10 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
         let trackerRecordEntities = try context.fetch(fetchRequest)
         return try trackerRecordEntities.map { try mapper.map(from: $0) }
     }
+
+    func getAll() throws -> [TrackerRecord] {
+        let fetchRequest = TrackerRecordEntity.fetchRequest() as NSFetchRequest<TrackerRecordEntity>
+        let trackerRecordEntities = try context.fetch(fetchRequest)
+        return try trackerRecordEntities.map { try mapper.map(from: $0) }
+    }
 }

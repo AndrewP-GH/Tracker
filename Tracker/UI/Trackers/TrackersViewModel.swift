@@ -42,7 +42,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
             filterStore.setSelectedFilter(currentFilter)
             let today = Date()
             if currentFilter == .today && !currentDate.isDateEqual(to: today) {
-                currentDate = today
+                setCurrentDate(to: today)
             } else {
                 updateContent()
             }
@@ -63,8 +63,8 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         self.trackerRecordStore = trackerRecordStore
     }
 
-    func dateChanged(to date: Date) {
-        currentDate = date
+    func setCurrentDate(to date: Date) {
+        currentDate = date.stripTime()
     }
 
     func searchTextChanged(to text: String?) {
@@ -227,7 +227,7 @@ extension TrackersViewModel: TrackersViewDelegate {
     private func getFinished(for date: Date) -> [UUID] {
         do {
             return try trackerRecordStore.get(for: date)
-                    .map({ $0.trackerId })
+                                         .map({ $0.trackerId })
         } catch {
             assertionFailure(error.localizedDescription)
             return []

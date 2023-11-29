@@ -11,7 +11,7 @@ protocol TrackersViewModelProtocol: TrackersViewDelegate, FiltersViewControllerD
     var placeholderStateObservable: Observable<PlaceholderState> { get }
     var currentFilter: Filter { get }
 
-    func dateChanged(to date: Date)
+    func setCurrentDate(to date: Date)
     func searchTextChanged(to text: String?)
     func viewDidLoad()
     func numberOfSections() -> Int

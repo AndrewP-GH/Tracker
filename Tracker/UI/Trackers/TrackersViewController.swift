@@ -220,7 +220,7 @@ final class TrackersViewController: UIViewController {
     }
 
     @objc private func dateChanged() {
-        viewModel.dateChanged(to: datePicker.date)
+        viewModel.setCurrentDate(to: datePicker.date)
         presentedViewController?.dismiss(animated: false, completion: nil)
     }
 
