@@ -133,8 +133,8 @@ final class TrackersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         analyticsService?.report(name: "viewDidLoad", event: .open, screen: .main, item: nil)
-        viewModel.currentDateObservable.bind { [weak self] date in
-            self?.datePicker.date = date
+        viewModel.currentDateObservable.bind { [weak self] dateOnly in
+            self?.datePicker.date = dateOnly.date
         }
         viewModel.trackersDidChange = { [weak self] in
             self?.trackersView.reloadData()

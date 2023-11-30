@@ -99,11 +99,11 @@ extension TrackerStore: TrackersStoreProtocol {
         return NSCompoundPredicate(orPredicateWithSubpredicates: [noSchedulePredicate, byDayPredicate])
     }
 
-    func countBy(date: Date) throws -> Int {
-        guard let weekDay = date.dayOfWeek() else { throw StoreError.encodeError }
+    func countBy(dateOnly: DateOnly) throws -> Int {
+        guard let weekDay = dateOnly.dayOfWeek else { throw StoreError.encodeError }
         let schedulePredicate = withoutScheduleOrByWeekDayPredicate(weekDay)
 //        I think we should filter by 'createdAt' property, but if we show this trackers in the list, let's count them
-//        let createdAtPredicate = NSPredicate(format: "%K <= %@", #keyPath(TrackerEntity.createdAt), date as NSDate)
+//        let createdAtPredicate = NSPredicate(format: "%K <= %@", #keyPath(TrackerEntity.createdAt), dateOnly.date as NSDate)
 //        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [schedulePredicate, createdAtPredicate])
         let fetchRequest = TrackerEntity.fetchRequest()
         fetchRequest.predicate = schedulePredicate

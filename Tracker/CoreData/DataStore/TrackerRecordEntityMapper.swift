@@ -19,10 +19,10 @@ struct TrackerRecordEntityMapper {
         guard let trackerId = recordEntity.trackerId,
               let date = recordEntity.date,
               let date = dateMarshalling.toDate(from: date) else { throw StoreError.decodeError }
-        return TrackerRecord(trackerId: trackerId, date: date)
+        return TrackerRecord(trackerId: trackerId, date: date.dateOnly())
     }
 
-    func map(from date: Date) -> String {
-        dateMarshalling.toString(from: date)
+    func map(from dateOnly: DateOnly) -> String {
+        dateMarshalling.toString(from: dateOnly.date)
     }
 }

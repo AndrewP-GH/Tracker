@@ -18,7 +18,6 @@ final class StatisticsService: StatisticsServiceProtocol {
 
     }
 
-
     func getStatistics() -> Statistics {
         let records = getRecords()
         let recordsPerDay = Dictionary(grouping: records, by: { $0.date })
@@ -43,16 +42,15 @@ final class StatisticsService: StatisticsServiceProtocol {
         }
     }
 
-    func bestPeriod(recordsPerDay: [Date: [TrackerRecord]]) -> Int {
+    func bestPeriod(recordsPerDay: [DateOnly: [TrackerRecord]]) -> Int {
         var bestPeriod = recordsPerDay.count > 0 ? 1 : 0
         let dates = recordsPerDay.keys.sorted(by: { $0 < $1 })
-        let oneDay: TimeInterval = 24 * 60 * 60
         var i = 1
         var period = 1
         while i < dates.count {
             let date = dates[i]
             let prevDate = dates[i - 1]
-            if prevDate.addingTimeInterval(oneDay) == date {
+            if prevDate.addingDays(1) == date {
                 period += 1
             } else {
                 period = 1
@@ -65,11 +63,11 @@ final class StatisticsService: StatisticsServiceProtocol {
         return bestPeriod
     }
 
-    func aggregateByDate(recordsPerDay: [Date: [TrackerRecord]]) -> Int {
+    func aggregateByDate(recordsPerDay: [DateOnly: [TrackerRecord]]) -> Int {
         var idealDays = 0
         for (date, records) in recordsPerDay {
             do {
-                let trackersCount = try trackersStore.countBy(date: date)
+                let trackersCount = try trackersStore.countBy(dateOnly: date)
                 if trackersCount == records.count {
                     idealDays += 1
                 }

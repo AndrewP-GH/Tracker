@@ -58,11 +58,11 @@ final class TrackerRecordStore: TrackerRecordStoreProtocol {
         return trackerRecordEntities?.count ?? 0 > 0
     }
 
-    func get(for date: Date) throws -> [TrackerRecord] {
+    func get(for dateOnly: DateOnly) throws -> [TrackerRecord] {
         let fetchRequest = TrackerRecordEntity.fetchRequest() as NSFetchRequest<TrackerRecordEntity>
         fetchRequest.predicate = NSPredicate(format: "%K == %@",
                                              #keyPath(TrackerRecordEntity.date),
-                                             mapper.map(from: date))
+                                             mapper.map(from: dateOnly))
         let trackerRecordEntities = try context.fetch(fetchRequest)
         return try trackerRecordEntities.map { try mapper.map(from: $0) }
     }

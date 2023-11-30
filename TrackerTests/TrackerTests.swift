@@ -55,7 +55,7 @@ final class TrackerTests: XCTestCase {
     final class FakeTrackersViewModel: TrackersViewModelProtocol {
         var trackersDidChange: (() -> Void)?
 
-        private(set) var currentDateObservable: Observable<Date> = .init(wrappedValue: Date())
+        private(set) var currentDateObservable: Observable<DateOnly> = .init(wrappedValue: DateOnly.today)
         private(set) var currentFilter: Filter = .all
 
         var placeholderStateObservable: Observable<PlaceholderState> = .init(wrappedValue: .empty)
@@ -92,7 +92,7 @@ final class TrackerTests: XCTestCase {
                                        color: .red,
                                        emoji: "🍔",
                                        schedule: nil,
-                                       createdAt: Date(),
+                                       createdAt: DateOnly.today,
                                        isPinned: false), completedDays: 0, isDone: false, canBeDone: true)
         }
 
@@ -116,7 +116,7 @@ final class TrackerTests: XCTestCase {
                                   color: .red,
                                   emoji: "🍔",
                                   schedule: nil,
-                                  createdAt: Date(),
+                                  createdAt: DateOnly.today,
                                   isPinned: false)
             return EditState(cell: CellModel(tracker: tracker, completedDays: 0, isDone: false, canBeDone: true),
                       category: TrackerCategory(id: UUID(), header: "TestCategory"))

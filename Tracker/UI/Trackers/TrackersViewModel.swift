@@ -17,17 +17,17 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     var trackersDidChange: (() -> Void)?
 
     @Observable
-    private(set) var currentDate: Date = Date() {
+    private(set) var currentDate: DateOnly = DateOnly.today {
         didSet {
-            let today = Date()
-            if currentFilter == .today && !currentDate.isDateEqual(to: today) {
+            let today = DateOnly.today
+            if currentFilter == .today && currentDate != today {
                 currentFilter = .all
             } else {
                 updateContent()
             }
         }
     }
-    var currentDateObservable: Observable<Date> {
+    var currentDateObservable: Observable<DateOnly> {
         $currentDate
     }
 
@@ -40,9 +40,9 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     var currentFilter: Filter = .all {
         didSet {
             filterStore.setSelectedFilter(currentFilter)
-            let today = Date()
-            if currentFilter == .today && !currentDate.isDateEqual(to: today) {
-                setCurrentDate(to: today)
+            let today = DateOnly.today
+            if currentFilter == .today && currentDate != today {
+                currentDate = today
             } else {
                 updateContent()
             }
@@ -64,7 +64,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
     }
 
     func setCurrentDate(to date: Date) {
-        currentDate = date.stripTime()
+        currentDate = date.dateOnly()
     }
 
     func searchTextChanged(to text: String?) {
@@ -77,7 +77,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
 
     private func updateContent() {
         let searchText = searchQuery?.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let dayOfWeek = currentDate.dayOfWeek() else { return }
+        guard let dayOfWeek = currentDate.dayOfWeek else { return }
         trackerStore.filter(prefix: searchText, weekDay: dayOfWeek)
         placeholderState = getPlaceholderState()
     }
@@ -108,7 +108,7 @@ final class TrackersViewModel: TrackersViewModelProtocol {
         let tracker = visibleTrackers[indexPath.section].trackers[indexPath.row]
         let completedDays = trackerRecordStore.count(for: tracker.id)
         let isDone = trackerRecordStore.exists(TrackerRecord(trackerId: tracker.id, date: currentDate))
-        let isButtonEnabled = currentDate <= Date()
+        let isButtonEnabled = currentDate <= DateOnly.today
         return CellModel(tracker: tracker,
                          completedDays: completedDays,
                          isDone: isDone,
@@ -224,7 +224,7 @@ extension TrackersViewModel: TrackersViewDelegate {
     }
 
 
-    private func getFinished(for date: Date) -> [UUID] {
+    private func getFinished(for date: DateOnly) -> [UUID] {
         do {
             return try trackerRecordStore.get(for: date)
                                          .map({ $0.trackerId })

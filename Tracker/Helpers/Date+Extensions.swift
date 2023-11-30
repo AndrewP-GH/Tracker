@@ -20,9 +20,7 @@ extension Date {
         Calendar.current.isDate(self, inSameDayAs: date)
     }
 
-    func stripTime() -> Date {
-        let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
-        let date = Calendar.current.date(from: components)
-        return date!
+    func dateOnly() -> DateOnly {
+        DateOnly(self)
     }
 }

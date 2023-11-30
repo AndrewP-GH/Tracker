@@ -356,7 +356,7 @@ final class ConfigureTrackerViewController: UIViewController {
                             color: colors[selectedColorPath.row],
                             emoji: emojis[selectedEmojiPath.row],
                             schedule: schedule,
-                            createdAt: Date(),
+                            createdAt: DateOnly.today,
                             isPinned: false),
                     to: selectedCategory
             )

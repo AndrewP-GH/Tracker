@@ -6,12 +6,7 @@ import Foundation
 
 struct TrackerRecord: Hashable {
     let trackerId: UUID
-    let date: Date
-
-    init(trackerId: UUID, date: Date) {
-        self.trackerId = trackerId
-        self.date = date.stripTime()
-    }
+    let date: DateOnly
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(trackerId)

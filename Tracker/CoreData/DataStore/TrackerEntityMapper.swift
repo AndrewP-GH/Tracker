@@ -16,7 +16,7 @@ final class TrackerEntityMapper {
         trackerEntity.hexColor = try colorMarshalling.hexString(from: tracker.color)
         trackerEntity.emoji = tracker.emoji
         trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
-        trackerEntity.createdAt = tracker.createdAt
+        trackerEntity.createdAt = tracker.createdAt.date
         trackerEntity.isPinned = tracker.isPinned
         return trackerEntity
     }
@@ -26,7 +26,7 @@ final class TrackerEntityMapper {
         trackerEntity.hexColor = try colorMarshalling.hexString(from: tracker.color)
         trackerEntity.emoji = tracker.emoji
         trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
-        trackerEntity.createdAt = tracker.createdAt
+        trackerEntity.createdAt = tracker.createdAt.date
         trackerEntity.isPinned = tracker.isPinned
     }
 
@@ -45,7 +45,7 @@ final class TrackerEntityMapper {
                        color: color,
                        emoji: emoji,
                        schedule: schedule,
-                       createdAt: createdAt,
+                       createdAt: createdAt.dateOnly(),
                        isPinned: isPinned)
     }
 
