@@ -6,7 +6,9 @@ import Foundation
 
 protocol TrackerRecordStoreProtocol {
     func add(_ trackerRecord: TrackerRecord) throws
-    func remove(_ trackerRecord: TrackerRecord) throws
+    func delete(_ trackerRecord: TrackerRecord) throws
     func count(for trackerId: UUID) -> Int
     func exists(_ trackerRecord: TrackerRecord) -> Bool
+    func get(for: DateOnly) throws -> [TrackerRecord]
+    func getAll() throws -> [TrackerRecord]
 }

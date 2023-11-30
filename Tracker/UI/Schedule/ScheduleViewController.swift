@@ -2,15 +2,14 @@
 // Created by Андрей Парамонов on 28.09.2023.
 //
 
-import Foundation
 import UIKit
 
 final class ScheduleViewController: UIViewController {
     private let cellHeight: CGFloat = 75
     private let cornerRadius: CGFloat = 16
 
-    weak var delegate: CreateTrackerViewControllerDelegate?
-    var selectedDays: [WeekDay] = []
+    weak var delegate: ConfigureTrackerViewControllerDelegate?
+    var selectedDays: Set<WeekDay> = []
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -53,6 +52,7 @@ final class ScheduleViewController: UIViewController {
         configureTable.layer.cornerRadius = cornerRadius
         configureTable.layer.masksToBounds = true
         configureTable.isScrollEnabled = false
+        configureTable.rowHeight = cellHeight
         return configureTable
     }()
 
@@ -99,8 +99,6 @@ final class ScheduleViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
-                    svContentG.bottomAnchor.constraint(equalTo: configureTable.bottomAnchor),
-
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
@@ -114,6 +112,7 @@ final class ScheduleViewController: UIViewController {
                     configureTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
                     configureTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     configureTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
+                    configureTable.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
                     configureTable.heightAnchor.constraint(equalToConstant: cellHeight * 7),
 
                     button.bottomAnchor.constraint(equalTo: safeG.bottomAnchor, constant: -16),
@@ -156,10 +155,6 @@ extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
         let weekDay = WeekDay.allCases[indexPath.row]
         cell.configure(weekDay: weekDay, title: weekDay.description, isEnabled: selectedDays.contains(weekDay))
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

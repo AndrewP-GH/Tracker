@@ -2,14 +2,17 @@
 // Created by Андрей Парамонов on 29.09.2023.
 //
 
-import Foundation
 import UIKit
 
 final class TrackerCollectionViewCell: UICollectionViewCell {
     static let identifier = "TrackerCollectionViewCell"
+    var previewView: UIView? {
+        coloredView
+    }
 
     private var tracker: Tracker?
     private weak var delegate: TrackersViewDelegate?
+    private var analyticsService: AnalyticsService?
 
     private var completedDays = 0 {
         didSet {
@@ -34,6 +37,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor(r: 174, g: 175, b: 180, alpha: 0.3).cgColor
         return view
     }()
 
@@ -46,6 +51,14 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         label.layer.cornerRadius = 12
         label.layer.masksToBounds = true
         return label
+    }()
+
+    private lazy var pinImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "Pin")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
 
     private lazy var textStackView: UIStackView = {
@@ -63,7 +76,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.adjustsFontSizeToFitWidth = false
+        label.adjustsFontSizeToFitWidth = true
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
         label.backgroundColor = .clear
@@ -93,6 +106,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         button.setImage(UIImage(named: "PlusButton"), for: .normal)
         button.backgroundColor = .ypWhite
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.layer.cornerRadius = 17
+        button.layer.masksToBounds = true
         return button
     }()
 
@@ -113,17 +128,18 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         setupView()
     }
 
-    func configure(with model: CellModel,
-                   delegate: TrackersViewDelegate) {
+    func configure(with model: CellModel, delegate: TrackersViewDelegate, analyticsService: AnalyticsService?) {
         tracker = model.tracker
         self.delegate = delegate
         completedDays = model.completedDays
         isDone = model.isDone
         canBeDone = model.canBeDone
+        self.analyticsService = analyticsService
         updateContentView()
     }
 
     private func setupView() {
+        backgroundColor = .clear
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = true
         contentView.backgroundColor = .clear
@@ -135,6 +151,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private func addSubviews() {
         contentView.addSubview(coloredView)
         coloredView.addSubview(emojiLabel)
+        coloredView.addSubview(pinImageView)
         coloredView.addSubview(textStackView)
         textStackView.addSubview(nameLabel)
         contentView.addSubview(controlView)
@@ -146,15 +163,20 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate(
                 [
-                    coloredView.topAnchor.constraint(equalTo: contentView.topAnchor),
-                    coloredView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    coloredView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3),
+                    coloredView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+                    coloredView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                     coloredView.heightAnchor.constraint(equalToConstant: 90),
 
                     emojiLabel.topAnchor.constraint(equalTo: coloredView.topAnchor, constant: 12),
                     emojiLabel.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 12),
                     emojiLabel.widthAnchor.constraint(equalToConstant: 24),
                     emojiLabel.heightAnchor.constraint(equalToConstant: 24),
+
+                    pinImageView.topAnchor.constraint(equalTo: coloredView.topAnchor, constant: 12),
+                    pinImageView.trailingAnchor.constraint(equalTo: coloredView.trailingAnchor, constant: -4),
+                    pinImageView.widthAnchor.constraint(equalToConstant: 24),
+                    pinImageView.heightAnchor.constraint(equalToConstant: 24),
 
                     textStackView.topAnchor.constraint(equalTo: emojiLabel.bottomAnchor, constant: 8),
                     textStackView.leadingAnchor.constraint(equalTo: coloredView.leadingAnchor, constant: 12),
@@ -167,8 +189,8 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
                     nameLabel.bottomAnchor.constraint(equalTo: textStackView.bottomAnchor),
 
                     controlView.topAnchor.constraint(equalTo: coloredView.bottomAnchor),
-                    controlView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                    controlView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                    controlView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
+                    controlView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -6),
                     controlView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
 
                     daysLabel.topAnchor.constraint(equalTo: controlView.topAnchor, constant: 16),
@@ -196,6 +218,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
         emojiLabel.text = tracker.emoji
         nameLabel.text = tracker.name
         button.tintColor = tracker.color
+        pinImageView.isHidden = !tracker.isPinned
 
         setDaysLabel()
         setButtonImage()
@@ -203,13 +226,12 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     @objc private func buttonTapped() {
+        analyticsService?.report(name: "buttonTapped", event: .click, screen: .main, item: .track)
         isDone.toggle()
         if let tracker, let delegate {
             if isDone {
-                completedDays += 1
                 delegate.didCompleteTracker(id: tracker.id)
             } else {
-                completedDays -= 1
                 delegate.didUncompleteTracker(id: tracker.id)
             }
         }
@@ -224,18 +246,7 @@ final class TrackerCollectionViewCell: UICollectionViewCell {
     }
 
     private func setDaysLabel() {
-        var text = ""
-        switch completedDays {
-        case 0:
-            text = "0 дней"
-        case 1:
-            text = "1 день"
-        case 2...4:
-            text = "\(completedDays) дня"
-        default:
-            text = "\(completedDays) дней"
-        }
-        daysLabel.text = text
+        daysLabel.text = L10n.Localizable.numberOfDays(completedDays)
     }
 
     private func setButtonEnabled() {

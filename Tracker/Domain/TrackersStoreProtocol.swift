@@ -5,12 +5,12 @@
 import Foundation
 
 protocol TrackersStoreProtocol {
-    func categoriesCount() -> Int
-    func trackersCount(for category: Int) -> Int
-    func categoryName(at index: Int) -> String
-    func tracker(at indexPath: IndexPath) throws -> Tracker
     func filter(prefix: String?, weekDay: WeekDay)
     func performFetch()
+    func update(tracker: Tracker) throws
+    func category(for tracker: Tracker) throws -> TrackerCategory
+    func delete(tracker: Tracker) throws
+    func countBy(dateOnly: DateOnly) throws -> Int
 
     var delegate: TrackersViewDelegate? { get set }
 }

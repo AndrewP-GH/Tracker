@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 23.09.2023.
 //
 
-import Foundation
 import UIKit
 
 struct Tracker {
@@ -11,5 +10,6 @@ struct Tracker {
     let color: UIColor
     let emoji: String
     let schedule: Schedule?
-    let createdAt: Date
+    let createdAt: DateOnly
+    var isPinned: Bool
 }

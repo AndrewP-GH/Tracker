@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 24.09.2023.
 //
 
-import Foundation
 import UIKit
 
 final class AddTrackerViewController: UIViewController {
@@ -22,8 +21,8 @@ final class AddTrackerViewController: UIViewController {
         createButton(title: "Привычка", action: #selector(addHabit))
     }()
 
-    private lazy var event: UIButton = {
-        createButton(title: "Нерегулярное событие", action: #selector(addEvent))
+    private lazy var irregularEvent: UIButton = {
+        createButton(title: "Нерегулярное событие", action: #selector(addIrregularEvent))
     }()
 
     override func viewDidLoad() {
@@ -40,7 +39,7 @@ final class AddTrackerViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(header)
         view.addSubview(habit)
-        view.addSubview(event)
+        view.addSubview(irregularEvent)
     }
 
     private func setupConstraints() {
@@ -60,25 +59,25 @@ final class AddTrackerViewController: UIViewController {
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
                     habit.heightAnchor.constraint(equalToConstant: 60),
 
-                    event.topAnchor.constraint(equalTo: habit.bottomAnchor, constant: 16),
-                    event.leadingAnchor
+                    irregularEvent.topAnchor.constraint(equalTo: habit.bottomAnchor, constant: 16),
+                    irregularEvent.leadingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: sideInset),
-                    event.trailingAnchor
+                    irregularEvent.trailingAnchor
                             .constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -sideInset),
-                    event.heightAnchor.constraint(equalToConstant: 60),
+                    irregularEvent.heightAnchor.constraint(equalToConstant: 60),
                 ]
         )
     }
 
     @objc private func addHabit() {
-        let vc = CreateTrackerViewController(mode: .habit)
-        vc.delegate = self
+        let vc = ConfigureTrackerViewController(trackerType: .habit, mode: .create)
+        vc.addTrackerDelegate = self
         present(vc, animated: true)
     }
 
-    @objc private func addEvent() {
-        let vc = CreateTrackerViewController(mode: .event)
-        vc.delegate = self
+    @objc private func addIrregularEvent() {
+        let vc = ConfigureTrackerViewController(trackerType: .irregularEvent, mode: .create)
+        vc.addTrackerDelegate = self
         present(vc, animated: true)
     }
 
@@ -96,14 +95,11 @@ final class AddTrackerViewController: UIViewController {
     }
 }
 
-extension AddTrackerViewController: AddTrackerViewControllerDelegate {
-    func addTracker(tracker: Tracker, category: TrackerCategory) {
+extension AddTrackerViewController: AddTrackerDelegate {
+    func addTracker(tracker: Tracker, to category: TrackerCategory) {
         delegate?.addTrackerToCategory(category: category, tracker: tracker)
-        presentingViewController?.dismiss(
-                animated: true,
-                completion: { [weak self] in
-                    self?.dismiss(animated: false)
-                }
-        )
+        presentingViewController?.dismiss(animated: true) { [weak self] in
+            self?.dismiss(animated: false)
+        }
     }
 }

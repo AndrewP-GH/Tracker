@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 12.08.2023.
 //
 
-import Foundation
 import UIKit
 
 final class HomePageViewController: UITabBarController {
@@ -34,18 +33,21 @@ final class HomePageViewController: UITabBarController {
     }
 
     private func getViewControllers() -> [UIViewController] {
-        let trackersViewController = TrackersViewController(
-                viewModel: TrackersViewModel(
-                        categoryStore: TrackerCategoryStore(),
-                        trackerRecordStore: TrackerRecordStore()
-                )
+        let trackerStore = TrackerStore()
+        let viewModel = TrackersViewModel(
+                trackerStore: trackerStore,
+                categoryStore: TrackerCategoryStore(),
+                trackerRecordStore: TrackerRecordStore()
         )
+        trackerStore.delegate = viewModel
+        let trackersViewController = TrackersViewController(viewModel: viewModel, analyticsService: AnalyticsService())
         let navigationController = UINavigationController(rootViewController: trackersViewController)
-        navigationController.tabBarItem = UITabBarItem(title: "Трекеры",
+        navigationController.tabBarItem = UITabBarItem(title: L10n.Localizable.Trackers.trackers,
                                                        image: UIImage(named: "Trackers"),
                                                        selectedImage: nil)
-        let settingsViewController = StatisticsViewController()
-        settingsViewController.tabBarItem = UITabBarItem(title: "Статистика",
+        let recordsStore = TrackerRecordStore()
+        let settingsViewController = StatisticsViewController(recordsStore: recordsStore, trackersStore: trackerStore)
+        settingsViewController.tabBarItem = UITabBarItem(title: L10n.Localizable.Trackers.statistics,
                                                          image: UIImage(named: "Statistics"),
                                                          selectedImage: nil)
         return [navigationController, settingsViewController]

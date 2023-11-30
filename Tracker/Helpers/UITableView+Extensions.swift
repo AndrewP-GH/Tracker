@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 01.10.2023.
 //
 
-import Foundation
 import UIKit
 
 extension UITableView {

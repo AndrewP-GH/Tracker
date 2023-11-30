@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Андрей Парамонов on 22.11.2023.
+  
+*/
+"trackers.title" = "Трекеры";
+"trackers.filters" = "Фильтры";
+"trackers.trackers" = "Трекеры";
+"trackers.statistics" = "Статистика";
+"trackers.pinned" = "Закрепленные";
+"trackers.pin" = "Закрепить";
+"trackers.unpin" = "Открепить";
+"trackers.edit" = "Редактировать";
+"trackers.delete" = "Удалить";
+"trackers.deleteConfirm" = "Уверены, что хотите удалить трекер?";
+"trackers.deleteCancel" = "Отмена";

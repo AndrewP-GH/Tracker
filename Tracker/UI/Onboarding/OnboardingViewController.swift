@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 13.11.2023.
 //
 
-import Foundation
 import UIKit
 
 final class OnboardingViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -24,6 +23,7 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = .ypBlack.withAlphaComponent(0.3)
         pageControl.currentPageIndicatorTintColor = .ypBlack
+        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .touchUpInside)
         return pageControl
     }()
 
@@ -47,7 +47,8 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
     }
 
     override func viewDidLoad() {
@@ -134,6 +135,17 @@ final class OnboardingViewController: UIPageViewController, UIPageViewController
         OnboardingDataStore.shared.setOnboardingWasShown()
         let viewController = HomePageViewController()
         viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
+        present(viewController, animated: true)
+    }
+
+    @objc
+    private func pageControlTapped(_ sender: Any) {
+        guard let pageControl = sender as? UIPageControl else { return }
+        let selectedPage = pageControl.currentPage
+        if selectedPage == 0 {
+            setViewControllers([pages[selectedPage + 1]], direction: .forward, animated: true, completion: nil)
+        } else {
+            setViewControllers([pages[selectedPage - 1]], direction: .reverse, animated: true, completion: nil)
+        }
     }
 }

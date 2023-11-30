@@ -2,14 +2,13 @@
 // Created by Андрей Парамонов on 14.11.2023.
 //
 
-import Foundation
 import UIKit
 
 final class OnboardingPageViewController: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
 
@@ -31,7 +30,8 @@ final class OnboardingPageViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
     }
 
     override func viewDidLoad() {

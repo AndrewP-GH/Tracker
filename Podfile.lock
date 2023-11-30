@@ -1,0 +1,25 @@
+PODS:
+  - SwiftGen (6.6.2)
+  - YandexMobileMetrica/Dynamic (4.5.2):
+    - YandexMobileMetrica/Dynamic/Core (= 4.5.2)
+    - YandexMobileMetrica/Dynamic/Crashes (= 4.5.2)
+  - YandexMobileMetrica/Dynamic/Core (4.5.2)
+  - YandexMobileMetrica/Dynamic/Crashes (4.5.2):
+    - YandexMobileMetrica/Dynamic/Core
+
+DEPENDENCIES:
+  - SwiftGen (~> 6.0)
+  - YandexMobileMetrica/Dynamic (= 4.5.2)
+
+SPEC REPOS:
+  trunk:
+    - SwiftGen
+    - YandexMobileMetrica
+
+SPEC CHECKSUMS:
+  SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
+  YandexMobileMetrica: f5368ee93f286c793d73b58da00929babfc897c1
+
+PODFILE CHECKSUM: 8a2a59cc1ae1250e5177aebf6c31fc29dc475d66
+
+COCOAPODS: 1.14.3

@@ -9,12 +9,14 @@ import UIKit
 
 final class TrackersViewController: UIViewController {
     private let viewModel: TrackersViewModelProtocol
+    private let analyticsService: AnalyticsService?
+    private let filtersButtonHeight: CGFloat = 50
+    private let filtersButtonVerticalOffset: CGFloat = 16
 
     private lazy var plusImageButton: UIButton = {
         let plusImage = UIButton()
         plusImage.translatesAutoresizingMaskIntoConstraints = false
-        plusImage.setImage(UIImage(named: "AddTracker"), for: .normal)
-        plusImage.tintColor = .ypBlack
+        plusImage.setImage(UIImage(named: "AddTracker")?.withTintColor(.ypBlack), for: .normal)
         plusImage.contentMode = .scaleAspectFit
         plusImage.backgroundColor = .clear
         plusImage.addTarget(self, action: #selector(addTracker), for: .touchUpInside)
@@ -31,7 +33,7 @@ final class TrackersViewController: UIViewController {
         trackerLabel.translatesAutoresizingMaskIntoConstraints = false
         trackerLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         trackerLabel.textColor = .ypBlack
-        trackerLabel.text = "Трекеры"
+        trackerLabel.text = L10n.Localizable.Trackers.title
         return trackerLabel
     }()
 
@@ -46,7 +48,6 @@ final class TrackersViewController: UIViewController {
         datePicker.layer.cornerRadius = 8
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.init(identifier: "ru_RU")
-        datePicker.date = viewModel.currentDate
         return datePicker
     }()
 
@@ -92,27 +93,50 @@ final class TrackersViewController: UIViewController {
         trackersView.delegate = self
         trackersView.showsVerticalScrollIndicator = false
         trackersView.showsHorizontalScrollIndicator = false
+        trackersView.alwaysBounceVertical = true
+        trackersView.contentInset = UIEdgeInsets(top: 0,
+                                                 left: 0,
+                                                 bottom: filtersButtonHeight + filtersButtonVerticalOffset,
+                                                 right: 0)
         return trackersView
     }()
 
-    private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(emptyStateText: "Что будем отслеживать?")
+    private lazy var emptyTrackersPlaceholderView: EmptyResultPlaceholderView = {
+        let emptyTrackersPlaceholderView = EmptyResultPlaceholderView(emptyStateText: "Что будем отслеживать?")
         emptyTrackersPlaceholderView.translatesAutoresizingMaskIntoConstraints = false
         return emptyTrackersPlaceholderView
     }()
 
-    init(viewModel: TrackersViewModelProtocol) {
+    private lazy var filtersButton: UIButton = {
+        let filtersButton = UIButton()
+        filtersButton.translatesAutoresizingMaskIntoConstraints = false
+        filtersButton.setTitle(L10n.Localizable.Trackers.filters, for: .normal)
+        filtersButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        filtersButton.backgroundColor = .ypBlue
+        filtersButton.layer.cornerRadius = 16
+        filtersButton.layer.masksToBounds = true
+        filtersButton.addTarget(self, action: #selector(filtersTapped), for: .touchUpInside)
+        return filtersButton
+    }()
+
+    init(viewModel: TrackersViewModelProtocol, analyticsService: AnalyticsService? = nil) {
         self.viewModel = viewModel
+        self.analyticsService = analyticsService
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        assertionFailure("init(coder:) has not been implemented")
+        return nil
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.reloadDataDelegate = { [weak self] in
+        analyticsService?.report(name: "viewDidLoad", event: .open, screen: .main, item: nil)
+        viewModel.currentDateObservable.bind { [weak self] dateOnly in
+            self?.datePicker.date = dateOnly.date
+        }
+        viewModel.trackersDidChange = { [weak self] in
             self?.trackersView.reloadData()
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
@@ -120,6 +144,11 @@ final class TrackersViewController: UIViewController {
         }
         setupView()
         viewModel.viewDidLoad()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        analyticsService?.report(name: "viewDidDisappear", event: .close, screen: .main, item: nil)
     }
 
     private func setupView() {
@@ -142,42 +171,56 @@ final class TrackersViewController: UIViewController {
         view.addSubview(trackerLabel)
         view.addSubview(searchTextField)
         view.addSubview(trackersView)
+        trackersView.addSubview(filtersButton)
         view.addSubview(emptyTrackersPlaceholderView)
     }
 
     private func setupConstraints() {
+        let safeG = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate(
                 [
                     plusImageButton.widthAnchor.constraint(equalToConstant: 42),
                     plusImageButton.heightAnchor.constraint(equalToConstant: 42),
 
-                    trackerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 1),
-                    trackerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                    trackerLabel.topAnchor.constraint(equalTo: safeG.topAnchor, constant: 1),
+                    trackerLabel.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.defaultLeadingOffset),
 
                     searchTextField.topAnchor.constraint(equalTo: trackerLabel.bottomAnchor, constant: 7),
-                    searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                    searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                    searchTextField.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.defaultLeadingOffset),
+                    searchTextField.trailingAnchor
+                            .constraint(equalTo: view.trailingAnchor, constant: -Constants.defaultLeadingOffset),
                     searchTextField.heightAnchor.constraint(equalToConstant: 36),
 
                     trackersView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
-                    trackersView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                    trackersView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                    trackersView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                    trackersView.leadingAnchor
+                            .constraint(equalTo: view.leadingAnchor, constant: Constants.trackersViewSideOffset),
+                    trackersView.trailingAnchor
+                            .constraint(equalTo: view.trailingAnchor, constant: -Constants.trackersViewSideOffset),
+                    trackersView.bottomAnchor.constraint(equalTo: safeG.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+                    filtersButton.widthAnchor.constraint(equalToConstant: 114),
+                    filtersButton.heightAnchor.constraint(equalToConstant: filtersButtonHeight),
+                    filtersButton.centerXAnchor.constraint(equalTo: trackersView.safeAreaLayoutGuide.centerXAnchor),
+                    filtersButton.bottomAnchor.constraint(equalTo: trackersView.safeAreaLayoutGuide.bottomAnchor,
+                                                          constant: -filtersButtonVerticalOffset),
                 ]
         )
     }
 
     @objc private func addTracker() {
+        analyticsService?.report(name: "addTracker", event: .click, screen: .main, item: .addTrack)
         let addTrackerViewController = AddTrackerViewController()
         addTrackerViewController.delegate = viewModel
         present(addTrackerViewController, animated: true)
     }
 
     @objc private func dateChanged() {
-        viewModel.dateChanged(to: datePicker.date)
+        viewModel.setCurrentDate(to: datePicker.date)
         presentedViewController?.dismiss(animated: false, completion: nil)
     }
 
@@ -195,6 +238,19 @@ final class TrackersViewController: UIViewController {
             trackersView.isHidden = true
             emptyTrackersPlaceholderView.isHidden = false
         }
+    }
+
+    @objc private func filtersTapped() {
+        analyticsService?.report(name: "filtersTapped", event: .click, screen: .main, item: .filter)
+        let vc = FiltersViewController(selectedFilter: viewModel.currentFilter, delegate: viewModel)
+        present(vc, animated: true)
+    }
+}
+
+extension TrackersViewController {
+    private enum Constants {
+        static let defaultLeadingOffset: CGFloat = 16
+        static let trackersViewSideOffset: CGFloat = 10
     }
 }
 
@@ -218,8 +274,106 @@ extension TrackersViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrackerCollectionViewCell.identifier,
                                                       for: indexPath) as? TrackerCollectionViewCell
                 ?? TrackerCollectionViewCell()
-        cell.configure(with: viewModel.cellModel(at: indexPath), delegate: viewModel);
+        cell.configure(with: viewModel.cellModel(at: indexPath),
+                       delegate: viewModel,
+                       analyticsService: analyticsService);
         return cell
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegate {
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+            point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let indexPath = indexPaths.first else { return nil }
+        let firstAction = getFirstAction(for: indexPath)
+        return UIContextMenuConfiguration(actionProvider: { actions in
+            UIMenu(children: [
+                firstAction,
+                UIAction(title: L10n.Localizable.Trackers.edit) { [weak self] _ in
+                    self?.editTracker(at: indexPath)
+                },
+                UIAction(title: L10n.Localizable.Trackers.delete,
+                         attributes: .destructive) { [weak self] _ in
+                    self?.deleteTracker(at: indexPath)
+                }
+            ])
+        })
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfigurationForItemAt indexPath: IndexPath,
+            point: CGPoint) -> UIContextMenuConfiguration? {
+        self.collectionView(collectionView, contextMenuConfigurationForItemsAt: [indexPath], point: point)
+    }
+
+    private func getFirstAction(for indexPath: IndexPath) -> UIAction {
+        let pinAction = viewModel.getPinAction(at: indexPath)
+        switch pinAction {
+        case .pin:
+            return UIAction(title: L10n.Localizable.Trackers.pin) { [weak self] _ in
+                self?.pinTracker(at: indexPath)
+            }
+        case .unpin:
+            return UIAction(title: L10n.Localizable.Trackers.unpin) { [weak self] _ in
+                self?.unpinTracker(at: indexPath)
+            }
+        }
+    }
+
+    private func editTracker(at indexPath: IndexPath) {
+        analyticsService?.report(name: "editTracker", event: .click, screen: .main, item: .edit)
+        let trackerType = viewModel.trackerType(at: indexPath)
+        let vc = ConfigureTrackerViewController(trackerType: trackerType, mode: .edit)
+        vc.editTrackerDelegate = self
+        guard let editState = viewModel.getEditState(at: indexPath) else { return }
+        vc.setState(editState)
+        present(vc, animated: true)
+    }
+
+    private func deleteTracker(at indexPath: IndexPath) {
+        analyticsService?.report(name: "deleteTracker", event: .click, screen: .main, item: .delete)
+        let actionSheet = UIAlertController(title: nil,
+                                            message: L10n.Localizable.Trackers.deleteConfirm,
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.delete,
+                                            style: .default) { [weak self] action in
+            self?.viewModel.deleteTracker(at: indexPath)
+        })
+        actionSheet.addAction(UIAlertAction(title: L10n.Localizable.Trackers.deleteCancel, style: .cancel))
+        present(actionSheet, animated: true, completion: nil)
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfiguration configuration: UIContextMenuConfiguration,
+            highlightPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        getCellPreview(for: indexPath)
+    }
+
+    func collectionView(
+            _ collectionView: UICollectionView,
+            contextMenuConfiguration configuration: UIContextMenuConfiguration,
+            dismissalPreviewForItemAt indexPath: IndexPath) -> UITargetedPreview? {
+        getCellPreview(for: indexPath)
+    }
+
+    private func getCellPreview(for indexPath: IndexPath) -> UITargetedPreview? {
+        guard let cell = trackersView.cellForItem(at: indexPath) as? TrackerCollectionViewCell,
+              let cellPreview = cell.previewView else { return nil }
+        let targetedPreview = UITargetedPreview(view: cellPreview)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+
+    private func pinTracker(at indexPath: IndexPath) {
+        viewModel.pinTracker(at: indexPath)
+    }
+
+    private func unpinTracker(at indexPath: IndexPath) {
+        viewModel.unpinTracker(at: indexPath)
     }
 }
 
@@ -260,7 +414,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
 
     fileprivate var spacing: CGFloat {
-        9
+        1
     }
 
     fileprivate var cellHeight: CGFloat {
@@ -280,5 +434,12 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
             layout collectionViewLayout: UICollectionViewLayout,
             minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         spacing
+    }
+}
+
+extension TrackersViewController: EditTrackerDelegate {
+    func editTracker(result: EditTrackerResult) {
+        viewModel.editTracker(result: result)
+        dismiss(animated: true)
     }
 }

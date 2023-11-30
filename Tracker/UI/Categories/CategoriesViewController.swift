@@ -2,8 +2,9 @@
 // Created by Андрей Парамонов on 28.09.2023.
 //
 
-import Foundation
 import UIKit
+
+typealias SelectableTrackerCategoryTableViewCell = SelectableTableViewCell<TrackerCategory>
 
 final class CategoriesViewController: UIViewController {
     private let cellHeight: CGFloat = 75
@@ -46,8 +47,8 @@ final class CategoriesViewController: UIViewController {
         configureTable.separatorStyle = .none
         configureTable.showsVerticalScrollIndicator = false
         configureTable.showsHorizontalScrollIndicator = false
-        configureTable.register(CategoriesTableViewCell.self,
-                                forCellReuseIdentifier: CategoriesTableViewCell.identifier)
+        configureTable.register(SelectableTrackerCategoryTableViewCell.self,
+                                forCellReuseIdentifier: SelectableTrackerCategoryTableViewCell.identifier)
         configureTable.delegate = self
         configureTable.dataSource = self
         configureTable.layer.cornerRadius = cornerRadius
@@ -70,8 +71,8 @@ final class CategoriesViewController: UIViewController {
         return button
     }()
 
-    private lazy var emptyTrackersPlaceholderView: EmptyTrackersPlaceholderView = {
-        let emptyTrackersPlaceholderView = EmptyTrackersPlaceholderView(
+    private lazy var emptyTrackersPlaceholderView: EmptyResultPlaceholderView = {
+        let emptyTrackersPlaceholderView = EmptyResultPlaceholderView(
                 emptyStateText: """
                                 Привычки и события можно
                                 объединить по смыслу
@@ -87,13 +88,18 @@ final class CategoriesViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not implemented")
+        assertionFailure("init(coder:) is not implemented")
+        return nil
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.categoriesChangedDelegate = { [weak self] in
             self?.categoriesTable.reloadData()
+        }
+        viewModel.categorySelectedDelegate = { [weak self] in
+            self?.categoriesTable.reloadData()
+            self?.dismiss(animated: true)
         }
         viewModel.placeholderStateObservable.bind { [weak self] state in
             self?.placeholderDidChange(state: state)
@@ -128,13 +134,11 @@ final class CategoriesViewController: UIViewController {
                     scrollView.trailingAnchor.constraint(equalTo: safeG.trailingAnchor, constant: -sideInset),
                     scrollView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -16),
 
-                    svContentG.bottomAnchor.constraint(equalTo: categoriesTable.bottomAnchor),
-
                     contentView.topAnchor.constraint(equalTo: svContentG.topAnchor),
                     contentView.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     contentView.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
-                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                    contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
                     titleLabel.topAnchor.constraint(equalTo: svContentG.topAnchor, constant: 26),
                     titleLabel.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
@@ -143,6 +147,7 @@ final class CategoriesViewController: UIViewController {
                     categoriesTable.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
                     categoriesTable.leadingAnchor.constraint(equalTo: svContentG.leadingAnchor),
                     categoriesTable.trailingAnchor.constraint(equalTo: svContentG.trailingAnchor),
+                    categoriesTable.bottomAnchor.constraint(equalTo: svContentG.bottomAnchor),
 
                     emptyTrackersPlaceholderView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
                     emptyTrackersPlaceholderView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
@@ -193,19 +198,15 @@ extension CategoriesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoriesTableViewCell.identifier,
-                                                 for: indexPath) as? CategoriesTableViewCell
-                ?? CategoriesTableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectableTrackerCategoryTableViewCell.identifier,
+                                                 for: indexPath) as? SelectableTrackerCategoryTableViewCell
+                ?? SelectableTrackerCategoryTableViewCell()
         cell.configure(model: viewModel.categoryCellModel(at: indexPath.row))
         return cell
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? CategoriesTableViewCell {
+        if let cell = cell as? SelectableTrackerCategoryTableViewCell {
             cell.isLast = tableView.isLastCellInSection(at: indexPath)
         }
     }

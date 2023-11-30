@@ -2,7 +2,6 @@
 // Created by Андрей Парамонов on 20.11.2023.
 //
 
-import Foundation
 import UIKit
 
 final class CreateCategoryViewController: UIViewController {
@@ -111,19 +110,10 @@ final class CreateCategoryViewController: UIViewController {
     @objc private func saveButtonTapped() {
         guard let delegate,
               let name = nameTextField.text else { return }
-        delegate.addCategory(
-                category: TrackerCategory(
-                        id: UUID(),
-                        header: name,
-                        items: []
-                )
-        )
-        presentingViewController?.dismiss(
-                animated: true,
-                completion: { [weak self] in
-                    self?.dismiss(animated: false)
-                }
-        )
+        delegate.addCategory(category: TrackerCategory(id: UUID(), header: name))
+        presentingViewController?.dismiss(animated: true) { [weak self] in
+            self?.dismiss(animated: false)
+        }
     }
 }
 

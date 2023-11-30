@@ -6,15 +6,16 @@ import Foundation
 
 final class CategoriesViewModel: CategoriesViewModelProtocol {
     let categoryStore: TrackerCategoryStoreProtocol
-    weak var delegate: CreateTrackerViewControllerDelegate?
+    weak var delegate: ConfigureTrackerViewControllerDelegate?
 
-    init(trackerCategoryStore: TrackerCategoryStoreProtocol, delegate: CreateTrackerViewControllerDelegate) {
+    init(trackerCategoryStore: TrackerCategoryStoreProtocol, delegate: ConfigureTrackerViewControllerDelegate) {
         categoryStore = trackerCategoryStore
         self.delegate = delegate
     }
 
     var selectedCategory: TrackerCategory?
     var categoriesChangedDelegate: (() -> Void)?
+    var categorySelectedDelegate: (() -> Void)?
 
     @Observable
     private(set) var placeholderState: PlaceholderState = .hide
@@ -36,14 +37,17 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
             setPlaceholderState()
             categoriesChangedDelegate?()
         } catch {
-            fatalError(error.localizedDescription)
+            assertionFailure(error.localizedDescription)
         }
     }
 
-    func categoryCellModel(at index: Int) -> CategoryCellModel {
+    func categoryCellModel(at index: Int) -> SelectableCellModel<TrackerCategory> {
         let categories = try! categoryStore.getAll()
         let category = categories[index]
-        return CategoryCellModel(category: category, isSelected: category == selectedCategory) { [weak self] category in
+        return SelectableCellModel(
+                value: category,
+                isSelected: category == selectedCategory,
+                title: category.header) { [weak self] category in
             self?.categorySelected(category)
         }
     }
@@ -53,7 +57,7 @@ final class CategoriesViewModel: CategoriesViewModelProtocol {
                 ? nil
                 : category
         delegate?.setCategory(category: selectedCategory)
-        categoriesChangedDelegate?()
+        categorySelectedDelegate?()
     }
 
     func viewDidLoad() {

@@ -16,25 +16,37 @@ final class TrackerEntityMapper {
         trackerEntity.hexColor = try colorMarshalling.hexString(from: tracker.color)
         trackerEntity.emoji = tracker.emoji
         trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
-        trackerEntity.createdAt = tracker.createdAt
+        trackerEntity.createdAt = tracker.createdAt.date
+        trackerEntity.isPinned = tracker.isPinned
         return trackerEntity
     }
 
+    func map(from tracker: Tracker, to trackerEntity: TrackerEntity) throws {
+        trackerEntity.name = tracker.name
+        trackerEntity.hexColor = try colorMarshalling.hexString(from: tracker.color)
+        trackerEntity.emoji = tracker.emoji
+        trackerEntity.schedule = scheduleMarshalling.toString(from: tracker.schedule)
+        trackerEntity.createdAt = tracker.createdAt.date
+        trackerEntity.isPinned = tracker.isPinned
+    }
+
     func map(from trackerEntity: TrackerEntity) throws -> Tracker {
-        let color = try colorMarshalling.color(from: trackerEntity.hexColor!)
-        let schedule = scheduleMarshalling.toSchedule(from: trackerEntity.schedule)
-        guard
-                let id = trackerEntity.id,
-                let name = trackerEntity.name,
-                let emoji = trackerEntity.emoji,
-                let createdAt = trackerEntity.createdAt
+        guard let id = trackerEntity.id,
+              let name = trackerEntity.name,
+              let hexColor = trackerEntity.hexColor,
+              let emoji = trackerEntity.emoji,
+              let createdAt = trackerEntity.createdAt
         else { throw StoreError.decodeError }
+        let color = try colorMarshalling.color(from: hexColor)
+        let schedule = scheduleMarshalling.toSchedule(from: trackerEntity.schedule)
+        let isPinned = trackerEntity.isPinned
         return Tracker(id: id,
                        name: name,
                        color: color,
                        emoji: emoji,
                        schedule: schedule,
-                       createdAt: createdAt)
+                       createdAt: createdAt.dateOnly(),
+                       isPinned: isPinned)
     }
 
     func map(from dayOfWeak: WeekDay) -> String {
